@@ -1,28 +1,23 @@
 ﻿using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
-public  class MonsterBase : MonoBehaviour
+public class MonsterStateBese : MonoBehaviour
 {
-    [SerializeField] protected MonsterData monsterData;
-    
-    protected int currentHp;
-
-    protected Transform target;
     protected Transform monsterTransform;
     protected MonsterStateManager monsterStateManager;
-
-    protected virtual void Awake()
+    
+    protected virtual void OnEnable()
     {
-
         if (monsterTransform == null)
         {
             monsterTransform = transform;
         }
 
-        if (monsterStateManager == null)
+        if(monsterStateManager == null)
         {
             monsterStateManager = GetComponent<MonsterStateManager>();
         }
+
     }
     
-
 }
