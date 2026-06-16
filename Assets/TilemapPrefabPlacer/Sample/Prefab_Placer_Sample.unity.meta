@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c297734f815f58f4a921a0f3efb01979
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 359482
+  packageName: Tilemap Prefab Placer
+  packageVersion: 1.0
+  assetPath: Assets/TilemapPrefabPlacer/Sample/Prefab_Placer_Sample.unity
+  uploadId: 856466
