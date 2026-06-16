@@ -2,17 +2,17 @@
 
 public struct DamageInfoSet
 {
-    public int damage;
-    public GameObject attacker;
-    public Vector2 hitVector;
+    public int Damage;
+    public GameObject Attacker;
+    public Vector2 AttackDirection;
 
     public DamageInfoSet(
         int damage,
         GameObject attacker = null,
-        Vector2 hitVector = default)
+        Vector2 attackDirection = default)
     {
-        this.damage = damage;
-        this.attacker = attacker;
-        this.hitVector = hitVector;
+        this.Damage = damage;
+        this.Attacker = attacker;
+        this.AttackDirection = attackDirection;
     }
 }
