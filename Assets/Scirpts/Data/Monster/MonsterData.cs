@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-
-
 [CreateAssetMenu(fileName = "MonsterData", menuName = "GameData/Monster Data")]
 public class MonsterData : ScriptableObject
 {
@@ -20,9 +18,8 @@ public class MonsterData : ScriptableObject
     [SerializeField] private float attakcRange;
     [Header("몬스터 공격 딜레이")]
     [SerializeField] private float attackDelay;
-
-
-
+    [Header("플레이어 인식 범위")]
+    [SerializeField] private float contactRange;
 
     public string MonsterName { get { return monsterName; } }
     public MonsterBase MonsterPrefab { get { return monsterPrefab; } }
@@ -31,6 +28,5 @@ public class MonsterData : ScriptableObject
     public int AttackDamage { get { return attackDamage; } }
     public float AttakcRange { get { return attakcRange; } }
     public float AttakcDelay { get { return attackDelay; } }
-
-
+    public float ContactRange { get { return contactRange; } }
 }
