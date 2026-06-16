@@ -3,23 +3,17 @@ using UnityEngine;
 
 public class PatrolMonsterState : MonsterBase
 {
-    [Header("정찰 속도")]
-    [SerializeField] private float patrolSpeed = 1.0f;
-    [Header("정찰 간격")]
-    [SerializeField] private Vector2 moveOffset = new Vector2(3.0f, 0.0f);
-    [Header("정지 시간")]
-    [SerializeField] private float waitTime = 1.0f;
-
-
     private Vector2 startPoint;
     private Vector2 endPoint;
     private Coroutine patrolCo;
+    private WaitForSeconds wait;
 
     protected override void Awake() // 시작및 목표 위치 지정
     {
         base.Awake();
+        wait = new WaitForSeconds(monsterData.PatrolWaitTime);
         startPoint = transform.position;
-        endPoint = startPoint + moveOffset;
+        endPoint = startPoint + monsterData.MoveOffset;
     }
 
    
@@ -46,19 +40,20 @@ public class PatrolMonsterState : MonsterBase
         {
             while (transform.position.x < endPoint.x)
             {
-                transform.Translate(patrolSpeed * Time.deltaTime * Vector2.right);
+                transform.Translate(monsterData.PatrolSpeed * Time.deltaTime * Vector2.right);
                 yield return null;
             }
-                yield return new WaitForSeconds(waitTime);
-           
+            yield return wait;
+
+
             while (transform.position.x > startPoint.x)
             {
-                transform.Translate(patrolSpeed * Time.deltaTime * Vector2.left);
+                transform.Translate(monsterData.PatrolSpeed * Time.deltaTime * Vector2.left);
                 yield return null;
 
             }
 
-            yield return new WaitForSeconds(waitTime);
+            yield return wait;
 
         }
     }

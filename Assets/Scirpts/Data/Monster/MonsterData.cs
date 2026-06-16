@@ -20,6 +20,12 @@ public class MonsterData : ScriptableObject
     [SerializeField] private float attackDelay;
     [Header("플레이어 인식 범위")]
     [SerializeField] private float contactRange;
+    [Header("정찰 속도")]
+    [SerializeField] private float patrolSpeed;
+    [Header("정찰 간격")]
+    [SerializeField] private Vector2 moveOffset = new Vector2(3.0f, 0.0f);
+    [Header("정찰 대기시간")]
+    [SerializeField] private float patrolWaitTime;
 
     public string MonsterName { get { return monsterName; } }
     public MonsterBase MonsterPrefab { get { return monsterPrefab; } }
@@ -29,4 +35,8 @@ public class MonsterData : ScriptableObject
     public float AttakcRange { get { return attakcRange; } }
     public float AttakcDelay { get { return attackDelay; } }
     public float ContactRange { get { return contactRange; } }
+    public float PatrolSpeed { get {return patrolSpeed; } }
+    public Vector2 MoveOffset { get { return moveOffset; } }
+    public float PatrolWaitTime { get { return patrolWaitTime; } }
+
 }
