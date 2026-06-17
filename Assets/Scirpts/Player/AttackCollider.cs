@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class AttackCollider : MonoBehaviour
 {
-    //공격받는 레이어, 공격 지속 시간
-    [SerializeField] private LayerMask targetLayer;
-    [SerializeField] private float lifeTime = 0.15f;
-
-    private readonly HashSet<IDamageable> damagedTargets = new HashSet<IDamageable>();
-
     private DamageInfoSet damageInfo;
     private bool isInitialized;
 
@@ -16,18 +10,14 @@ public class AttackCollider : MonoBehaviour
     {
         this.damageInfo = damageInfo;
         isInitialized = true;//초기화
-
-        Destroy(gameObject, lifeTime);
     }
-
+    public void Clear()
+    {
+        isInitialized = false;
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!isInitialized)
-        {
-            return;
-        }
-
-        if (!IsTargetLayer(other.gameObject))
         {
             return;
         }
@@ -36,23 +26,17 @@ public class AttackCollider : MonoBehaviour
         {
             return;
         }
+        //루트와 콜라이더 분리시 사용
+        //IDamageable damageable = other.GetComponentInParent<IDamageable>();
+        //if (damageable == null)
+        //{
+        //    return;
+        //}
 
         if (damageable.IsDead)
         {
             return;
         }
-
-        if (damagedTargets.Contains(damageable))
-        {
-            return;
-        }
-        //중복 공격 방지
-        damagedTargets.Add(damageable);
         damageable.TakeDamage(damageInfo);
-    }
-
-    private bool IsTargetLayer(GameObject target)
-    {
-        return (targetLayer.value & (1 << target.layer)) != 0;
     }
 }

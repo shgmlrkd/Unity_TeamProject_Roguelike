@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewWeaponData", menuName = "GameData/Weapon Data")]
+[CreateAssetMenu(fileName = "NewWeaponData", menuName = "Roguelike/Weapon Data")]
 public class WeaponData : ScriptableObject
 {
     [Header("Info")]
@@ -8,7 +8,10 @@ public class WeaponData : ScriptableObject
     public Sprite WeaponIcon;
 
     [Header("Attack")]
-    public GameObject AttackPrefab;
     public int Damage = 1;
-    public float AttackCooldown = 0.3f;
+    public float AttackDistance = 0.7f;
+    public Vector2 AttackBoxSize = new Vector2(1.0f, 1.0f);
+
+    [Header("Drop")]
+    public GameObject WeaponItemPrefab;
 }
