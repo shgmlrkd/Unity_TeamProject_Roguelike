@@ -6,9 +6,14 @@ using UnityEngine.UI;
 [Serializable]
 public class VolumeUI
 {
-    public VolumeType type;
-    public Slider slider;
-    public TextMeshProUGUI text;
+    // 어떤 볼륨 UI인지 구분하기 위한 타입
+    public VolumeType Type;
+
+    // 볼륨 값을 조절하는 슬라이더
+    public Slider Slider;
+
+    // 슬라이더 값을 표시하는 텍스트
+    public TextMeshProUGUI Text;
 }
 
 public class OptionUIController : MonoBehaviour
@@ -34,21 +39,54 @@ public class OptionUIController : MonoBehaviour
         foreach (VolumeUI volume in volumeUIs)
         {
             // 값은 50으로 초기화
-            volume.slider.SetValueWithoutNotify(DEFAULT_VALUE);
-            UpdateVolumeOptionValue(volume.type, DEFAULT_VALUE);
+            volume.Slider.SetValueWithoutNotify(DEFAULT_VALUE);
+            UpdateVolumeOptionValue(volume.Type, DEFAULT_VALUE);
 
             // AddListener 괄호안에는 value라는 매개변수가 OnVolumeChanged라는 함수에 매개변수로 들어간다는 뜻
-            volume.slider.onValueChanged.AddListener(value => OnVolumeChanged(volume.type, value));
+            volume.Slider.onValueChanged.AddListener(value => OnVolumeChanged(volume.Type, value));
         }
-        
+
+        // 초기 볼륨 저장
+        SaveVolumeOption();
+
+        // 초기 볼륨 적용
+        SoundManager.Instance.ApplyVolume();
+
+        // 토글 옵션 이벤트 등록
+        SubscribeToggleEvent();
+
         // 처음 시작 시 비활성화
         gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        // 파괴 시 이벤트 해제
+        UnsubcribeToggleEvent();
+    }
+
+    private void SubscribeToggleEvent()
+    {
+        statToggle.OnToggleChanged += _ => SaveToggleOption();
+        equipToggle.OnToggleChanged += _ => SaveToggleOption();
+    }
+
+    private void UnsubcribeToggleEvent()
+    {
+        statToggle.OnToggleChanged -= _ => SaveToggleOption();
+        equipToggle.OnToggleChanged -= _ => SaveToggleOption();
     }
 
     // 볼륨값이 변하면 볼륨 관련 수치, 텍스트를 업데이트 시킴
     private void OnVolumeChanged(VolumeType volumeType, float value)
     {
         UpdateVolumeOptionValue(volumeType, value);
+
+        // 현재 값 저장
+        SaveVolumeOption();
+
+        // 즉시 적용
+        SoundManager.Instance.ApplyVolume();
     }
 
     private void UpdateVolumeOptionValue(VolumeType type, float value)
@@ -56,54 +94,26 @@ public class OptionUIController : MonoBehaviour
         // 타입이 없으면 리턴
         if (type == VolumeType.None) return;
 
-        // VolumeUI을 찾고
-        VolumeUI ui = GetUI(type);
-
         // null이면 리턴
-        if (ui == null) return;
+        if (volumeUIs[(int)type] == null) return;
 
         // 텍스트 갱신
-        ui.text.text = $"{(value * 100).ToString("F0")}";
+        volumeUIs[(int)type].Text.text = $"{(value * 100).ToString("F0")}";
     }
 
-    private VolumeUI GetUI(VolumeType type)
+    private void SaveVolumeOption()
     {
-        foreach (VolumeUI volume in volumeUIs)
-        {
-            if(volume.type == type)
-            {
-                return volume;
-            }    
-        }
-
-        return null;
+        // 옵션 매니저에 값들을 저장함
+        OptionManager.Instance.SetVolume(
+            volumeUIs[(int)VolumeType.Master].Slider.value,
+            volumeUIs[(int)VolumeType.BGM].Slider.value,
+            volumeUIs[(int)VolumeType.SFX].Slider.value
+        );
     }
 
-    public void GetOptionValue()
+    private void SaveToggleOption()
     {
-        // 값만 따로 저장하는 foreach문을 돌림
-        foreach (VolumeUI volume in volumeUIs)
-        {
-            volumeValues[(int)volume.type] = volume.slider.value;
-        }
-        
-        // 마스터 볼륨값
-        float masterVolume = volumeValues[(int)VolumeType.Master];
-
-        // 최종 BGM 볼륨값
-        float finalBGMValue = volumeValues[(int)VolumeType.BGM] * masterVolume;
-
-        // 최종 SFX 볼륨값
-        float finalSFXValue = volumeValues[(int)VolumeType.SFX] * masterVolume;
-
-        // GameManager에서 받을 float 형 볼륨 수치
-
-        // ex) GameManager.Instance.GetVolumeOption(finalBGMValue);
-        // GameManager.Instance.GetVolumeOption(finalSFXValue);
-
-        // GameManager에서 받을 bool형 토글
-
-        // ex) GameManager.Instance.SetToggleOption(statToggle.IsOn);
-        // GameManager.Instance.SetToggleOption(equipToggle.IsOn);
+        // 옵션 매니저에 토글 값들을 저장함
+        OptionManager.Instance.SetUIOption(statToggle.IsOn, equipToggle.IsOn);
     }
 }
