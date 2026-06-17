@@ -8,19 +8,26 @@ public class CharacterController2D : MonoBehaviour
 
     [Header("Weapon")]
     [SerializeField] private WeaponData defaultWeapon;
-    //현재 보유 무기 리스트로 관리
-    [SerializeField] private List<WeaponData> ownedWeapons = new List<WeaponData>();
-    [SerializeField] private Transform attackSpawnPoint;
+    [SerializeField] private WeaponData currentWeapon;
+    [SerializeField] private float weaponDropDistance = 0.8f;
+    [SerializeField] private float droppedWeaponPickupDelay = 2.0f;
+
+    [Header("Attack")]
+    [SerializeField] private AttackCollider attackCollider;
+    [SerializeField] private Collider2D attackHitbox;
+    [SerializeField] private Transform attackAreaTransform;
+    [SerializeField] private BoxCollider2D attackBoxCollider;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     private Rigidbody2D rb;
     private CharacterInputManager inputManager;
-
+    //화면 기준 마우스 위치 좌표 도출용
     private Camera mainCamera;
-    private Vector2 lookDirection = Vector2.down;
 
-    private Vector2 lastMoveDirection = Vector2.down;
-    private int currentWeaponIndex;
-    private float nextAttackTime;
+    private Vector2 lookDirection = Vector2.down;
 
     private void Awake()
     {
@@ -29,32 +36,44 @@ public class CharacterController2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         inputManager = GetComponent<CharacterInputManager>();
 
-        if (attackSpawnPoint == null)
+        if (animator == null)
         {
-            attackSpawnPoint = transform;
+            animator = GetComponent<Animator>();
         }
 
-        if (ownedWeapons.Count == 0 && defaultWeapon != null)
+        if (spriteRenderer == null)
         {
-            ownedWeapons.Add(defaultWeapon);
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
+
+        if (currentWeapon == null)
+        {
+            currentWeapon = defaultWeapon;
+        }
+
+        if (attackHitbox != null)
+        {
+            attackHitbox.enabled = false;
+        }
+
+        ApplyWeaponAttackSetting();
     }
 
     private void OnEnable()
     {
         inputManager.OnAttackPressed += HandleAttackPressed;
-        inputManager.OnWeaponSelected += ChangeWeapon;
     }
 
     private void OnDisable()
     {
         inputManager.OnAttackPressed -= HandleAttackPressed;
-        inputManager.OnWeaponSelected -= ChangeWeapon;
     }
 
     private void Update()
     {
         UpdateLookDirection();
+        UpdateAttackAreaTransform();
+        UpdateSpriteFlip();
     }
 
     private void FixedUpdate()
@@ -73,6 +92,9 @@ public class CharacterController2D : MonoBehaviour
         {
             return;
         }
+        //마우스 위치 추적
+        Vector3 mouseScreenPosition = inputManager.MousePosition;
+        mouseScreenPosition.z = -mainCamera.transform.position.z;
 
         Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(inputManager.MousePosition);
         Vector2 direction = mouseWorldPosition - transform.position;
@@ -84,93 +106,133 @@ public class CharacterController2D : MonoBehaviour
 
         lookDirection = direction.normalized;
     }
+    //무기 공격 범위 참조해 반영
+    private void UpdateAttackAreaTransform()
+    {
+        if (attackAreaTransform == null || currentWeapon == null)
+        {
+            return;
+        }
+
+        attackAreaTransform.localPosition = lookDirection * currentWeapon.AttackDistance;
+
+        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+        attackAreaTransform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
+    //스프라이트 플립 바라보는 방향 따라
+    private void UpdateSpriteFlip()
+    {
+        if (spriteRenderer == null)
+        {
+            return;
+        }
+
+        if (lookDirection.x > 0.01f)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (lookDirection.x < -0.01f)
+        {
+            spriteRenderer.flipX = true;
+        }
+    }
     //공격 버튼 누를 시 쿨타임, 현재 웨폰 검사
     private void HandleAttackPressed()
     {
-        WeaponData currentWeapon = GetCurrentWeapon();
-
         if (currentWeapon == null)
         {
             return;
         }
 
-        if (Time.time < nextAttackTime)
-        {
-            return;
-        }
-
-        Attack(currentWeapon);
+        animator.SetTrigger("Attack");
     }
-
-    private void Attack(WeaponData weapon)
+    //애니메이션 공격 판정 시작
+    public void EnableAttackCollider()
     {
-        if (weapon.AttackPrefab == null)
+        if (currentWeapon == null || attackCollider == null || attackHitbox == null)
         {
-            Debug.LogWarning("공격 프리팹이 없습니다.");
             return;
         }
-
-        nextAttackTime = Time.time + weapon.AttackCooldown;
-        //공격 방향, 공격 정보 불러와 게임오브젝트에 저장
-        GameObject attackObject = Instantiate(
-            weapon.AttackPrefab,
-            attackSpawnPoint.position,
-            Quaternion.identity
-        );
 
         DamageInfoSet damageInfo = new DamageInfoSet(
-            weapon.Damage,
+            currentWeapon.Damage,
             gameObject,
             lookDirection
         );
-        //AttackCollider 컴포넌트 불러와 damageInfo 정보 획득
-        if (attackObject.TryGetComponent(out AttackCollider attackCollider))
-        {
-            attackCollider.Init(damageInfo);
-        }
-        //public void Init(DamageInfoSet damageInfo)
-        //{
-        //    this.damageInfo = damageInfo;
-        //    isInitialized = true;
 
-        //    Destroy(gameObject, lifeTime);
-        //}
+        attackCollider.Init(damageInfo);
+        attackHitbox.enabled = true;
+    }
+    //종료
+    public void DisableAttackCollider()
+    {
+        if (attackHitbox != null)
+        {
+            attackHitbox.enabled = false;
+        }
+
+        if (attackCollider != null)
+        {
+            attackCollider.Clear();
+        }
     }
 
-    private void ChangeWeapon(int weaponIndex)
+    public void EquipWeapon(WeaponData newWeapon)
     {
-        if (weaponIndex < 0 || weaponIndex >= ownedWeapons.Count)
+        if (newWeapon == null)
         {
             return;
         }
 
-        currentWeaponIndex = weaponIndex;
 
-        Debug.Log($"무기 변경: {ownedWeapons[currentWeaponIndex].WeaponName}");
+        DropCurrentWeapon();
+
+        currentWeapon = newWeapon;
+        ApplyWeaponAttackSetting();
+
+        Debug.Log($"무기 장착: {currentWeapon.WeaponName}");
     }
-
-    public void AddWeapon(WeaponData weapon)
+    //무기 드랍(새로운 무기 획득)시 기존 무기 떨어트림
+    private void DropCurrentWeapon()
     {
-        if (weapon == null)
+        if (currentWeapon == null || currentWeapon.WeaponItemPrefab == null)
         {
             return;
         }
 
-        ownedWeapons.Add(weapon);
+        if (currentWeapon.WeaponItemPrefab == null)
+        {
+            return;
+        }
+
+        Vector2 dropDirection = -lookDirection;
+
+        if (dropDirection == Vector2.zero)
+        {
+            dropDirection = Vector2.down;
+        }
+
+        Vector3 dropPosition = transform.position + (Vector3)(dropDirection.normalized * weaponDropDistance);
+
+        GameObject droppedWeapon = Instantiate(
+            currentWeapon.WeaponItemPrefab,
+            dropPosition,
+            Quaternion.identity
+        );
+
+        if (droppedWeapon.TryGetComponent(out WeaponItem weaponItem))
+        {
+            weaponItem.SetPickupDelay(droppedWeaponPickupDelay);
+        }
     }
-
-    private WeaponData GetCurrentWeapon()
+    //무기 공격 범위 만큼 공격 범위 변경
+    private void ApplyWeaponAttackSetting()
     {
-        if (ownedWeapons.Count == 0)
+        if (currentWeapon == null || attackBoxCollider == null)
         {
-            return null;
+            return;
         }
 
-        if (currentWeaponIndex < 0 || currentWeaponIndex >= ownedWeapons.Count)
-        {
-            currentWeaponIndex = 0;
-        }
-
-        return ownedWeapons[currentWeaponIndex];
+        attackBoxCollider.size = currentWeapon.AttackBoxSize;
     }
 }
