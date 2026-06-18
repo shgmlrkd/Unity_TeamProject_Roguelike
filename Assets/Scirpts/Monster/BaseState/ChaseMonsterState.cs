@@ -6,12 +6,6 @@ public class ChaseMonsterState : MonsterBase
     private Transform player;
     private Vector2 nextPosition;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
-
     private void FixedUpdate()
     {
         player = monsterStateManager.Target; // 상태매니저에서 가져온 타겟을 트랜스폼에 저장후 사용
