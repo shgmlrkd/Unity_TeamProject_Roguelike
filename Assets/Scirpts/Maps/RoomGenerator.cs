@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomGenerator
+public class RoomGenerator : MonoBehaviour
 {
     private int maxRooms;
     private Dictionary<Vector2Int, RoomManager.RoomData> dungeonMap = new Dictionary<Vector2Int, RoomManager.RoomData>();

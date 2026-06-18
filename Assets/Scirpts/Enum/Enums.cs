@@ -55,3 +55,11 @@ public enum SceneType
     Title,
     InGame
 }
+
+///////////////////////////////////////
+//              Map
+///////////////////////////////////////
+public enum RoomType 
+{ 
+    Start, Normal, Boss, Store, Treasure 
+}
