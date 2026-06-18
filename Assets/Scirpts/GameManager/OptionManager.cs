@@ -1,4 +1,4 @@
-﻿public class OptionManager : Singleton<OptionManager>
+﻿public class OptionManager : GlobalSingleton<OptionManager>
 {
     public float MasterVolume { get; private set; }
     public float BGMVolume { get; private set; }
