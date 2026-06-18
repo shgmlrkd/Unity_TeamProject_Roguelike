@@ -8,9 +8,9 @@ public class TitleUIController : MonoBehaviour
     [SerializeField]
     private GameObject optionPanel;
 
-    [Header("페이드 아웃 패널")]
-    [SerializeField]
-    private Image fadeOutPanel;
+    [Header("스크린 페이더")]
+    [SerializeField] 
+    private ScreenFader screenFader;
 
     [Header("타이틀 캔버스 그룹")]
     [SerializeField]
@@ -19,22 +19,22 @@ public class TitleUIController : MonoBehaviour
     [Header("옵션 캔버스 그룹")]
     [SerializeField]
     private CanvasGroup optionCanvasGroup;
-
     private void Awake()
     {
-        if(fadeOutPanel != null)
+        if (screenFader != null)
         {
-            fadeOutPanel.gameObject.SetActive(false);
+            screenFader.gameObject.SetActive(false);
         }
     }
 
     public void OnClickGameStart()
     {
-        fadeOutPanel.gameObject.SetActive(true);
+        screenFader.gameObject.SetActive(true);
 
         Sequence sequence = DOTween.Sequence();
-       
-        sequence.Append(fadeOutPanel.DOFade(1.0f, UIAnimationSettings.FadeDuration).From(0.0f));
+
+        // 페이드 아웃 진행
+        sequence.Append(screenFader.FadeOut(UIAnimationSettings.FadeDuration));
 
         // 페이드 인이 일정 비율 진행되면 입력 비활성화
         sequence.InsertCallback(UIAnimationSettings.CallbackRatio, () =>
