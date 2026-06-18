@@ -10,7 +10,7 @@ public class CharacterInputManager : MonoBehaviour
     [SerializeField] private InputActionReference attackAction;
 
     public Vector2 MoveInput { get; private set; }
-    public Vector2 MousePosition { get; private set; }
+    public Vector2 MousePosition => lookAction.action.ReadValue<Vector2>();
 
     public event Action OnAttackPressed;
 
