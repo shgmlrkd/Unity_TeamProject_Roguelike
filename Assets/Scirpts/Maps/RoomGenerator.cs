@@ -20,6 +20,17 @@ public class RoomGenerator
         dungeonMap.Add(currentPos, new RoomManager.RoomData { gridPos = currentPos, type = RoomType.Start });
         roomPositions.Add(currentPos);
 
+        // 일반 방 배치 (뭉침 방지 규칙 포함)
+        RuleRoom();
+
+        // 특수방 배정
+        List<Vector2Int> deadEnds = FindDeadEnds();
+        AssignSpecialRooms(deadEnds);
+
+        return dungeonMap;
+    }
+    private void RuleRoom()
+    {
         Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
         // 일반 방 배치 (뭉침 방지 규칙 포함)
@@ -36,12 +47,6 @@ public class RoomGenerator
                 roomPositions.Add(nextPos);
             }
         }
-
-        // 특수방 배정
-        List<Vector2Int> deadEnds = FindDeadEnds();
-        AssignSpecialRooms(deadEnds);
-
-        return dungeonMap;
     }
 
     private void AssignSpecialRooms(List<Vector2Int> deadEnds)
