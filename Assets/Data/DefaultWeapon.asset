@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f8e4382dc48ac4a8a13eddd4ddd033, type: 3}
   m_Name: DefaultWeapon
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
+  itemType: 0
   itemName: "\uAE30\uBCF8\uBB34\uAE30"
   sprite: {fileID: 21300000, guid: fdc9f5cadf8e7814f8c4f70d8a6763c4, type: 3}
+  equipmentType: 1
   attack: 1
   attackRange: 1
   attackSpeedRate: 1
