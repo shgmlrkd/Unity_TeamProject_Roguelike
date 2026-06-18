@@ -6,18 +6,6 @@ public class UIButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerEx
 {
     private Vector3 originalScale;
 
-    [Header("마우스 오버 크기")]
-    [SerializeField]
-    private float hoverScale = 1.1f;
-
-    [Header("튕김 강도")]
-    [SerializeField]
-    private float punchPower = 0.1f;
-
-    [Header("시간")]
-    [SerializeField]
-    private float duration = 0.2f;
-
     [SerializeField] 
     private bool usePunch = false;
 
@@ -37,7 +25,8 @@ public class UIButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         // 클릭 시 애니메이션 효과를 적용함
         transform.DOKill();
-        transform.DOPunchScale(originalScale * punchPower, duration);
+        transform.DOPunchScale(originalScale * UIAnimationSettings.PunchPower, 
+            UIAnimationSettings.NormalDuration);
     }
 
     // 마우스 포인터가 버튼에 오버랩 될 때 호출되는 인터페이스 메서드
@@ -48,7 +37,8 @@ public class UIButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         // 오버랩 시 애니메이션 효과를 적용함
         transform.DOKill();
-        transform.DOScale(Vector3.one * hoverScale, duration).SetEase(Ease.OutQuad);
+        transform.DOScale(Vector3.one * UIAnimationSettings.HoverScale, 
+            UIAnimationSettings.NormalDuration).SetEase(Ease.OutQuad);
     }
 
     // 마우스 포인터가 버튼에 오버랩되어 있다가 빠져나올 때 호출되는 인터페이스 메서드
@@ -59,6 +49,7 @@ public class UIButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         // 마우스가 벗어날 때 애니메이션 효과를 적용함
         transform.DOKill();
-        transform.DOScale(originalScale, duration).SetEase(Ease.OutQuad);
+        transform.DOScale(originalScale, 
+            UIAnimationSettings.NormalDuration).SetEase(Ease.OutQuad);
     }
 }

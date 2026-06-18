@@ -1,23 +1,54 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TitleUIController : MonoBehaviour
 {
+    [Header("옵션 패널")]
     [SerializeField]
     private GameObject optionPanel;
 
+    [Header("페이드 아웃 패널")]
     [SerializeField]
-    private OptionPanelAnimation uiAnimation;
+    private Image fadeOutPanel;
 
+    [Header("타이틀 캔버스 그룹")]
     [SerializeField]
-    private CanvasGroup canvasGroup;
+    private CanvasGroup titleCanvasGroup;
+    
+    [Header("옵션 캔버스 그룹")]
+    [SerializeField]
+    private CanvasGroup optionCanvasGroup;
 
-    [SerializeField]
-    [Range(0.0f, 1.0f)]
-    private float inputToggleRatio = 0.25f;
+    private void Awake()
+    {
+        if(fadeOutPanel != null)
+        {
+            fadeOutPanel.gameObject.SetActive(false);
+        }
+    }
 
     public void OnClickGameStart()
     {
+        fadeOutPanel.gameObject.SetActive(true);
+
+        Sequence sequence = DOTween.Sequence();
+       
+        sequence.Append(fadeOutPanel.DOFade(1.0f, UIAnimationSettings.FadeDuration).From(0.0f));
+
+        // 페이드 인이 일정 비율 진행되면 입력 비활성화
+        sequence.InsertCallback(UIAnimationSettings.CallbackRatio, () =>
+        {
+            titleCanvasGroup.blocksRaycasts = false;
+        });
+
+        // 끝나면 DOTween 종료 시키고 인게임 씬 로드
+        sequence.OnComplete(() =>
+        {
+            DOTween.KillAll();
+            GameSceneManager.Instance.LoadScene(SceneType.InGame);
+        });
+
         print("게임 시작");
     }
 
@@ -27,37 +58,32 @@ public class TitleUIController : MonoBehaviour
         optionPanel.SetActive(true);
 
         // 애니메이션 재생 중 입력 비활성화
-        canvasGroup.blocksRaycasts = false;
-        canvasGroup.interactable = false;
+        optionCanvasGroup.blocksRaycasts = false;
 
         Sequence sequence = DOTween.Sequence();
 
         // 옵션 패널 열기 애니메이션 재생
-        sequence.Append(uiAnimation.PlayOpenOptionPanel());
+        sequence.Append(UIAnimationUtility.ShowScale(optionPanel.transform, 0.2f));
 
         // 애니메이션이 일정 비율 진행되면 입력 활성화
-        sequence.InsertCallback(uiAnimation.Duration * inputToggleRatio, () =>
+        sequence.InsertCallback(UIAnimationSettings.CallbackRatio, () =>
         {
-            canvasGroup.blocksRaycasts = true;
-            canvasGroup.interactable = true;
+            optionCanvasGroup.blocksRaycasts = true;
         });
     }
 
     public void OnClickCloseOption()
     {
-        // 옵션 설정 저장
-        // 여기서 GameManager에 볼륨과 표시 여부를 저장 시키면댐
-
         Sequence sequence = DOTween.Sequence();
 
         // 옵션 패널 닫기 애니메이션 재생
-        sequence.Append(uiAnimation.PlayCloseOptionPanel());
+        sequence.Append(UIAnimationUtility.HideScale(optionPanel.transform, 
+            UIAnimationSettings.NormalDuration));
 
         // 애니메이션이 일정 비율 진행되면 입력 비활성화
-        sequence.InsertCallback(uiAnimation.Duration * inputToggleRatio, () =>
+        sequence.InsertCallback(UIAnimationSettings.CallbackRatio, () =>
         {
-            canvasGroup.blocksRaycasts = false;
-            canvasGroup.interactable = false;
+            optionCanvasGroup.blocksRaycasts = false;
         });
 
         // 애니메이션 종료 후 패널 비활성화
@@ -70,5 +96,11 @@ public class TitleUIController : MonoBehaviour
     public void OnClickExit()
     {
         print("게임 종료");
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();
+#endif
     }
 }
