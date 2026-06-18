@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 
-public  class MonsterBase : MonoBehaviour
+public class MonsterBase : MonoBehaviour 
 {
-    [SerializeField] protected MonsterData monsterData;
-    
-    protected int currentHp;
-
-    protected Transform target;
     protected Transform monsterTransform;
     protected MonsterStateManager monsterStateManager;
+    protected Rigidbody2D rb;
+    protected Collider2D monsterCollider2D;
+    protected MonsterHP monsterHP;
 
     protected virtual void Awake()
     {
 
+  
         if (monsterTransform == null)
         {
             monsterTransform = transform;
@@ -22,7 +21,19 @@ public  class MonsterBase : MonoBehaviour
         {
             monsterStateManager = GetComponent<MonsterStateManager>();
         }
+        if(rb == null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+        if (monsterCollider2D == null) 
+        {
+            monsterCollider2D = GetComponent<Collider2D>();
+        }
+        if (monsterHP == null) 
+        {
+            monsterHP = GetComponent<MonsterHP>();
+        }    
+        
     }
-    
-
+   
 }
