@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8263c31a0172b364c81f55ccc41ff4dd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  - lookAction: {fileID: -5630151704836100654, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  - attackAction: {fileID: 1120369429361536294, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  - weaponSlot1Action: {instanceID: 0}
+  - weaponSlot2Action: {instanceID: 0}
+  - weaponSlot3Action: {instanceID: 0}
+  - weaponSlot4Action: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
