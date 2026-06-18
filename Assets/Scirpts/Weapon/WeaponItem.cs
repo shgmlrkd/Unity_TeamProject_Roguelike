@@ -25,12 +25,13 @@ public class WeaponItem : MonoBehaviour
             return;
         }
 
-        if (!other.TryGetComponent(out CharacterController2D characterController))
+        PlayerWeaponController weaponController = other.GetComponentInParent<PlayerWeaponController>();
+
+        if (weaponController == null)
         {
             return;
         }
 
-        characterController.EquipWeapon(weaponData);
-        Destroy(gameObject);
+        weaponController.EquipWeapon(weaponData);
     }
 }
