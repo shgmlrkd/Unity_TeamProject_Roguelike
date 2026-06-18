@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
-  m_Name: 'Waterfall Animated Tile[1]'
+  m_Name: Fountain Animated Tile
   m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.Tilemaps.AnimatedTile
   m_AnimatedSprites:
-  - {fileID: -862285523, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
-  - {fileID: -1908798161, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
-  - {fileID: -674141793, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
-  m_MinSpeed: 3
-  m_MaxSpeed: 3
+  - {fileID: -1411150670, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
+  - {fileID: -799735689, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
+  - {fileID: 313294228, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
+  m_MinSpeed: 6
+  m_MaxSpeed: 10
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0
