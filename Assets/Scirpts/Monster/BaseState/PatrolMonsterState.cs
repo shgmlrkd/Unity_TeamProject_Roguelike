@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class PatrolMonsterState : MonsterBase
 {
@@ -7,13 +8,16 @@ public class PatrolMonsterState : MonsterBase
     private Vector2 endPoint;
     private Coroutine patrolCo;
     private WaitForSeconds wait;
+    Vector2 nextPosition;
+
+
 
     protected override void Awake() // 시작및 목표 위치 지정
     {
         base.Awake();
-        wait = new WaitForSeconds(monsterData.PatrolWaitTime);
+        wait = new WaitForSeconds(monsterStateManager.MonsterData.PatrolWaitTime);
         startPoint = transform.position;
-        endPoint = startPoint + monsterData.MoveOffset;
+        endPoint = startPoint + monsterStateManager.MonsterData.MoveOffset;
     }
 
    
@@ -22,7 +26,7 @@ public class PatrolMonsterState : MonsterBase
     {
     
         patrolCo = StartCoroutine(PatrolCo());
-
+        
     }
 
     private void OnDisable() // 코루틴 종료
@@ -38,17 +42,20 @@ public class PatrolMonsterState : MonsterBase
     {
         while(true)
         {
-            while (transform.position.x < endPoint.x)
+            while (rb.position.x < endPoint.x)
             {
-                transform.Translate(monsterData.PatrolSpeed * Time.deltaTime * Vector2.right);
+                nextPosition = Vector2.MoveTowards(rb.position, endPoint, monsterStateManager.MonsterData.PatrolSpeed * Time.fixedDeltaTime);
+                rb.MovePosition(nextPosition);
                 yield return null;
             }
             yield return wait;
 
 
-            while (transform.position.x > startPoint.x)
+            while (rb.position.x > startPoint.x)
             {
-                transform.Translate(monsterData.PatrolSpeed * Time.deltaTime * Vector2.left);
+
+                nextPosition = Vector2.MoveTowards(rb.position, startPoint, monsterStateManager.MonsterData.PatrolSpeed * Time.fixedDeltaTime);
+                rb.MovePosition(nextPosition);
                 yield return null;
 
             }
