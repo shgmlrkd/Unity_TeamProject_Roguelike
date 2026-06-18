@@ -25,11 +25,15 @@ public class MonsterBase : MonoBehaviour
         {
             rb = GetComponent<Rigidbody2D>();
         }
-        if(monsterCollider2D == null)
+        if (monsterCollider2D == null) 
         {
             monsterCollider2D = GetComponent<Collider2D>();
         }
-
+        if (monsterHP == null) 
+        {
+            monsterHP = GetComponent<MonsterHP>();
+        }    
+        
     }
    
 }

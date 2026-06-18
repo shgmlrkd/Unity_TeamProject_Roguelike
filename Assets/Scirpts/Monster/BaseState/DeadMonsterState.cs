@@ -2,12 +2,6 @@
 
 public class DeadMonsterState : MonsterBase
 {
-    
-    protected override void Awake()
-    {
-        base.Awake();
-        
-    }
 
     private void OnEnable()
     {

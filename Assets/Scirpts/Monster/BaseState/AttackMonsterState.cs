@@ -3,12 +3,7 @@ using UnityEngine;
 
 public class AttackMonsterState : MonsterBase
 {
-    protected override void Awake()
-    {
-        base.Awake();
-
-    }
-
+    
     public void AttackDamage()
     {
         if (monsterStateManager.Target == null) return;
