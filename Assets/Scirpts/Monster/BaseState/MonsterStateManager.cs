@@ -1,18 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class MonsterStateManager : MonsterBase
+public class MonsterStateManager : MonoBehaviour
 {
 
-    [SerializeField] private MonsterStateEnum monsterState = MonsterStateEnum.None;
+    [SerializeField] private MonsterData monsterData;
     [SerializeField] private MonsterBase[] stateBeses;
+    [SerializeField] private MonsterStateEnum monsterState = MonsterStateEnum.None;
     [SerializeField] private UnityEvent<MonsterStateEnum> OnstateChanged;
     [SerializeField] private LayerMask playerLayer;
 
+    private Transform target;
+    public Transform Target { get { return target; } }
+
+    public MonsterData MonsterData {get {return monsterData;}}
 
 
     private void Start()
     {
+
         SetState(MonsterStateEnum.Patrol);
     }
 
@@ -20,15 +26,15 @@ public class MonsterStateManager : MonsterBase
     {
         
     }
-    private void Update()
+    private void FixedUpdate()
     {
         CheckState();
     }
+    
     private void CheckState() // 플레이어 감지및 행동 지정
     {
         Collider2D player = Physics2D.OverlapCircle(transform.position, monsterData.ContactRange, playerLayer);
-        
-       
+
 
         if (player == null)
         {
@@ -38,9 +44,11 @@ public class MonsterStateManager : MonsterBase
             
         }
 
-        target = player.transform; // 플레이어 찾기
 
-        float distance = Vector2.Distance(transform.position, target.transform.position);
+        target = player.transform; // 타겟 위치 지정
+        
+
+        float distance = Vector2.Distance(transform.position, target.position);
 
         if (distance <= monsterData.AttakcRange)
         {
@@ -50,8 +58,6 @@ public class MonsterStateManager : MonsterBase
         {
             SetState(MonsterStateEnum.Chase);
         }
-
-
 
     }
     public void SetState(MonsterStateEnum newState) // 상태 교체
@@ -66,5 +72,14 @@ public class MonsterStateManager : MonsterBase
         OnstateChanged?.Invoke(monsterState);
     }
 
-    
+    private void OnDrawGizmos() // 사거리 체크
+    {
+        if (monsterData == null) return;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, monsterData.ContactRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, monsterData.AttakcRange);
+    }
+
 }
