@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class CharacterController2D : MonoBehaviour
     private Camera mainCamera;
 
     private Vector2 lookDirection = Vector2.down;
+    //[Header("Debug")]
+    //[SerializeField] private LineRenderer lookDebugLine;
+    //[SerializeField] private float lookDebugLineLength = 2f;
 
     private void Awake()
     {
@@ -74,6 +78,8 @@ public class CharacterController2D : MonoBehaviour
         UpdateLookDirection();
         UpdateAttackAreaTransform();
         UpdateSpriteFlip();
+
+        //UpdateLookDebugLine();
     }
 
     private void FixedUpdate()
@@ -85,18 +91,29 @@ public class CharacterController2D : MonoBehaviour
     {
         rb.linearVelocity = inputManager.MoveInput * moveSpeed;
     }
+    //바라보는 방향 디버깅 용 주석처리
+    //private void UpdateLookDebugLine()
+    //{
+    //    if (lookDebugLine == null)
+    //    {   
+    //        return;
+    //    }
 
+    //    lookDebugLine.positionCount = 2;
+    //    lookDebugLine.SetPosition(0, transform.position);
+    //    lookDebugLine.SetPosition(1, transform.position + (Vector3)(lookDirection * lookDebugLineLength));
+    //}
     private void UpdateLookDirection()
     {
         if (mainCamera == null)
         {
             return;
         }
-        //마우스 위치 추적
-        Vector3 mouseScreenPosition = inputManager.MousePosition;
-        mouseScreenPosition.z = -mainCamera.transform.position.z;
 
-        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(inputManager.MousePosition);
+        Vector3 mouseScreenPosition = inputManager.MousePosition;
+        mouseScreenPosition.z = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
+
+        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
         Vector2 direction = mouseWorldPosition - transform.position;
 
         if (direction.sqrMagnitude <= 0.001f)
