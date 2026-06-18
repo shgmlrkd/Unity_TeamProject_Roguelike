@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
-public enum RoomType { Start, Normal, Boss, Store, Treasure }
-
 public class RoomManager : MonoBehaviour
 {
     [System.Serializable]
@@ -14,8 +11,8 @@ public class RoomManager : MonoBehaviour
 
     [Header("맵 생성 설정")]
     [SerializeField] private int maxRooms = 15;
-    [SerializeField] private float roomWidth = 32;
-    [SerializeField] private float roomHeight = 21;
+    [SerializeField] public float roomWidth = 32;
+    [SerializeField] public float roomHeight = 21;
 
     [Header("방 프리팹")]
     [SerializeField] private GameObject startRoomPrefab;
@@ -24,16 +21,23 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private GameObject storeRoomPrefab;
     [SerializeField] private GameObject treasureRoomPrefab;
 
+    private DoorManager doorManager;
+    private void Awake()
+    {
+        doorManager = FindFirstObjectByType<DoorManager>();
+    }
     private void Start()
     {
         GenerateAndSpawnDungeon();
     }
-
     private void GenerateAndSpawnDungeon()
     {
-        // 규칙 전담 클래스(RoomGenerator) 인스턴스를 만들고 맵 데이터를 가져옵니다.
         RoomGenerator generator = new RoomGenerator(maxRooms);
         Dictionary<Vector2Int, RoomData> dungeonMap = generator.Generate();
+        if (doorManager != null)
+        {
+            doorManager.CalculateDoors(dungeonMap);
+        }
         SpawnRoomPrefabs(dungeonMap);
     }
 
@@ -43,6 +47,7 @@ public class RoomManager : MonoBehaviour
         {
             RoomData room = pair.Value;
             Vector3 worldPos = new Vector3(room.gridPos.x * roomWidth, room.gridPos.y * roomHeight, 0);
+            GameObject spawnedRoom = null;
 
             switch (room.type)
             {
@@ -62,6 +67,10 @@ public class RoomManager : MonoBehaviour
                     GameObject randomNormalPrefab = normalRoomPrefabs[Random.Range(0, normalRoomPrefabs.Count)];
                     Instantiate(randomNormalPrefab, worldPos, Quaternion.identity);
                     break;
+            }
+            if (spawnedRoom != null && doorManager != null)
+            {
+                doorManager.SpawnDoorsInRoom(spawnedRoom, room.gridPos, roomWidth, roomHeight);
             }
         }
     }
