@@ -1,4 +1,7 @@
-﻿public enum MonsterStateEnum 
+///////////////////////////////////////
+//              Monster
+///////////////////////////////////////
+public enum MonsterStateEnum 
 {
     None = -1,
     Idle, 
@@ -6,4 +9,16 @@
     Chase,
     Attack, 
     Dead 
+}
+
+///////////////////////////////////////
+//                UI
+///////////////////////////////////////
+
+public enum VolumeType
+{
+    None = -1,
+    Master,
+    BGM,
+    SFX
 }
