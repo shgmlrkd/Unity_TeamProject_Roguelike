@@ -1696,57 +1696,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2136274619334412864, guid: d5565d612cc7a0443bc5a4a237cb1ae4, type: 3}
   m_PrefabInstance: {fileID: 1112781944}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1183119444
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1183119446}
-  - component: {fileID: 1183119445}
-  m_Layer: 0
-  m_Name: RoomManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1183119445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183119444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aaa6fb3785a64441a7e5b20f83bd268, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RoomManager
-  maxRooms: 6
-  roomWidth: 32
-  roomHeight: 21
-  startRoomPrefab: {fileID: 6184275234081297716, guid: e5b6d66461e02c548837f4790bf34a97, type: 3}
-  normalRoomPrefabs:
-  - {fileID: 8293521635643192757, guid: 5a41808355bbc65418c0a271d93b69d4, type: 3}
-  - {fileID: 7349907168721496140, guid: 1f38a09d3460a7c48868aad8434c806d, type: 3}
---- !u!4 &1183119446
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183119444}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -142.49052, y: 36.58414, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1183193112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2426,6 +2375,61 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1484497280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1484497282}
+  - component: {fileID: 1484497281}
+  m_Layer: 0
+  m_Name: RoomManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1484497281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484497280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aaa6fb3785a64441a7e5b20f83bd268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomManager
+  maxRooms: 10
+  roomWidth: 32
+  roomHeight: 21
+  startRoomPrefab: {fileID: 6184275234081297716, guid: e5b6d66461e02c548837f4790bf34a97, type: 3}
+  normalRoomPrefabs:
+  - {fileID: 8293521635643192757, guid: 5a41808355bbc65418c0a271d93b69d4, type: 3}
+  - {fileID: 7116797243141037718, guid: 0b0ce7eb4b7f0cf4b8df6d6e4300954d, type: 3}
+  - {fileID: 1281316175487772473, guid: 55aa15128b2ae4c4b863750b2bce29ce, type: 3}
+  bossRoomPrefab: {fileID: 5212176038272747045, guid: 0ca0c4d85292a7b4f9cb134da0cc203a, type: 3}
+  storeRoomPrefab: {fileID: 7349907168721496140, guid: b5ce831919d75e849a6ed7ac0956e2d6, type: 3}
+  treasureRoomPrefab: {fileID: 1196326717202590283, guid: 59de1a25c6ea8ac44882321dc1507c87, type: 3}
+--- !u!4 &1484497282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484497280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -251.38423, y: 115.22293, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1514318684 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3732926286377063122, guid: aa015f15c2afcf2449b5e0c89c2341de, type: 3}
@@ -3322,4 +3326,4 @@ SceneRoots:
   - {fileID: 1087821556}
   - {fileID: 133457853}
   - {fileID: 686586181}
-  - {fileID: 1183119446}
+  - {fileID: 1484497282}
