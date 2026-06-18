@@ -45,3 +45,13 @@ public enum VolumeType
     BGM,
     SFX
 }
+
+///////////////////////////////////////
+//             SceneType
+///////////////////////////////////////
+
+public enum SceneType
+{
+    Title,
+    InGame
+}
