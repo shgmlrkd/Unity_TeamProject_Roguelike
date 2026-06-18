@@ -4,7 +4,7 @@
 public class EquipmentData : ItemData
 {
     [SerializeField]
-    private EquipmentType euipmentType;
+    private EquipmentType equipmentType;
 
     [SerializeField]
     private int attack;
@@ -18,7 +18,7 @@ public class EquipmentData : ItemData
     [SerializeField]
     private float moveSpeedRate;
 
-    public EquipmentType EquipmentType => euipmentType; // 장비 타입
+    public EquipmentType EquipmentType => equipmentType; // 장비 타입
     public int Attack => attack;                        // 공격력
     public float AttackRange => attackRange;            // 공격 범위
     public float AttackSpeedRate => attackSpeedRate;    // 공격 속도 계수 (애니메이션 용도)
