@@ -31,8 +31,6 @@ public class OptionUIController : MonoBehaviour
 
     private const float DEFAULT_VALUE = 0.5f;
 
-    private float[] volumeValues = new float[3];
-
     private void Start()
     {
         // 옵션에 볼륨 수치가 변할 때 발생하는 이벤트 등록하기
