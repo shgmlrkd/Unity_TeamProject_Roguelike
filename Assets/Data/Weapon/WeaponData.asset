@@ -20,5 +20,5 @@ MonoBehaviour:
   attackRange: 1
   attackSpeedRate: 1
   moveSpeedRate: 1
-  attackBoxSize: {x: 1, y: 1}
+  attackBoxSize: {x: 2, y: 3}
   weaponItemPrefab: {fileID: 0}
