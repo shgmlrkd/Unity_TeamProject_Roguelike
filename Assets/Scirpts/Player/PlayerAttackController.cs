@@ -15,6 +15,8 @@ public class PlayerAttackController : MonoBehaviour
     private CharacterController2D characterController;
     private PlayerWeaponController weaponController;
 
+    private bool isAttacking;
+
     private void Awake()
     {
         inputManager = GetComponent<CharacterInputManager>();
@@ -67,6 +69,10 @@ public class PlayerAttackController : MonoBehaviour
     //공격 키 누를 시 어택 애니메이션 호출
     private void HandleAttackPressed()
     {
+        if (isAttacking)
+        {
+            return;
+        }
         if (weaponController == null || weaponController.CurrentWeapon == null)
         {
             return;
@@ -76,7 +82,7 @@ public class PlayerAttackController : MonoBehaviour
         {
             return;
         }
-
+        isAttacking = true;
         animator.SetTrigger("Attack");
     }
 
@@ -137,6 +143,11 @@ public class PlayerAttackController : MonoBehaviour
         {
             attackCollider.Clear();
         }
+    }
+    public void EndAttack()
+    {
+        Debug.Log("EndAttack 호출됨");
+        isAttacking = false;
     }
     //
     private void HandleWeaponChanged(WeaponData weaponData)
