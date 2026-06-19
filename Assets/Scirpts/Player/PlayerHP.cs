@@ -1,14 +1,20 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerHP : MonoBehaviour, IDamageable
 {
     [SerializeField] private Animator animator;
 
     [SerializeField] private int maxHp = 10;
+
+    [SerializeField] private float invincibleTime = 0.8f;
     private int currentHp;
 
     private bool isDead;
+
+    private bool isInvincible;
+    private Coroutine invincibleCoroutine;
 
     public int MaxHp => maxHp;
     public int CurrentHp => currentHp;
@@ -44,11 +50,16 @@ public class PlayerHP : MonoBehaviour, IDamageable
         {
             return;
         }
-        
+
+        if (isInvincible)
+        {
+            return;
+        }
+
         // DamageInfoSet 의
         currentHp -= damageInfoset.Damage;
-        GameObject attacker = damageInfoset.Attacker;
-        Vector2 Direction = damageInfoset.AttackDirection;
+        //GameObject attacker = damageInfoset.Attacker;
+        //Vector2 Direction = damageInfoset.AttackDirection;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
         OnHpChanged?.Invoke(currentHp, maxHp);
@@ -64,6 +75,9 @@ public class PlayerHP : MonoBehaviour, IDamageable
         {
             animator.SetTrigger("Hit");
         }
+
+        StartInvincible();
+
     }
 
     private void Die()
@@ -79,6 +93,25 @@ public class PlayerHP : MonoBehaviour, IDamageable
             //애니메이터 오류발생대응
             Destroy(gameObject);
         }
+    }
+    //피격시 무적 설정
+    private void StartInvincible()
+    {
+        if (invincibleCoroutine != null)
+        {
+            StopCoroutine(invincibleCoroutine);
+        }
+
+        invincibleCoroutine = StartCoroutine(InvincibleCo());
+    }
+    private IEnumerator InvincibleCo()
+    {
+        isInvincible = true;
+
+        yield return new WaitForSeconds(invincibleTime);
+
+        isInvincible = false;
+        invincibleCoroutine = null;
     }
     //사망 애니메이션 마지막 프레임에 호출
     public void DestroyPlayer()
