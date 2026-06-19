@@ -63,3 +63,16 @@ public enum RoomType
 { 
     Start, Normal, Boss, Store, Treasure 
 }
+
+///////////////////////////////////////
+//              Player
+///////////////////////////////////////
+public enum PlayerStateEnum
+{
+    None = -1,
+    Idle,
+    Move,
+    Attack,
+    Hit,
+    Dead
+}
