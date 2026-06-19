@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd0f9d162a108e4eae1f3611761dcab, type: 3}
+  m_Name: DirectionalRoomDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::DirectionalRoomDatabaseSO
+  startRoom:
+    roomName: 
+    roomPrefab: {fileID: 6184275234081297716, guid: e5b6d66461e02c548837f4790bf34a97, type: 3}
+  normalRooms_Any:
+  - roomName: "\uC794\uB514\uB9F5"
+    roomPrefab: {fileID: 8293521635643192757, guid: 5a41808355bbc65418c0a271d93b69d4, type: 3}
+  - roomName: "\uB0AD\uB5A8\uC5B4\uC9C0\uB9F5"
+    roomPrefab: {fileID: 7116797243141037718, guid: 0b0ce7eb4b7f0cf4b8df6d6e4300954d, type: 3}
+  - roomName: "\uC2ED\uC790\uB9F5"
+    roomPrefab: {fileID: 1281316175487772473, guid: 55aa15128b2ae4c4b863750b2bce29ce, type: 3}
+  normalRooms_Up: []
+  normalRooms_Down: []
+  normalRooms_Left: []
+  normalRooms_Right: []
+  bossRooms_Up:
+  - roomName: "\uBCF4\uC2A4"
+    roomPrefab: {fileID: 5212176038272747045, guid: 0ca0c4d85292a7b4f9cb134da0cc203a, type: 3}
+  bossRooms_Down: []
+  bossRooms_Left: []
+  bossRooms_Right: []
+  storeRooms_Up: []
+  storeRooms_Down: []
+  storeRooms_Left:
+  - roomName: 
+    roomPrefab: {fileID: 7349907168721496140, guid: b5ce831919d75e849a6ed7ac0956e2d6, type: 3}
+  storeRooms_Right:
+  - roomName: 
+    roomPrefab: {fileID: 7349907168721496140, guid: b5ce831919d75e849a6ed7ac0956e2d6, type: 3}
+  treasureRooms_Up:
+  - roomName: 
+    roomPrefab: {fileID: 1196326717202590283, guid: 59de1a25c6ea8ac44882321dc1507c87, type: 3}
+  treasureRooms_Down: []
+  treasureRooms_Left: []
+  treasureRooms_Right: []
