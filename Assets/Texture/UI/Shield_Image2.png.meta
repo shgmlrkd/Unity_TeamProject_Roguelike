@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f615f601b821e5241a95a420afb9761e
+guid: 41a43bfd31d4f814eb9754c271debd86
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4712381424420886853
-    second: HP_Image4_0
+      213: -4242227835269521546
+    second: Shield_Image2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,24 +109,11 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HP_Image4_0
+      name: Shield_Image2_0
       rect:
         serializedVersion: 2
         x: 1
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 54991c030fdb56140800000000000000
-      internalID: 4712381424420886853
+      spriteID: 67f5c7692449025c0800000000000000
+      internalID: -4242227835269521546
       vertices: []
       indices: 
       edges: []
@@ -161,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HP_Image4_0: 4712381424420886853
+      Shield_Image2_0: -4242227835269521546
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
