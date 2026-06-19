@@ -29,29 +29,22 @@ public class OptionUIController : MonoBehaviour
     [SerializeField]
     private UIButtonToggle equipToggle;
 
-    private const float DEFAULT_VALUE = 0.5f;
-
     private void Start()
     {
-        // 옵션에 볼륨 수치가 변할 때 발생하는 이벤트 등록하기
-        foreach (VolumeUI volume in volumeUIs)
-        {
-            // 값은 50으로 초기화
-            volume.Slider.SetValueWithoutNotify(DEFAULT_VALUE);
-            UpdateVolumeOptionValue(volume.Type, DEFAULT_VALUE);
+        // 저장된 옵션 값을 불러와 UI에 반영
+        InitializeVolumeUI();
 
-            // AddListener 괄호안에는 value라는 매개변수가 OnVolumeChanged라는 함수에 매개변수로 들어간다는 뜻
-            volume.Slider.onValueChanged.AddListener(value => OnVolumeChanged(volume.Type, value));
-        }
+        // 저장된 UI 표시 옵션 상태 적용
+        InitializeToggleUI();
 
-        // 초기 볼륨 저장
-        SaveVolumeOption();
+        // 슬라이더 이벤트 등록
+        SubscribeVolumeEvent();
 
-        // 초기 볼륨 적용
-        SoundManager.Instance.ApplyVolume();
-
-        // 토글 옵션 이벤트 등록
+        // 토글 이벤트 등록
         SubscribeToggleEvent();
+
+        // 로드된 볼륨 값 즉시 적용
+        SoundManager.Instance.ApplyVolume();
 
         // 처음 시작 시 비활성화
         gameObject.SetActive(false);
@@ -63,12 +56,52 @@ public class OptionUIController : MonoBehaviour
         UnsubcribeToggleEvent();
     }
 
+    private void SubscribeVolumeEvent()
+    {
+        foreach (VolumeUI volume in volumeUIs)
+        {
+            // 반복문 변수 캡처 문제 방지를 위해 로컬 변수 사용
+            VolumeType type = volume.Type;
+
+            volume.Slider.onValueChanged.AddListener(
+                value => OnVolumeChanged(type, value));
+        }
+    }
+
+    // 저장된 토글 상태를 UI에 적용
+    private void InitializeToggleUI()
+    {
+        statToggle.SetToggleWithoutNotify(
+            OptionManager.Instance.ShowStat);
+
+        equipToggle.SetToggleWithoutNotify(
+            OptionManager.Instance.ShowEquip);
+    }
+
+    // 저장된 볼륨 값을 UI에 적용
+    private void InitializeVolumeUI()
+    {
+        float master = OptionManager.Instance.MasterVolume;
+        float bgm = OptionManager.Instance.BGMVolume;
+        float sfx = OptionManager.Instance.SFXVolume;
+
+        volumeUIs[(int)VolumeType.Master].Slider.SetValueWithoutNotify(master);
+        volumeUIs[(int)VolumeType.BGM].Slider.SetValueWithoutNotify(bgm);
+        volumeUIs[(int)VolumeType.SFX].Slider.SetValueWithoutNotify(sfx);
+
+        UpdateVolumeOptionValue(VolumeType.Master, master);
+        UpdateVolumeOptionValue(VolumeType.BGM, bgm);
+        UpdateVolumeOptionValue(VolumeType.SFX, sfx);
+    }
+
+    // 토글 설정하는 부분 이벤트 등록
     private void SubscribeToggleEvent()
     {
         statToggle.OnToggleChanged += _ => SaveToggleOption();
         equipToggle.OnToggleChanged += _ => SaveToggleOption();
     }
 
+    // 토글 설정하는 부분 이벤트 해제
     private void UnsubcribeToggleEvent()
     {
         statToggle.OnToggleChanged -= _ => SaveToggleOption();

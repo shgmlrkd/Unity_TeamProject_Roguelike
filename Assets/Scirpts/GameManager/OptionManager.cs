@@ -1,4 +1,6 @@
-﻿public class OptionManager : GlobalSingleton<OptionManager>
+﻿using UnityEngine;
+
+public class OptionManager : GlobalSingleton<OptionManager>
 {
     public float MasterVolume { get; private set; }
     public float BGMVolume { get; private set; }
@@ -7,12 +9,31 @@
     public bool ShowStat { get; private set; }
     public bool ShowEquip { get; private set; }
 
+    [Header("옵션 초기화 체크박스")]
+    [SerializeField]
+    private bool settingInit = false;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        // 옵션 세팅 초기화
+        if (settingInit)
+        { 
+            PlayerPrefs.DeleteAll(); 
+        }
+
+        LoadOption();
+    }
+
     // 볼륨 값 저장
     public void SetVolume(float master, float bgm, float sfx)
     {
         MasterVolume = master;
         BGMVolume = bgm;
         SFXVolume = sfx;
+
+        SaveOption();
     }
 
     // 인게임 UI 표시 여부 저장
@@ -21,6 +42,30 @@
         ShowStat = showStat;
         ShowEquip = showEquip;
 
-        print($"스탯 표시 : {ShowStat}\n장비 표시 : {showEquip}");
+        SaveOption();
+    }
+
+    // 옵션을 PlayerPrefs로 저장
+    public void SaveOption()
+    {
+        PlayerPrefs.SetFloat("MasterVolume", MasterVolume);
+        PlayerPrefs.SetFloat("BGMVolume", BGMVolume);
+        PlayerPrefs.SetFloat("SFXVolume", SFXVolume);
+
+        PlayerPrefs.SetInt("ShowStat", ShowStat ? 1 : 0);
+        PlayerPrefs.SetInt("ShowEquipment", ShowEquip ? 1 : 0);
+
+        PlayerPrefs.Save();
+    }
+
+    // 옵션을 PlayerPrefs로 로드
+    private void LoadOption()
+    {
+        MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
+        BGMVolume = PlayerPrefs.GetFloat("BGMVolume", 1.0f);
+        SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
+
+        ShowStat = PlayerPrefs.GetInt("ShowStat", 1) == 1;
+        ShowEquip = PlayerPrefs.GetInt("ShowEquipment", 1) == 1;
     }
 }

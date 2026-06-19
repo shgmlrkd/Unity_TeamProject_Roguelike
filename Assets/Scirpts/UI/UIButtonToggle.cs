@@ -20,4 +20,10 @@ public class UIButtonToggle : MonoBehaviour, IPointerClickHandler
 
         OnToggleChanged?.Invoke(isOn);
     }
+
+    public void SetToggleWithoutNotify(bool value)
+    {
+        isOn = value;
+        checkObj.SetActive(isOn);
+    }
 }
