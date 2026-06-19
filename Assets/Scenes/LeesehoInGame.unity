@@ -2230,6 +2230,9 @@ GameObject:
   - component: {fileID: 1484952260}
   - component: {fileID: 1484952266}
   - component: {fileID: 1484952267}
+  - component: {fileID: 1484952270}
+  - component: {fileID: 1484952269}
+  - component: {fileID: 1484952268}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -2537,6 +2540,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   animator: {fileID: 0}
   maxHp: 10
+--- !u!95 &1484952268
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484952259}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83294146613092b4d9b74e135f6c707f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1484952269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484952259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c1570fef56b714782e3b9588ef9a39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponController
+  defaultWeapon: {fileID: 0}
+  currentWeapon: {fileID: 0}
+  weaponDropDistance: 0.8
+  droppedWeaponPickupDelay: 2
+--- !u!114 &1484952270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484952259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15cb006113627c84fa52c8a9baea966d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackController
+  attackCollider: {fileID: 0}
+  attackHitbox: {fileID: 0}
+  attackAreaTransform: {fileID: 0}
+  attackBoxCollider: {fileID: 0}
+  animator: {fileID: 1484952268}
 --- !u!224 &1514318684 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3732926286377063122, guid: aa015f15c2afcf2449b5e0c89c2341de, type: 3}
