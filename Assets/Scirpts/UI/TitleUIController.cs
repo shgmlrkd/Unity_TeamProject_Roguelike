@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class TitleUIController : MonoBehaviour
 {
-    [Header("옵션 패널")]
+    [Header("옵션 애니메이션")]
     [SerializeField]
-    private GameObject optionPanel;
+    private OptionUIAnimation optionUIAnimation;
 
     [Header("스크린 페이더")]
     [SerializeField] 
@@ -15,10 +15,7 @@ public class TitleUIController : MonoBehaviour
     [Header("타이틀 캔버스 그룹")]
     [SerializeField]
     private CanvasGroup titleCanvasGroup;
-    
-    [Header("옵션 캔버스 그룹")]
-    [SerializeField]
-    private CanvasGroup optionCanvasGroup;
+
     private void Awake()
     {
         if (screenFader != null)
@@ -54,43 +51,14 @@ public class TitleUIController : MonoBehaviour
 
     public void OnClickOpenOption()
     {
-        // 옵션 패널 활성화
-        optionPanel.SetActive(true);
-
-        // 애니메이션 재생 중 입력 비활성화
-        optionCanvasGroup.blocksRaycasts = false;
-
-        Sequence sequence = DOTween.Sequence();
-
-        // 옵션 패널 열기 애니메이션 재생
-        sequence.Append(UIAnimationUtility.ShowScale(optionPanel.transform, 0.2f));
-
-        // 애니메이션이 일정 비율 진행되면 입력 활성화
-        sequence.InsertCallback(UIAnimationSettings.CallbackRatio, () =>
-        {
-            optionCanvasGroup.blocksRaycasts = true;
-        });
+        // 옵션 애니메이션 후 보여주기 (열기)
+        optionUIAnimation.Show();
     }
 
     public void OnClickCloseOption()
     {
-        Sequence sequence = DOTween.Sequence();
-
-        // 옵션 패널 닫기 애니메이션 재생
-        sequence.Append(UIAnimationUtility.HideScale(optionPanel.transform, 
-            UIAnimationSettings.NormalDuration));
-
-        // 애니메이션이 일정 비율 진행되면 입력 비활성화
-        sequence.InsertCallback(UIAnimationSettings.CallbackRatio, () =>
-        {
-            optionCanvasGroup.blocksRaycasts = false;
-        });
-
-        // 애니메이션 종료 후 패널 비활성화
-        sequence.OnComplete(() =>
-        {
-            optionPanel.SetActive(false);
-        });
+        // 옵션 애니메이션 후 숨기기 (닫기)
+        optionUIAnimation.Hide();
     }
 
     public void OnClickExit()
