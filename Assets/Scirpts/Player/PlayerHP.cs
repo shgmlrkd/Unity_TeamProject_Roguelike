@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerHP : MonoBehaviour, IDamageable
 {
@@ -8,13 +9,19 @@ public class PlayerHP : MonoBehaviour, IDamageable
     [SerializeField] private int maxHp = 10;
     private int currentHp;
 
+    // 추가 체력 저장할 변수
+    [SerializeField]
+    private int currentBonusHp = 0;
+
     private bool isDead;
 
     public int MaxHp => maxHp;
     public int CurrentHp => currentHp;
+    public int CurrentBonusHp => currentBonusHp;
     public bool IsDead => isDead;
 
     public event Action<int, int> OnHpChanged;
+
     //현재 체력 갱신 테스트
     //[Header("Test")]
     //[SerializeField] private int testCurrentHp = -1;
@@ -31,32 +38,69 @@ public class PlayerHP : MonoBehaviour, IDamageable
     }
     private void Start()
     {
-        OnHpChanged?.Invoke(currentHp, maxHp);
+        OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
 
-    //private void Update()
-    //{
-    //    UpdateTestCurrentHp();
-    //}
+    private void Update()
+    {
+        //UpdateTestCurrentHp();
+
+        // 데미지 받은것을 가정
+        if (Keyboard.current.aKey.wasPressedThisFrame)
+        {
+            TakeDamage(new DamageInfoSet(3));
+        }
+
+        // 추가 체력 아이템 먹엇다고 가정
+        if (Keyboard.current.dKey.wasPressedThisFrame)
+        {
+            currentBonusHp += 1;
+
+            if (currentBonusHp > 20)
+            {
+                currentBonusHp = 20;
+            }
+
+            OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        }
+    }
+
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
     {
         if (isDead)
         {
             return;
         }
-        
-        // DamageInfoSet 의
-        currentHp -= damageInfoset.Damage;
+
+        // 현재 추가 체력이 있는가
+        if (currentBonusHp > 0)
+        {
+            currentBonusHp -= damageInfoset.Damage;
+        }
+        else // 없으면 현재 체력에서 데미지 받음
+        {
+            currentHp -= damageInfoset.Damage;
+        }
+
+        // 추가 체력으로 막지 못한 남은 데미지
+        if (currentBonusHp < 0)
+        {
+            int remainingDamage = -currentBonusHp;
+
+            currentHp -= remainingDamage;
+            currentBonusHp = 0;
+        }
+
         GameObject attacker = damageInfoset.Attacker;
         Vector2 Direction = damageInfoset.AttackDirection;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
-        OnHpChanged?.Invoke(currentHp, maxHp);
+        OnHpChanged?.Invoke(currentHp, currentBonusHp);
 
         if (currentHp <= 0)
         {
             currentHp = 0;
-            
+
             Die();
             return;
         }
