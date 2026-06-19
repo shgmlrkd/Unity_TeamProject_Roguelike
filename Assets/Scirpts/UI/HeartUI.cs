@@ -1,22 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HeartUI : MonoBehaviour
 {
+    // 하트 UI 개수
+    private const int MaxHeartCount = 5;
+    private const int MaxBonusHeartCount = 10;
+
     //하트 당 hp
     private const int HpPerHeart = 2;
 
-    [SerializeField] private PlayerHP playerHp;
-    [SerializeField] private Transform heartContainer;
-    [SerializeField] private Image heartPrefab;
+    [SerializeField] 
+    private PlayerHP playerHp;
 
-    [Header("Sprites")]
-    [SerializeField] private Sprite fullHeartSprite;
-    [SerializeField] private Sprite halfHeartSprite;
-    [SerializeField] private Sprite emptyHeartSprite;
+    [SerializeField]
+    private Transform heartContainer;
 
-    private readonly List<Image> hearts = new List<Image>();
+    [SerializeField]
+    private Image heartPrefab;
+
+    [Header("체력 UI 스프라이트")]
+    [SerializeField] 
+    private Sprite[] heartSprites;
+
+    [Header("추가 체력 UI 스프라이트")]
+    [SerializeField]
+    private Sprite[] bonusHeartSprites;
+
+    private Image[] baseHearts = new Image[5];
+    private Image[] bonusHearts = new Image[10];
 
     private void OnEnable()
     {
@@ -36,53 +50,79 @@ public class HeartUI : MonoBehaviour
 
     private void Start()
     {
-        CreateHearts(playerHp.MaxHp);
-        UpdateHearts(playerHp.CurrentHp, playerHp.MaxHp);
+        CreateHearts();
+        UpdateHearts(playerHp.CurrentHp, playerHp.CurrentBonusHp);
     }
 
-    private void CreateHearts(int maxHp)
+    private void CreateHearts()
     {
-        for (int i = 0; i < hearts.Count; i++)
-        {
-            Destroy(hearts[i].gameObject);
-        }
-
-        hearts.Clear();
-
-        int heartCount = Mathf.CeilToInt(maxHp / (float)HpPerHeart);
-
-        for (int i = 0; i < heartCount; i++)
+        // 최대 체력 개수만큼 하트를 생성
+        for (int i = 0; i < MaxHeartCount; i++)
         {
             Image heart = Instantiate(heartPrefab, heartContainer);
-            heart.sprite = fullHeartSprite;
-            hearts.Add(heart);
+            baseHearts[i] = heart;
+        }
+
+        // 최대 추가 체력 개수만큼 하트를 생성
+        for (int i = 0; i < MaxBonusHeartCount; i++)
+        {
+            Image heart = Instantiate(heartPrefab, heartContainer);
+            heart.gameObject.SetActive(false);
+
+            bonusHearts[i] = heart;
         }
     }
 
-    private void UpdateHearts(int currentHp, int maxHp)
+    private void UpdateHearts(int curHp, int curBonusHp)
     {
-        int heartCount = Mathf.CeilToInt(maxHp / (float)HpPerHeart);
+        UpdateBaseHearts(curHp);
+        UpdateBonusHearts(curBonusHp);
+    }
 
-        if (hearts.Count != heartCount)
+    private void UpdateBaseHearts(int curHp)
+    {
+        int fullHeartCount = curHp / HpPerHeart;
+        int halfHeartCount = curHp % HpPerHeart;
+
+        for (int i = 0; i < MaxHeartCount; i++)
         {
-            CreateHearts(maxHp);
-        }
-
-        for (int i = 0; i < hearts.Count; i++)
-        {
-            int heartHpValue = currentHp - (i * HpPerHeart);
-
-            if (heartHpValue >= 2)
+            if (i < fullHeartCount)
             {
-                hearts[i].sprite = fullHeartSprite;
+                baseHearts[i].sprite = heartSprites[(int)HeartType.fullHeart];
             }
-            else if (heartHpValue == 1)
+            else if (i < fullHeartCount + halfHeartCount)
             {
-                hearts[i].sprite = halfHeartSprite;
+                baseHearts[i].sprite = heartSprites[(int)HeartType.halfHeart];
             }
             else
             {
-                hearts[i].sprite = emptyHeartSprite;
+                baseHearts[i].sprite = heartSprites[(int)HeartType.emptyHeart];
+            }
+        }
+    }
+
+    private void UpdateBonusHearts(int curBonusHp)
+    {
+        int fullBonusHeartCount = curBonusHp / HpPerHeart;
+        int halfBonusHeartCount = curBonusHp % HpPerHeart;
+
+        for (int i = 0; i < MaxBonusHeartCount; i++)
+        {
+            // 사용 중인 보너스 하트는 활성화
+            if (i < fullBonusHeartCount)
+            {
+                bonusHearts[i].gameObject.SetActive(true);
+                bonusHearts[i].sprite = bonusHeartSprites[(int)HeartType.fullHeart];
+            }
+            else if (i < fullBonusHeartCount + halfBonusHeartCount)
+            {
+                bonusHearts[i].gameObject.SetActive(true);
+                bonusHearts[i].sprite = bonusHeartSprites[(int)HeartType.halfHeart];
+            }
+            // 사용하지 않는 보너스 하트는 비활성화
+            else
+            {
+                bonusHearts[i].gameObject.SetActive(false);
             }
         }
     }
