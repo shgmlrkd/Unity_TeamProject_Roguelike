@@ -383,7 +383,7 @@ PrefabInstance:
     - target: {fileID: 5662467154453680470, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 520634680}
+      objectReference: {fileID: 819300198}
     - target: {fileID: 5662467154453680470, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -612,11 +612,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &375018062 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6659351942616061099, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
-  m_PrefabInstance: {fileID: 1855098818223899437}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &434375469
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,7 +712,6 @@ GameObject:
   - component: {fileID: 520634678}
   - component: {fileID: 520634677}
   - component: {fileID: 520634679}
-  - component: {fileID: 520634680}
   m_Layer: 5
   m_Name: TitleButtonPanel
   m_TagString: Untagged
@@ -811,27 +805,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &520634680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520634675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 182a682f63b51294d8ef897d3f0e1427, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TitleUIController
-  optionPanel: {fileID: 375018062}
-  screenFader: {fileID: 104162935}
-  titleCanvasGroup: {fileID: 819300197}
-  optionCanvasGroup: {fileID: 571391642}
---- !u!225 &571391642 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 3247034342758626285, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
-  m_PrefabInstance: {fileID: 1855098818223899437}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &819300192
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,6 +818,8 @@ GameObject:
   - component: {fileID: 819300194}
   - component: {fileID: 819300193}
   - component: {fileID: 819300197}
+  - component: {fileID: 819300198}
+  - component: {fileID: 819300199}
   m_Layer: 5
   m_Name: TitleCanvas
   m_TagString: Untagged
@@ -950,6 +925,35 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &819300198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819300192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182a682f63b51294d8ef897d3f0e1427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TitleUIController
+  optionUIAnimation: {fileID: 819300199}
+  screenFader: {fileID: 104162935}
+  titleCanvasGroup: {fileID: 819300197}
+--- !u!114 &819300199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819300192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011752d5a0542fe4c8849e6db8578d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OptionUIAnimation
+  target: {fileID: 1810555928}
+  canvasGroup: {fileID: 1806990901}
 --- !u!224 &1702122634 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4835872298381161357, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
@@ -1066,7 +1070,7 @@ PrefabInstance:
     - target: {fileID: 5662467154453680470, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 520634680}
+      objectReference: {fileID: 819300198}
     - target: {fileID: 5662467154453680470, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1097,7 +1101,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4835872298381161357, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
   m_PrefabInstance: {fileID: 1757240929}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1855098818223899437
+--- !u!225 &1806990901 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 3247034342758626285, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
+  m_PrefabInstance: {fileID: 1810555927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1810555927
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1368,7 +1377,11 @@ PrefabInstance:
     - target: {fileID: 8086993867908294029, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 520634680}
+      objectReference: {fileID: 819300198}
+    - target: {fileID: 8086993867908294029, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickCloseOption
+      objectReference: {fileID: 0}
     - target: {fileID: 8189961586401020349, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1390,6 +1403,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
+--- !u!224 &1810555928 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5685984067719069193, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
+  m_PrefabInstance: {fileID: 1810555927}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3168722638469100562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1398,6 +1416,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 819300196}
     m_Modifications:
+    - target: {fileID: 1508094595068337398, guid: 8ef8f6a044859064386cd95d33c23f16, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4147914858154245971, guid: 8ef8f6a044859064386cd95d33c23f16, type: 3}
       propertyPath: m_Name
       value: ScreenFadePanel
@@ -1598,7 +1620,7 @@ PrefabInstance:
     - target: {fileID: 5662467154453680470, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 520634680}
+      objectReference: {fileID: 819300198}
     - target: {fileID: 5662467154453680470, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1630,6 +1652,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 81150903}
   - {fileID: 819300196}
-  - {fileID: 1855098818223899437}
+  - {fileID: 1810555927}
   - {fileID: 354901351}
   - {fileID: 260712071}
