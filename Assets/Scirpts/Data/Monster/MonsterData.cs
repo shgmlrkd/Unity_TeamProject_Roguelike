@@ -26,6 +26,10 @@ public class MonsterData : ScriptableObject
     [SerializeField] private Vector2 moveOffset = new Vector2(3.0f, 0.0f);
     [Header("정찰 대기시간")]
     [SerializeField] private float patrolWaitTime;
+    [Header("드랍 골드")]
+    [SerializeField] private int minDropGold;
+    [SerializeField] private int maxDropGold;
+
 
     public string MonsterName { get { return monsterName; } }
     public MonsterBase MonsterPrefab { get { return monsterPrefab; } }
@@ -38,5 +42,7 @@ public class MonsterData : ScriptableObject
     public float PatrolSpeed { get {return patrolSpeed; } }
     public Vector2 MoveOffset { get { return moveOffset; } }
     public float PatrolWaitTime { get { return patrolWaitTime; } }
+    public int DropGold { get { return Random.Range(minDropGold, maxDropGold); } }
+   
 
 }
