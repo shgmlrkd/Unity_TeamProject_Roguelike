@@ -390,6 +390,7 @@ GameObject:
   - component: {fileID: 534363257}
   - component: {fileID: 534363256}
   - component: {fileID: 534363255}
+  - component: {fileID: 534363258}
   m_Layer: 5
   m_Name: HPPanel
   m_TagString: Untagged
@@ -485,6 +486,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534363253}
   m_CullTransparentMesh: 1
+--- !u!114 &534363258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534363253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb3c1704c1afdae4a9cd47f160a2156a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartUI
+  playerHp: {fileID: 1484952267}
+  heartContainer: {fileID: 534363254}
+  heartPrefab: {fileID: 8994555591145788003, guid: 1ce17f2cac0cb2f47a915362c8fc6fb5, type: 3}
+  fullHeartSprite: {fileID: 21300000, guid: be05b05bc470fc044bb1e5c9b3404ae9, type: 3}
+  halfHeartSprite: {fileID: 21300000, guid: 81a355642789f7f42904ff63a2886c91, type: 3}
+  emptyHeartSprite: {fileID: 21300000, guid: 72759190cea8b744eb37fa863de1cec1, type: 3}
 --- !u!1 &580719494
 GameObject:
   m_ObjectHideFlags: 0
