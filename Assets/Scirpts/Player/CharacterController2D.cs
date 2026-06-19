@@ -8,6 +8,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
 
     [Header("Animation")]
+    [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     private Rigidbody2D rb;
@@ -26,7 +27,10 @@ public class CharacterController2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         inputManager = GetComponent<CharacterInputManager>();
 
-
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
 
         if (spriteRenderer == null)
         {
@@ -39,6 +43,8 @@ public class CharacterController2D : MonoBehaviour
     {
         UpdateLookDirection();
         UpdateSpriteFlip();
+
+        UpdateMoveAnimation();
     }
 
     private void FixedUpdate()
@@ -88,5 +94,14 @@ public class CharacterController2D : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
+    }
+    private void UpdateMoveAnimation()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+
+        animator.SetBool("IsMoving", inputManager.MoveInput != Vector2.zero);
     }
 }
