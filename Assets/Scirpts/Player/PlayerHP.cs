@@ -44,6 +44,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
         {
             return;
         }
+        
         // DamageInfoSet 의
         currentHp -= damageInfoset.Damage;
         GameObject attacker = damageInfoset.Attacker;
@@ -57,6 +58,11 @@ public class PlayerHP : MonoBehaviour, IDamageable
             currentHp = 0;
             
             Die();
+            return;
+        }
+        if (animator != null)
+        {
+            animator.SetTrigger("Hit");
         }
     }
 
