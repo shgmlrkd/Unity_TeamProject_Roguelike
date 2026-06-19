@@ -390,7 +390,6 @@ GameObject:
   - component: {fileID: 534363257}
   - component: {fileID: 534363256}
   - component: {fileID: 534363255}
-  - component: {fileID: 534363258}
   m_Layer: 5
   m_Name: HPPanel
   m_TagString: Untagged
@@ -486,24 +485,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534363253}
   m_CullTransparentMesh: 1
---- !u!114 &534363258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534363253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb3c1704c1afdae4a9cd47f160a2156a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HeartUI
-  playerHp: {fileID: 1484952267}
-  heartContainer: {fileID: 534363254}
-  heartPrefab: {fileID: 8994555591145788003, guid: 1ce17f2cac0cb2f47a915362c8fc6fb5, type: 3}
-  fullHeartSprite: {fileID: 21300000, guid: be05b05bc470fc044bb1e5c9b3404ae9, type: 3}
-  halfHeartSprite: {fileID: 21300000, guid: 81a355642789f7f42904ff63a2886c91, type: 3}
-  emptyHeartSprite: {fileID: 21300000, guid: 72759190cea8b744eb37fa863de1cec1, type: 3}
 --- !u!1 &580719494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,8 +1492,9 @@ MonoBehaviour:
   startRoomPrefab: {fileID: 6184275234081297716, guid: e5b6d66461e02c548837f4790bf34a97, type: 3}
   normalRoomPrefabs:
   - {fileID: 8293521635643192757, guid: 5a41808355bbc65418c0a271d93b69d4, type: 3}
-  - {fileID: 7349907168721496140, guid: 1f38a09d3460a7c48868aad8434c806d, type: 3}
-  bossRoomPrefab: {fileID: 2423285275340397671, guid: d5310ab70fed9c445b535800b76ad3d1, type: 3}
+  - {fileID: 7116797243141037718, guid: 0b0ce7eb4b7f0cf4b8df6d6e4300954d, type: 3}
+  - {fileID: 1281316175487772473, guid: 55aa15128b2ae4c4b863750b2bce29ce, type: 3}
+  bossRoomPrefab: {fileID: 5212176038272747045, guid: 0ca0c4d85292a7b4f9cb134da0cc203a, type: 3}
   storeRoomPrefab: {fileID: 7349907168721496140, guid: b5ce831919d75e849a6ed7ac0956e2d6, type: 3}
   treasureRoomPrefab: {fileID: 1196326717202590283, guid: 59de1a25c6ea8ac44882321dc1507c87, type: 3}
 --- !u!4 &1183119446
