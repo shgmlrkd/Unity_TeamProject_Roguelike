@@ -59,8 +59,8 @@ public enum HeartType
 
 public enum SceneType
 {
-    Title,
-    InGame
+    Title,      // 타이틀 씬
+    InGame      // 인게임 씬
 }
 
 ///////////////////////////////////////
