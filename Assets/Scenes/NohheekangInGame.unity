@@ -2378,6 +2378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   animator: {fileID: 0}
   maxHp: 10
+  invincibleTime: 0.8
   currentBonusHp: 0
 --- !u!1001 &1498354701
 PrefabInstance:
