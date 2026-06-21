@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fb67ca3142aaa5a45ab568f46f52a70f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280247
+  packageName: 'Fantasy Chests: Pixel art Animation'
+  packageVersion: 1.0
+  assetPath: Assets/FantasyChestPixelArtAsset/Animation/smallchest_5_open.anim
+  uploadId: 652900
