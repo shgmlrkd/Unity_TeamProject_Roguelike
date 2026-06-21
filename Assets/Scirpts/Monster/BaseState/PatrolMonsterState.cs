@@ -1,67 +1,135 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Splines;
 
 public class PatrolMonsterState : MonsterBase
 {
-    private Vector2 startPoint;
-    private Vector2 endPoint;
-    private Coroutine patrolCo;
+    //// 길찾기 용    
+    private A_StarPathFinder pathFinder;                // A* 길찾기
+    private List<A_StarNode> currentPath;               // 현재 이동중인 경로 저장용
+    private int pathIndex;                              // 목표로 하는 노드 번호
+
+    // 대기시간 및 코루틴 저장용
     private WaitForSeconds wait;
-    Vector2 nextPosition;
+    private Coroutine patrolCo;
+
+    private int minPatrolDistance = 3; // 최소 거리값 
+    private int maxPatrolDistance = 8; // 최대 거리값 몬스터 데이터로 뺼까요?
 
 
-
-    protected override void Awake() // 시작및 목표 위치 지정
+    protected override void Awake() 
     {
         base.Awake();
-        wait = new WaitForSeconds(monsterStateManager.MonsterData.PatrolWaitTime);
-        startPoint = transform.position;
-        endPoint = startPoint + monsterStateManager.MonsterData.MoveOffset;
+
+        pathFinder = monsterStateManager.PathFinder;
+        wait = new WaitForSeconds(monsterStateManager.MonsterData.PatrolWaitTime); // 정찰 대기 시간
     }
 
-   
-
-    private void OnEnable() // 코루틴 시작 및 if문을 위해서 저장
+    private void OnEnable() // 순찰 시작
     {
-    
+
         patrolCo = StartCoroutine(PatrolCo());
-        
+
     }
 
     private void OnDisable() // 코루틴 종료
     {
-        if(patrolCo != null)
+        currentPath = null; // 경로 정보 초기화
+        pathIndex = 0;
+
+        if (patrolCo != null)
         {
             StopCoroutine(patrolCo);
             patrolCo = null;
         }
+        
+
     }
 
-    private IEnumerator PatrolCo()  // 좌우 반복 이동
+    private IEnumerator PatrolCo()  // 랜덤 위치 순찰
     {
-        while(true)
+        while (true)
         {
-            while (rb.position.x < endPoint.x)
+
+            bool hasPath = TrySetRandomPath(); // 랜덤 순찰 목표까지의 경로 생성
+
+            if (hasPath) // 목표 경로가 있다면 이동
             {
-                nextPosition = Vector2.MoveTowards(rb.position, endPoint, monsterStateManager.MonsterData.PatrolSpeed * Time.fixedDeltaTime);
-                rb.MovePosition(nextPosition);
-                yield return null;
-            }
-            yield return wait;
-
-
-            while (rb.position.x > startPoint.x)
-            {
-
-                nextPosition = Vector2.MoveTowards(rb.position, startPoint, monsterStateManager.MonsterData.PatrolSpeed * Time.fixedDeltaTime);
-                rb.MovePosition(nextPosition);
-                yield return null;
-
+                yield return MovePath();
+                
             }
 
-            yield return wait;
+            yield return wait; // 도착후 대기
 
         }
     }
+
+    private IEnumerator MovePath()
+    {
+        while ( currentPath != null && pathIndex < currentPath.Count) // 경로가 존재하며 목적지에 도착하지 않았다면
+        {
+            Debug.Log($"이동중 : {pathIndex}/{currentPath.Count}");
+            Vector3 targetPos = pathFinder.Grid.GetWorldPosition(currentPath[pathIndex]); // 현재 목표 노드의 월드 좌표 가져오기
+            Debug.Log($"거리 : {Vector2.Distance(rb.position, targetPos)}");
+
+            Vector2 nextPosition = Vector2.MoveTowards(
+                rb.position,
+                targetPos,
+                monsterStateManager.MonsterData.PatrolSpeed * Time.fixedDeltaTime); // 목표까지 이동
+
+            rb.MovePosition(nextPosition);
+
+            if(Vector2.Distance(nextPosition, targetPos) < 0.25f) // 목표 노드에 도착했다면 다음 목표 노드로 변경 도착 판정을 널널하게
+            {
+                pathIndex++;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    private bool TrySetRandomPath()
+    {
+        // 현재 몬스터 위치에 해당하는 시작 노드 가져오기
+        A_StarNode startNode = pathFinder.Grid.GetNodeFromWorld(rb.position);
+       
+        // 못 가져 왔다면 실패
+        if(startNode == null)
+        {
+            return false;
+        }
+
+        // 시작 노드 기준 최소 / 최대 거리 안에서 랜덤 순찰 노드
+        A_StarNode randomNode = pathFinder.Grid.GetRandomPatrolNode(
+            startNode,
+            minPatrolDistance,
+            maxPatrolDistance);
+
+        if(randomNode == null)
+        {
+            return false;
+        }
+        
+        // 랜덤으로 뽑은 노드를 월드 좌표로 전환
+        Vector3 targetPos = pathFinder.Grid.GetWorldPosition(randomNode);
+
+        // 현재 위치에서 랜덤 목표 위치까지 경로 생성
+        currentPath = pathFinder.FindPath(rb.position, targetPos);
+
+        // 경로가 없거나
+        // 현재 위치만 들어있는 경로면 실패
+        if (currentPath == null || currentPath.Count <= 1)
+        {
+            return false;
+        }
+
+        // currentPath[0] 은 현재 위치
+        // 실제 이동은 다음 노드부터 시작
+        pathIndex = 1;
+
+        // 랜덤 순찰 경로 생성 성공
+        return true;
+
+    }
+
 }
