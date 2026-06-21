@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37f8e4382dc48ac4a8a13eddd4ddd033, type: 3}
-  m_Name: Necklace2
+  m_Name: FlameNecklace
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
   itemType: 0
-  itemName: "\uBAA9\uAC78\uC7742"
-  sprite: {fileID: 0}
+  itemName: "\uBD88\uAF43 \uC815\uC218 \uBAA9\uAC78\uC774"
+  sprite: {fileID: 21300000, guid: 16204c7fef5b24406bdc1bac781150ef, type: 3}
   equipmentType: 0
   attack: 1
   attackRange: 1
   attackSpeedRate: 1
   moveSpeedRate: 1
+  shieldHp: 0

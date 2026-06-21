@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc6038c072f30f47a836216689b153c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OptionManager
-  settingInit: 1
+  settingInit: 0
 --- !u!4 &260712071
 Transform:
   m_ObjectHideFlags: 0
@@ -1380,6 +1380,10 @@ PrefabInstance:
     - target: {fileID: 7556878988791736094, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
       propertyPath: m_Name
       value: OptionCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7556878988791736094, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8086993867908294029, guid: bf3d1f37ee9ba584f8f56e6afc975bab, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
