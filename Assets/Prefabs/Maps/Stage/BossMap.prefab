@@ -7151,6 +7151,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5032106543446982722}
   - component: {fileID: 6517283516309872542}
+  - component: {fileID: 8076949754152941247}
+  - component: {fileID: 5871110036403221700}
   m_Layer: 0
   m_Name: BossMap
   m_TagString: Untagged
@@ -7187,3 +7189,32 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &8076949754152941247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2423285275340397671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276443436e5d3ee4ea0beabae45ac55b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A_StarPathFinder
+  grid: {fileID: 5871110036403221700}
+--- !u!114 &5871110036403221700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2423285275340397671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4266d960a9f3a3a4f8c488c7843a0980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A_StarGrid
+  wallTilemap: {fileID: 4196395110500298522}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
