@@ -11,15 +11,17 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
     [SerializeField] private float invincibleTime = 0.8f;
     private int currentHp;
-
     // 추가 체력 저장할 변수
-    [SerializeField]
     private int currentBonusHp = 0;
 
     private bool isDead;
 
     private bool isInvincible;
     private Coroutine invincibleCoroutine;
+
+    [Header("아이템 테스트용")]
+    [SerializeField]
+    private Transform bonusHpObj;
 
     public int MaxHp => maxHp;
     public int CurrentHp => currentHp;
@@ -45,6 +47,8 @@ public class PlayerHP : MonoBehaviour, IDamageable
     private void Start()
     {
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
+
+        Instantiate(bonusHpObj, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
     }
 
     private void Update()
@@ -52,7 +56,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
         //UpdateTestCurrentHp();
 
         // 데미지 받은것을 가정
-        if (Keyboard.current.aKey.wasPressedThisFrame)
+        /*if (Keyboard.current.aKey.wasPressedThisFrame)
         {
             TakeDamage(new DamageInfoSet(3));
         }
@@ -68,7 +72,14 @@ public class PlayerHP : MonoBehaviour, IDamageable
             }
 
             OnHpChanged?.Invoke(currentHp, currentBonusHp);
-        }
+        }*/
+    }
+
+    public void SetBonusHp(int bonusHp)
+    {
+        currentBonusHp = Mathf.Clamp(currentBonusHp + bonusHp, 0, 20);
+
+        OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
 
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
