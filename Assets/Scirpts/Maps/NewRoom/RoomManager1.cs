@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RoomManager1 : MonoBehaviour
+public class RoomManager1 : ScenesSingleton<RoomManager1>
 {
-    public static RoomManager1 Instance { get; private set; }
-
     [Header("모듈 연결")]
     [SerializeField] private RoomGenerator1 generator;
     [SerializeField] private RoomTeleporter teleporter;
@@ -17,9 +15,9 @@ public class RoomManager1 : MonoBehaviour
     private Dictionary<Vector2Int, RoomInfo> dungeonMap = new Dictionary<Vector2Int, RoomInfo>();
     private Dictionary<RoomType, Dictionary<Vector2Int, List<RoomInfo>>> dbLookUp = new Dictionary<RoomType, Dictionary<Vector2Int, List<RoomInfo>>>();
 
-    private void Awake()
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
         InitializeDatabaseLookUp();
     }
 
