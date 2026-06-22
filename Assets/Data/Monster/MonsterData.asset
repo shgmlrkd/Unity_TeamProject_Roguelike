@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MonsterData
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: 
-  monsterPrefab: {fileID: 8323830877627035958, guid: d8ca3e42ed47d28418fd32dd898554b2, type: 3}
+  monsterPrefab: {fileID: 0}
   monsterMaxHp: 5
   moveSpeed: 2
   attackDamage: 1
@@ -21,5 +21,6 @@ MonoBehaviour:
   attackDelay: 1
   contactRange: 4
   patrolSpeed: 3
-  moveOffset: {x: 3, y: 0}
-  patrolWaitTime: 1
+  patrolWaitTime: 0.5
+  minDropGold: 0
+  maxDropGold: 0
