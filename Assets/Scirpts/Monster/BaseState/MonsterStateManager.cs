@@ -6,15 +6,16 @@ public class MonsterStateManager : MonoBehaviour
 
     [SerializeField] private MonsterData monsterData;
     [SerializeField] private MonsterBase[] stateBeses;
+    [SerializeField] private AStarPathFinder pathFinder;
     [SerializeField] private MonsterStateEnum monsterState = MonsterStateEnum.None;
     [SerializeField] private UnityEvent<MonsterStateEnum> OnstateChanged;
-    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private LayerMask PlayerLayer;
 
     private Transform target;
     public Transform Target { get { return target; } }
-
     public MonsterData MonsterData {get {return monsterData;}}
-
+    public AStarPathFinder PathFinder {get {return pathFinder;}}
+    
 
     private void Start()
     {
@@ -33,7 +34,7 @@ public class MonsterStateManager : MonoBehaviour
     
     private void CheckState() // 플레이어 감지및 행동 지정
     {
-        Collider2D player = Physics2D.OverlapCircle(transform.position, monsterData.ContactRange, playerLayer);
+        Collider2D player = Physics2D.OverlapCircle(transform.position, monsterData.ContactRange, PlayerLayer);
 
 
         if (player == null)
