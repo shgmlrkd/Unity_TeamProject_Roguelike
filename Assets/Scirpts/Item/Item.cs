@@ -62,7 +62,7 @@ public class Item : MonoBehaviour
             if (equipmentData != null)
             {
                 // 플레이어 담당자와 상의 해야함
-                //player.SetBonusHp(equipmentData.ShieldHp);
+                player.SetBonusHp(equipmentData.ShieldHp);
             }
 
             gameObject.SetActive(false);
