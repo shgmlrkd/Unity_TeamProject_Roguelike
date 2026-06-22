@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HeartUI : MonoBehaviour
@@ -29,8 +27,18 @@ public class HeartUI : MonoBehaviour
     [SerializeField]
     private Sprite[] bonusHeartSprites;
 
-    private Image[] baseHearts = new Image[5];
-    private Image[] bonusHearts = new Image[10];
+    private Image[] baseHearts = new Image[MaxHeartCount];
+    private Image[] bonusHearts = new Image[MaxBonusHeartCount];
+
+    private bool isCreated;
+    private void Awake()
+    {
+        if (playerHp == null)
+        {
+            playerHp = FindFirstObjectByType<PlayerHP>();
+        }
+        CreateHearts();
+    } 
 
     private void OnEnable()
     {
@@ -50,12 +58,26 @@ public class HeartUI : MonoBehaviour
 
     private void Start()
     {
-        CreateHearts();
+        if (playerHp == null)
+        {
+            Debug.LogError("HeartUI: PlayerHP가 연결되지 않았습니다.");
+            return;
+        }
         UpdateHearts(playerHp.CurrentHp, playerHp.CurrentBonusHp);
     }
 
     private void CreateHearts()
     {
+        if (isCreated)
+        {
+            return;
+        }
+        if (heartPrefab == null || heartContainer == null)
+        {
+            Debug.LogError("HeartUI: heartPrefab 또는 heartContainer가 연결되지 않았습니다.");
+            return;
+        }
+    
         // 최대 체력 개수만큼 하트를 생성
         for (int i = 0; i < MaxHeartCount; i++)
         {
@@ -71,14 +93,38 @@ public class HeartUI : MonoBehaviour
 
             bonusHearts[i] = heart;
         }
+        isCreated = true;
     }
 
     private void UpdateHearts(int curHp, int curBonusHp)
     {
+        if (!isCreated)
+        {
+            return;
+        }
+        if (!IsSpriteArrayValid())
+        {
+            return;
+        }
         UpdateBaseHearts(curHp);
         UpdateBonusHearts(curBonusHp);
     }
+    private bool IsSpriteArrayValid()
+    {
+        if (heartSprites == null || heartSprites.Length <= (int)HeartType.emptyHeart)
+        {
+            Debug.LogError("HeartUI: heartSprites 배열 크기가 부족합니다. HeartType enum 값과 배열 Size를 확인하세요.");
+            return false;
+        }
 
+        if (bonusHeartSprites == null || bonusHeartSprites.Length <= (int)HeartType.halfHeart)
+        {
+            Debug.LogError("HeartUI: bonusHeartSprites 배열 크기가 부족합니다. fullHeart, halfHeart 스프라이트가 필요합니다.");
+            return false;
+        }
+
+        return true;
+    }
     private void UpdateBaseHearts(int curHp)
     {
         int fullHeartCount = curHp / HpPerHeart;

@@ -9,7 +9,11 @@ public class CharacterController2D : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
+
+    [Header("Visual")]
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Transform visualRoot;
+    [SerializeField] private bool invertVisualFlip = true;
 
     private Rigidbody2D rb;
     private CharacterInputManager inputManager;
@@ -20,6 +24,8 @@ public class CharacterController2D : MonoBehaviour
 
     public Vector2 LookDirection => lookDirection;
 
+    private Vector3 visualRootOriginalScale;
+
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -29,7 +35,7 @@ public class CharacterController2D : MonoBehaviour
 
         if (animator == null)
         {
-            animator = GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
         }
 
         if (spriteRenderer == null)
@@ -37,12 +43,28 @@ public class CharacterController2D : MonoBehaviour
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
+        if (visualRoot == null)
+        {
+            if (animator != null)
+            {
+                visualRoot = animator.transform;
+            }
+            else if (spriteRenderer != null)
+            {
+                visualRoot = spriteRenderer.transform;
+            }
+        }
+
+        if (visualRoot != null)
+        {
+            visualRootOriginalScale = visualRoot.localScale;
+        }
     }
 
     private void Update()
     {
         UpdateLookDirection();
-        UpdateSpriteFlip();
+        UpdateVisualFlip();
 
         UpdateMoveAnimation();
     }
@@ -66,7 +88,8 @@ public class CharacterController2D : MonoBehaviour
 
         Vector3 mouseScreenPosition = inputManager.MousePosition;
         //절대 값 출력
-        mouseScreenPosition.z = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
+        mouseScreenPosition.z = Mathf.Abs(mainCamera.transform.position.z 
+            - transform.position.z);
 
         Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
         Vector2 direction = mouseWorldPosition - transform.position;
@@ -78,22 +101,28 @@ public class CharacterController2D : MonoBehaviour
 
         lookDirection = direction.normalized;
     }
-    //스프라이트 플립 바라보는 방향 따라
-    private void UpdateSpriteFlip()
+    //바라보는 방향 따라 플립
+    private void UpdateVisualFlip()
     {
-        if (spriteRenderer == null)
+        if (visualRoot == null)
+        {
+            return;
+        }
+        if (Mathf.Abs(lookDirection.x) <= 0.01f)
         {
             return;
         }
 
-        if (lookDirection.x > 0.01f)
+        float directionSign = lookDirection.x > 0f ? 1f : -1f;
+
+        if (invertVisualFlip)
         {
-            spriteRenderer.flipX = false;
+            directionSign *= -1f;
         }
-        else if (lookDirection.x < -0.01f)
-        {
-            spriteRenderer.flipX = true;
-        }
+
+        Vector3 scale = visualRootOriginalScale;
+        scale.x = Mathf.Abs(visualRootOriginalScale.x) * directionSign;
+        visualRoot.localScale = scale;
     }
     private void UpdateMoveAnimation()
     {

@@ -8,6 +8,8 @@ public class PlayerHP : MonoBehaviour, IDamageable
     [SerializeField] private Animator animator;
 
     [SerializeField] private int maxHp = 10;
+    [SerializeField] private const int MaxBonusHp = 20;
+
 
     [SerializeField] private float invincibleTime = 0.8f;
     private int currentHp;
@@ -48,7 +50,10 @@ public class PlayerHP : MonoBehaviour, IDamageable
     {
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
 
-        Instantiate(bonusHpObj, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
+        if (bonusHpObj != null)
+        {
+            Instantiate(bonusHpObj, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
+        }
     }
 
     private void Update()
@@ -77,7 +82,12 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
     public void SetBonusHp(int bonusHp)
     {
-        currentBonusHp = Mathf.Clamp(currentBonusHp + bonusHp, 0, 20);
+        if (isDead)
+        {
+            return;
+        }
+
+        currentBonusHp = Mathf.Clamp(currentBonusHp + bonusHp, 0, MaxBonusHp);
 
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
@@ -88,24 +98,26 @@ public class PlayerHP : MonoBehaviour, IDamageable
         {
             return;
         }
+        if (isInvincible)
+        {
+            return;
+        }
 
         // 현재 추가 체력이 있는가
         if (currentBonusHp > 0)
         {
             currentBonusHp -= damageInfoset.Damage;
+
+            if (currentBonusHp < 0)// 추가 체력으로 막지 못한 남은 데미지
+            {
+                int overflowDamage = -currentBonusHp;
+                currentHp -= overflowDamage;
+                currentBonusHp = 0;
+            }
         }
         else // 없으면 현재 체력에서 데미지 받음
         {
             currentHp -= damageInfoset.Damage;
-        }
-
-        // 추가 체력으로 막지 못한 남은 데미지
-        if (currentBonusHp < 0)
-        {
-            int remainingDamage = -currentBonusHp;
-
-            currentHp -= remainingDamage;
-            currentBonusHp = 0;
         }
 
         GameObject attacker = damageInfoset.Attacker;
