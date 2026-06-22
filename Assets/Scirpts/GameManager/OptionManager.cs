@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class OptionManager : GlobalSingleton<OptionManager>
 {
@@ -8,6 +9,8 @@ public class OptionManager : GlobalSingleton<OptionManager>
 
     public bool ShowStat { get; private set; }
     public bool ShowEquip { get; private set; }
+
+    public event Action<bool, bool> OnUIOptionChanged;
 
     [Header("옵션 초기화 체크박스")]
     [SerializeField]
@@ -43,6 +46,8 @@ public class OptionManager : GlobalSingleton<OptionManager>
         ShowEquip = showEquip;
 
         SaveOption();
+
+        OnUIOptionChanged?.Invoke(ShowStat, ShowEquip);
     }
 
     // 옵션을 PlayerPrefs로 저장
@@ -67,5 +72,8 @@ public class OptionManager : GlobalSingleton<OptionManager>
 
         ShowStat = PlayerPrefs.GetInt("ShowStat", 1) == 1;
         ShowEquip = PlayerPrefs.GetInt("ShowEquipment", 1) == 1;
+
+        // 저장된 표시 옵션 이벤트 발행
+        OnUIOptionChanged?.Invoke(ShowStat, ShowEquip);
     }
 }

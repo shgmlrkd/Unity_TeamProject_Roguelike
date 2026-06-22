@@ -144,6 +144,8 @@ public class OptionUIController : MonoBehaviour
 
     private void SaveToggleOption()
     {
+        print($"OptionUIController : {statToggle.IsOn} / {equipToggle.IsOn}");
+
         // 옵션 매니저에 토글 값들을 저장함
         OptionManager.Instance.SetUIOption(statToggle.IsOn, equipToggle.IsOn);
     }

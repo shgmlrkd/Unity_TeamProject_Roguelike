@@ -43,4 +43,18 @@ public class GlobalSingleton<T> : MonoBehaviour where T : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+    protected virtual void OnApplicationQuit()
+    {
+        // 종료 직전에 정리
+        instance = null;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
+    }
+
 }

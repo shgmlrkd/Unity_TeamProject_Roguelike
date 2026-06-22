@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29d80487df3b61f48b8ef987ded056aa, type: 3}
-  m_Name: HpPotion
+  m_Name: Cookie
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableData
   itemType: 1
-  itemName: "\uCCB4\uB825 \uD3EC\uC158"
-  sprite: {fileID: 0}
+  itemName: "\uCFE0\uD0A4"
+  sprite: {fileID: 21300000, guid: 8e94f2317ca2b466d84f782f2b4f2fd8, type: 3}
   consumableType: 0
-  healAmount: 2
+  healAmount: 1
