@@ -22,10 +22,11 @@ public class MonsterData : ScriptableObject
     [SerializeField] private float contactRange;
     [Header("정찰 속도")]
     [SerializeField] private float patrolSpeed;
-    [Header("정찰 간격")]
-    [SerializeField] private Vector2 moveOffset = new Vector2(3.0f, 0.0f);
     [Header("정찰 대기시간")]
     [SerializeField] private float patrolWaitTime;
+    [Header("정찰 거리제한")]
+    [SerializeField] private int minPatrolDistance = 3; 
+    [SerializeField] private int maxPatrolDistance = 8; 
     [Header("드랍 골드")]
     [SerializeField] private int minDropGold;
     [SerializeField] private int maxDropGold;
@@ -40,8 +41,9 @@ public class MonsterData : ScriptableObject
     public float AttakcDelay { get { return attackDelay; } }
     public float ContactRange { get { return contactRange; } }
     public float PatrolSpeed { get {return patrolSpeed; } }
-    public Vector2 MoveOffset { get { return moveOffset; } }
     public float PatrolWaitTime { get { return patrolWaitTime; } }
+    public int MinPatrolDistance { get { return minPatrolDistance; } }
+    public int MaxPatrolDistance { get { return maxPatrolDistance; } }
     public int DropGold { get { return Random.Range(minDropGold, maxDropGold); } }
    
 
