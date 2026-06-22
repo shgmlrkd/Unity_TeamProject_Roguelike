@@ -20,13 +20,13 @@ public class RoomRuleChecker1
     {
         if (IsBossRoomSpawned) return RoomType.Normal;
 
-        // 규칙 1: 보스방 조건 (최소 방 만족 및 위쪽 이동 시)
+        // 보스방 조건 (최소 방 만족 및 위쪽 이동 시)
         if (GeneratedNormalRoomCount >= minRoomsBeforeBoss && direction == Vector2Int.up)
         {
             return RoomType.Boss;
         }
 
-        // 규칙 2: 상점방 조건 (인터벌 만족 및 좌/우 이동 시)
+        //상점방 조건 (인터벌 만족 및 좌/우 이동 시)
         if (GeneratedNormalRoomCount > 0 && GeneratedNormalRoomCount % storeSpawnInterval == 0)
         {
             if (direction == Vector2Int.left || direction == Vector2Int.right)
@@ -35,7 +35,7 @@ public class RoomRuleChecker1
             }
         }
 
-        // 규칙 3: 보물방 예시 (3번째 방이고 위쪽 이동 시)
+        //보물방 예시 (3번째 방이고 위쪽 이동 시)
         if (GeneratedNormalRoomCount == 3 && direction == Vector2Int.up)
         {
             return RoomType.Treasure;
