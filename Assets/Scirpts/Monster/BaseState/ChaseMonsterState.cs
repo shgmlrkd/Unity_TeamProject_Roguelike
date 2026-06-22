@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChaseMonsterState : MonsterBase
 {
     
-    private A_StarPathFinder pathFinder;
+    private AStarPathFinder pathFinder;
     private int pathIndex;
     private float pathTimer;
 
@@ -13,7 +13,7 @@ public class ChaseMonsterState : MonsterBase
     
     private Transform player;
     
-    List<A_StarNode> currentPath;
+    List<AStarNode> currentPath;
     
 
     protected override void Awake()
@@ -61,23 +61,20 @@ public class ChaseMonsterState : MonsterBase
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (currentPath == null) return;
+    //private void OnDrawGizmos()
+    //{
+    //    if (currentPath == null) return;
 
-        Gizmos.color = Color.purple;
+    //    Gizmos.color = Color.purple;
 
-        foreach (A_StarNode node in currentPath)
-        {
-            Vector3 worldPos = pathFinder.Grid.GetWorldPosition(node);
+    //    foreach (AStarNode node in currentPath)
+    //    {
+    //        Vector3 worldPos = pathFinder.Grid.GetWorldPosition(node);
 
-            Gizmos.DrawSphere(worldPos, 0.3f);
+    //        Gizmos.DrawSphere(worldPos, 0.3f);
 
             
-        }
-
-        
-        
-    }
+    //    }
+    //}
 
 }

@@ -5,17 +5,13 @@ using UnityEngine;
 public class PatrolMonsterState : MonsterBase
 {
     //// 길찾기 용    
-    private A_StarPathFinder pathFinder;                // A* 길찾기
-    private List<A_StarNode> currentPath;               // 현재 이동중인 경로 저장용
+    private AStarPathFinder pathFinder;                // A* 길찾기
+    private List<AStarNode> currentPath;               // 현재 이동중인 경로 저장용
     private int pathIndex;                              // 목표로 하는 노드 번호
 
     // 대기시간 및 코루틴 저장용
     private WaitForSeconds wait;
     private Coroutine patrolCo;
-
-    private int minPatrolDistance = 3; // 최소 거리값 
-    private int maxPatrolDistance = 8; // 최대 거리값 몬스터 데이터로 뺼까요?
-
 
     protected override void Awake() 
     {
@@ -68,9 +64,7 @@ public class PatrolMonsterState : MonsterBase
     {
         while ( currentPath != null && pathIndex < currentPath.Count) // 경로가 존재하며 목적지에 도착하지 않았다면
         {
-            Debug.Log($"이동중 : {pathIndex}/{currentPath.Count}");
             Vector3 targetPos = pathFinder.Grid.GetWorldPosition(currentPath[pathIndex]); // 현재 목표 노드의 월드 좌표 가져오기
-            Debug.Log($"거리 : {Vector2.Distance(rb.position, targetPos)}");
 
             Vector2 nextPosition = Vector2.MoveTowards(
                 rb.position,
@@ -91,7 +85,7 @@ public class PatrolMonsterState : MonsterBase
     private bool TrySetRandomPath()
     {
         // 현재 몬스터 위치에 해당하는 시작 노드 가져오기
-        A_StarNode startNode = pathFinder.Grid.GetNodeFromWorld(rb.position);
+        AStarNode startNode = pathFinder.Grid.GetNodeFromWorld(rb.position);
        
         // 못 가져 왔다면 실패
         if(startNode == null)
@@ -100,10 +94,10 @@ public class PatrolMonsterState : MonsterBase
         }
 
         // 시작 노드 기준 최소 / 최대 거리 안에서 랜덤 순찰 노드
-        A_StarNode randomNode = pathFinder.Grid.GetRandomPatrolNode(
+        AStarNode randomNode = pathFinder.Grid.GetRandomPatrolNode(
             startNode,
-            minPatrolDistance,
-            maxPatrolDistance);
+            monsterStateManager.MonsterData.MinPatrolDistance,
+            monsterStateManager.MonsterData.MaxPatrolDistance);
 
         if(randomNode == null)
         {
