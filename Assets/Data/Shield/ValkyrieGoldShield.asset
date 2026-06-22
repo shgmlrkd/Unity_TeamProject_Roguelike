@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37f8e4382dc48ac4a8a13eddd4ddd033, type: 3}
+  m_Name: ValkyrieGoldShield
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
+  itemType: 0
+  itemName: "\uBC1C\uD0A4\uB9AC \uACE8\uB4DC \uC274\uB4DC"
+  sprite: {fileID: 21300000, guid: 25cc219f0f5b942b9a4cb8ef05b0b280, type: 3}
+  equipmentType: 2
+  attack: 0
+  attackRange: 0
+  attackSpeedRate: 0
+  moveSpeedRate: 0
+  shieldHp: 8

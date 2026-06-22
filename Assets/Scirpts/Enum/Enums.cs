@@ -41,9 +41,16 @@ public enum ConsumableType
 public enum VolumeType
 {
     None = -1,
-    Master,
-    BGM,
-    SFX
+    Master,             // 마스터 볼륨
+    BGM,                // BGM 볼륨
+    SFX                 // SFX 볼륨
+}
+
+public enum HeartType 
+{
+    fullHeart,      // 체력이 가득 찬 하트
+    halfHeart,       // 체력이 절반인 하트
+    emptyHeart     // 체력이 없는 빈 하트  
 }
 
 ///////////////////////////////////////
@@ -52,21 +59,27 @@ public enum VolumeType
 
 public enum SceneType
 {
-    Title,
-    InGame
+    Title,      // 타이틀 씬
+    InGame      // 인게임 씬
 }
 
 ///////////////////////////////////////
 //              Map
 ///////////////////////////////////////
+///
 public enum RoomType 
 { 
-    Start, Normal, Boss, Store, Treasure 
+    Start,
+    Normal,
+    Boss, 
+    Store,
+    Treasure 
 }
 
 ///////////////////////////////////////
 //              Player
 ///////////////////////////////////////
+
 public enum PlayerStateEnum
 {
     None = -1,
