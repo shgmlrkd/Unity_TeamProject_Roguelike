@@ -16,8 +16,8 @@ MonoBehaviour:
   itemName: "\uBD88\uAF43 \uC815\uC218 \uBAA9\uAC78\uC774"
   sprite: {fileID: 21300000, guid: 16204c7fef5b24406bdc1bac781150ef, type: 3}
   equipmentType: 0
-  attack: 1
+  attack: 2
   attackRange: 1
-  attackSpeedRate: 1
-  moveSpeedRate: 1
+  attackSpeedRate: 0.5
+  moveSpeedRate: 1.2
   shieldHp: 0
