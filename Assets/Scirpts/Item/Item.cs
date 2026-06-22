@@ -24,7 +24,11 @@ public class Item : MonoBehaviour
         {
             // 장비다
             case ItemType.Equipment:
-                EquipmentType equipmentTypeKey = (EquipmentType)2;// Random.Range(0, 5);
+                EquipmentType equipmentTypeKey = (EquipmentType)Random.Range(0, 3);// Random.Range(0, 5);
+                if(equipmentTypeKey == EquipmentType.Weapon)
+                {
+                    equipmentTypeKey = EquipmentType.Necklace;
+                }
                 equipmentData = itemDataBase.GetEquipmentData(equipmentTypeKey);
                 break;
 
@@ -57,15 +61,26 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out PlayerHP player))
+        // 인벤토리가 생겼다면 이렇게 함
+        if (collision.TryGetComponent(out PlayerInventory player))
         {
             if (equipmentData != null)
             {
-                // 플레이어 담당자와 상의 해야함
-                player.SetBonusHp(equipmentData.ShieldHp);
+                player.StoreEquipment(transform.position, equipmentData);
             }
 
             gameObject.SetActive(false);
         }
+
+        /* 하트 UI 표시 테스트용
+        if (collision.TryGetComponent(out PlayerHP playe))
+        {
+            if (equipmentData != null)
+            {
+                playe.SetBonusHp(equipmentData.ShieldHp);
+            }
+
+            gameObject.SetActive(false);
+        }*/
     }
 }

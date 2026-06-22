@@ -10,10 +10,37 @@ public class PoolManager : ScenesSingleton<PoolManager>
 
     private Transform poolRoot; // 모든 풀링 오브젝트 최상위 부모
 
-    protected override void Awake()
+    private Transform uiPoolRoot; // UI 용
+
+    private bool isUI = false;
+
+    public void SetCreatePool(Transform transform = null, bool isUI = false)
     {
-        base.Awake();
-        CreatePoolRoot();
+        this.isUI = isUI;
+
+        if (isUI)
+        {
+            CreateUIPoolRoot(transform);
+        }
+        else
+        {
+            CreatePoolRoot();
+        }
+    }
+
+    private void CreateUIPoolRoot(Transform parentTransform)
+    {
+        // 이미 생성되어 있다면 중복 생성 방지
+        if (uiPoolRoot != null) return;
+
+        // 1. UI용 최상위 루트 생성 (반드시 RectTransform 포함)
+        GameObject uiRootObj = new GameObject("UIPoolRoot", typeof(RectTransform));
+
+        // 2. 넘겨받은 transform(보통 호출한 UI 패널)을 부모로 설정
+        // 이렇게 하면 UIPoolRoot가 Canvas 하위 계층에 놓이게 됩니다.
+        uiRootObj.transform.SetParent(parentTransform, false);
+
+        uiPoolRoot = uiRootObj.transform;
     }
 
     private void CreatePoolRoot()
@@ -23,7 +50,6 @@ public class PoolManager : ScenesSingleton<PoolManager>
         rootObj.transform.SetParent(transform); // PoolRoot를 PoolManager 오브젝트의 자식 설정
 
         poolRoot = rootObj.transform; // 생성된 poolRoot의 트랜스폼을 저장 
-
     }
 
     public void PreloadPool<T>(T prefab, int count) where T : Component // 오브젝트를 미리 생성
@@ -101,9 +127,25 @@ public class PoolManager : ScenesSingleton<PoolManager>
 
     private void CreatePoolParent(Type type) // 각 타입별 부모 오브젝트 생성
     {
-        GameObject parentObj = new GameObject(type.Name); // 타입 이름으로 오브젝트 생성
+        GameObject parentObj = null;
 
-        parentObj.transform.SetParent(poolRoot); // poolRoot의 자식으로 설정
+        if (isUI)
+        {
+            parentObj = new GameObject(type.Name, typeof(RectTransform));   // UI용
+        }
+        else
+        {
+            parentObj = new GameObject(type.Name);  // 타입 이름으로 오브젝트 생성
+        }
+
+        if (poolRoot != null)
+        {
+            parentObj.transform.SetParent(poolRoot); // poolRoot의 자식으로 설정
+        }
+        else
+        {
+            parentObj.transform.SetParent(uiPoolRoot); // poolRoot가 null이라면 UI용임
+        }
 
         poolParents.Add(type, parentObj.transform); // 타입별 부모 Transform에 저장
     }
