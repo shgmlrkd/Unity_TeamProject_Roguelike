@@ -6,7 +6,7 @@ public class MonsterStateManager : MonoBehaviour
 
     [SerializeField] private MonsterData monsterData;
     [SerializeField] private MonsterBase[] stateBeses;
-    [SerializeField] private A_StarPathFinder pathFinder;
+    [SerializeField] private AStarPathFinder pathFinder;
     [SerializeField] private MonsterStateEnum monsterState = MonsterStateEnum.None;
     [SerializeField] private UnityEvent<MonsterStateEnum> OnstateChanged;
     [SerializeField] private LayerMask PlayerLayer;
@@ -14,7 +14,7 @@ public class MonsterStateManager : MonoBehaviour
     private Transform target;
     public Transform Target { get { return target; } }
     public MonsterData MonsterData {get {return monsterData;}}
-    public A_StarPathFinder PathFinder {get {return pathFinder;}}
+    public AStarPathFinder PathFinder {get {return pathFinder;}}
     
 
     private void Start()

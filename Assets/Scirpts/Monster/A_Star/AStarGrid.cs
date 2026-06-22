@@ -2,14 +2,14 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class A_StarGrid : MonoBehaviour
+public class AStarGrid : MonoBehaviour
 {
     [SerializeField] private Tilemap wallTilemap; // 좌표 변환 / 맵 크기 용
     [SerializeField] private LayerMask obstacleLayer; // 벽 판정용
 
     BoundsInt bounds; // 타일맵의 범위와 크기 정보 저장
 
-    private A_StarNode[,] nodes; // 2차원 배열의 노드 배열 선언
+    private AStarNode[,] nodes; // 2차원 배열의 노드 배열 선언
 
 
     private void Awake()
@@ -24,7 +24,7 @@ public class A_StarGrid : MonoBehaviour
         int sizeX = bounds.size.x;
         int sizeY = bounds.size.y;
 
-        nodes = new A_StarNode[sizeX, sizeY];  // 측정된 타일맵 만큼 배열 만들기
+        nodes = new AStarNode[sizeX, sizeY];  // 측정된 타일맵 만큼 배열 만들기
 
         for (int x = 0; x < sizeX; x++) // 모든 배열 칸에 노드 생성
         {
@@ -40,12 +40,12 @@ public class A_StarGrid : MonoBehaviour
 
                 bool hasWall = wall != null;
 
-                nodes[x, y] = new A_StarNode(nodePos, hasWall); // 노드 생성후 배열에 저장
+                nodes[x, y] = new AStarNode(nodePos, hasWall); // 노드 생성후 배열에 저장
             }
         }
     }
 
-    private A_StarNode GetNode(Vector2Int cellPos) // 타일 좌표에 해당하는 노드 반환
+    private AStarNode GetNode(Vector2Int cellPos) // 타일 좌표에 해당하는 노드 반환
     {
 
         int x = cellPos.x - bounds.xMin;
@@ -58,7 +58,7 @@ public class A_StarGrid : MonoBehaviour
         return nodes[x, y];
     }
 
-    public A_StarNode GetNodeFromWorld(Vector3 worldPos) // 필드 트랜스폼의 포지션을 타일 좌표로 변환
+    public AStarNode GetNodeFromWorld(Vector3 worldPos) // 필드 트랜스폼의 포지션을 타일 좌표로 변환
     {
         Vector3Int cellPos = wallTilemap.WorldToCell(worldPos);
         Vector2Int nodePos = new Vector2Int(cellPos.x, cellPos.y);
@@ -66,9 +66,9 @@ public class A_StarGrid : MonoBehaviour
         return GetNode(nodePos); // A_StarNode 반환
     }
 
-    public List<A_StarNode> GetNeighbors(A_StarNode currentNode)  // 갈수 있는 길의 후보를 리스트에 넣기
+    public List<AStarNode> GetNeighbors(AStarNode currentNode)  // 갈수 있는 길의 후보를 리스트에 넣기
     {
-        List<A_StarNode> neighbors = new List<A_StarNode>();
+        List<AStarNode> neighbors = new List<AStarNode>();
 
         Vector2Int[] dirs = {
         new Vector2Int(1, 0),   // 오른쪽 
@@ -85,15 +85,15 @@ public class A_StarGrid : MonoBehaviour
 
         foreach (Vector2Int dir in dirs)  // 8 방향 탐색
         {
-            A_StarNode node = GetNode(currentNode.Position + dir);  // 현재 검사한 주변 노드 가져오기
+            AStarNode node = GetNode(currentNode.Position + dir);  // 현재 검사한 주변 노드 가져오기
 
             if (node == null) continue; // 맵밖 이면 무시
             if (node.IsWall) continue;  // 벽이면 무시
 
             if (dir.x != 0 && dir.y != 0) // 대각선 이동을 하는데 벽사이로 가는것을 방지
             {
-                A_StarNode sideX = GetNode(currentNode.Position + new Vector2Int(dir.x, 0)); // 대각선 검사 
-                A_StarNode sideY = GetNode(currentNode.Position + new Vector2Int(0, dir.y)); // 대각선 검사 
+                AStarNode sideX = GetNode(currentNode.Position + new Vector2Int(dir.x, 0)); // 대각선 검사 
+                AStarNode sideY = GetNode(currentNode.Position + new Vector2Int(0, dir.y)); // 대각선 검사 
 
                 if (sideX == null || sideY == null) continue;
                 if (sideX.IsWall || sideY.IsWall) continue;
@@ -108,7 +108,7 @@ public class A_StarGrid : MonoBehaviour
 
     }
 
-    public Vector3 GetWorldPosition(A_StarNode node) // 타일 좌표 변환 메서드 
+    public Vector3 GetWorldPosition(AStarNode node) // 타일 좌표 변환 메서드 
     {
         Vector3Int cellPos = new Vector3Int(node.Position.x, node.Position.y, 0);  // 노드가 가진 타일 좌표를 Tilemap 셀 좌표로 변환
 
@@ -118,24 +118,22 @@ public class A_StarGrid : MonoBehaviour
 
     public void ResetNode()  // 초기화 용 메서드
     {
-        foreach(A_StarNode node in nodes)
+        foreach(AStarNode node in nodes)
         {
             node.ResetCost();
         }
     }
 
-    public A_StarNode GetRandomPatrolNode(A_StarNode startNode, int minDistance, int maxDistance) // 패트롤 랜덤 end 포지션 지정 메서드
+    public AStarNode GetRandomPatrolNode(AStarNode startNode, float minDistance, float maxDistance) // 패트롤 랜덤 end 포지션 지정 메서드
     {
-        List<A_StarNode> randomPatrolNodes = new List<A_StarNode>(); // 이동 가능한 노드만 저장할 리스트
+        List<AStarNode> randomPatrolNodes = new List<AStarNode>(); // 이동 가능한 노드만 저장할 리스트
         
-        foreach (A_StarNode node in nodes)
+        foreach (AStarNode node in nodes)
         {
             if (node == null) continue;
             if (node.IsWall) continue;
 
-            int distance = 
-                Mathf.Abs(node.Position.x - startNode.Position.x) + 
-                Mathf.Abs(node.Position.y - startNode.Position.y);
+            float distance = Vector2.Distance(startNode.Position, node.Position);
 
             if (distance < minDistance) continue;
             if (distance > maxDistance) continue;

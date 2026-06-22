@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class A_StarPathFinder : MonoBehaviour
+public class AStarPathFinder : MonoBehaviour
 {
-    [SerializeField] private A_StarGrid grid;
+    [SerializeField] private AStarGrid grid;
 
-    public A_StarGrid Grid { get { return grid; } }
+    public AStarGrid Grid { get { return grid; } }
 
-    private List<A_StarNode> openList;
-    private List<A_StarNode> closeList;
+    private List<AStarNode> openList;
+    private List<AStarNode> closeList;
 
 
-    public List<A_StarNode> FindPath(Vector3 startPos, Vector3 targetPos)
+    public List<AStarNode> FindPath(Vector3 startPos, Vector3 targetPos)
     {
-        A_StarNode startNode = grid.GetNodeFromWorld(startPos);     // 시작 위치 가져오기
-        A_StarNode targetNode = grid.GetNodeFromWorld(targetPos);   // 목표 위치 노드 가져오기
+        AStarNode startNode = grid.GetNodeFromWorld(startPos);     // 시작 위치 가져오기
+        AStarNode targetNode = grid.GetNodeFromWorld(targetPos);   // 목표 위치 노드 가져오기
         
 
         if(startNode == null || targetNode == null)
@@ -26,8 +26,8 @@ public class A_StarPathFinder : MonoBehaviour
             return null;
         }
 
-        openList = new List<A_StarNode>();      // 초기화
-        closeList = new List<A_StarNode>();     // 초기화
+        openList = new List<AStarNode>();      // 초기화
+        closeList = new List<AStarNode>();     // 초기화
 
         grid.ResetNode();               // 이전에 탐색에서 사용된 G, H, Parent 값 초기화
 
@@ -40,7 +40,7 @@ public class A_StarPathFinder : MonoBehaviour
         
         while(openList.Count > 0)
         {
-            A_StarNode currentNode = openList[0];       // 임시 최고 순위 후보 지정
+            AStarNode currentNode = openList[0];       // 임시 최고 순위 후보 지정
 
             for (int i = 1; i < openList.Count; i++)    // 최고 순위를 제외한 더 좋은 노드 비교
             {
@@ -61,7 +61,7 @@ public class A_StarPathFinder : MonoBehaviour
 
 
 
-            foreach (A_StarNode neighbor in grid.GetNeighbors(currentNode))  
+            foreach (AStarNode neighbor in grid.GetNeighbors(currentNode))  
             {
                 if (neighbor.IsWall || closeList.Contains(neighbor))        // 주변 노드가 벽 또는 검사 끝난 노드는 할필요 없으니 다시 다음으로 진행
                 {
@@ -91,7 +91,7 @@ public class A_StarPathFinder : MonoBehaviour
         return null;
     }
 
-    private int GetDistance(A_StarNode NodeA, A_StarNode NodeB)
+    private int GetDistance(AStarNode NodeA, AStarNode NodeB)
     {
         int dstX = Mathf.Abs(NodeA.Position.x - NodeB.Position.x);  // x 축 차이 개수
         int dstY = Mathf.Abs(NodeA.Position.y - NodeB.Position.y);  // y 축 차이 개수
@@ -104,11 +104,11 @@ public class A_StarPathFinder : MonoBehaviour
 
     }
 
-    private List<A_StarNode> RetracePath(A_StarNode startNode, A_StarNode targetNode)
+    private List<AStarNode> RetracePath(AStarNode startNode, AStarNode targetNode)
     {
-        List<A_StarNode> path = new List<A_StarNode>(); // 최종 경로를 저장할 리스트
+        List<AStarNode> path = new List<AStarNode>(); // 최종 경로를 저장할 리스트
 
-        A_StarNode currentNode = targetNode;            // 경로 복원을 위해 목표 노드 부터 시작
+        AStarNode currentNode = targetNode;            // 경로 복원을 위해 목표 노드 부터 시작
 
         while (currentNode != startNode)                // 시작 노드에 도착할 때 까지
         {
