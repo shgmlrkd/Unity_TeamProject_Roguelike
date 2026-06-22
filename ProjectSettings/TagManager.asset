@@ -41,8 +41,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Tile
+    uniqueID: 1514074871
+    locked: 0
+  - name: Wall
+    uniqueID: 872056825
+    locked: 0
   - name: Door
     uniqueID: 3739372973
+    locked: 0
+  - name: Player
+    uniqueID: 3364119599
     locked: 0
   m_RenderingLayers:
   - Default
