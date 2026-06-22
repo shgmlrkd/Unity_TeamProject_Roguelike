@@ -7,7 +7,7 @@ public static class SceneNames
         = new Dictionary<SceneType, string>()
         {
             {SceneType.Title, "TiltleScene"},
-            {SceneType.InGame, "KimyoungbinInGame"},
+            {SceneType.InGame, "InGameScene"},
         };
 
     // 씬 타입별 이름을 반환해주는 메서드

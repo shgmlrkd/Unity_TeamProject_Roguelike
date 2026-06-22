@@ -15,7 +15,12 @@ MonoBehaviour:
   equipmentGroup:
   - type: 2
     datas:
-    - {fileID: 11400000, guid: 957060198bd7183478ca27fab57da9c2, type: 2}
+    - {fileID: 11400000, guid: f61cb1f2e1f9d0f4e95c24934bf6b354, type: 2}
     - {fileID: 11400000, guid: 957060198bd7183478ca27fab57da9c2, type: 2}
     - {fileID: 11400000, guid: 2b7408bb0448eee4b9a0296cdc276753, type: 2}
+  - type: 0
+    datas:
+    - {fileID: 11400000, guid: 2b1c8847ba6ca31468b7df14c3c21949, type: 2}
+    - {fileID: 11400000, guid: 2e189822b12fd0a44b8dfb25d552f463, type: 2}
+    - {fileID: 11400000, guid: 74198898a7047824780ff3352b233ad4, type: 2}
   consumableGroup: []
