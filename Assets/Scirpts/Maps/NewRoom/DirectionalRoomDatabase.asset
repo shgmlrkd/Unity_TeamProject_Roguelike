@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DirectionalRoomDatabaseSO
   startRoom:
     roomName: 
-    roomPrefab: {fileID: 5428048208597823004, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
+    roomPrefab: {fileID: 8833705308829559481, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
   normalRooms_Any:
   - roomName: 
-    roomPrefab: {fileID: 5428048208597823004, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
+    roomPrefab: {fileID: 8833705308829559481, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
   normalRooms_Up: []
   normalRooms_Down: []
   normalRooms_Left: []
