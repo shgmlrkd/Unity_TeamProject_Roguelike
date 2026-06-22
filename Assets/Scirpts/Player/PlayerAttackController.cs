@@ -14,8 +14,10 @@ public class PlayerAttackController : MonoBehaviour
     private CharacterInputManager inputManager;
     private CharacterController2D characterController;
     private PlayerWeaponController weaponController;
-
+    //공격 끝 조정
     private bool isAttacking;
+    //공격중 방향 고정
+    private Vector2 lockedAttackDirection = Vector2.down;
 
     private void Awake()
     {
@@ -25,7 +27,7 @@ public class PlayerAttackController : MonoBehaviour
 
         if (animator == null)
         {
-            animator = GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
         }
 
         if (attackHitbox != null)
@@ -64,6 +66,10 @@ public class PlayerAttackController : MonoBehaviour
 
     private void Update()
     {
+        if (isAttacking)
+        {
+            return;
+        }
         UpdateAttackAreaTransform();
     }
     //공격 키 누를 시 어택 애니메이션 호출
@@ -82,13 +88,35 @@ public class PlayerAttackController : MonoBehaviour
         {
             return;
         }
+
+        // 공격 시 마우스 방향 저장
+        lockedAttackDirection = characterController.LookDirection;
+
+        if (lockedAttackDirection.sqrMagnitude <= 0.001f)
+        {
+            lockedAttackDirection = Vector2.down;
+        }
+
+        lockedAttackDirection.Normalize();
+
+        // 저장방향으로 AttackArea를 배치
+        UpdateAttackAreaTransform(lockedAttackDirection);
+
         isAttacking = true;
         animator.SetTrigger("Attack");
     }
-
     private void UpdateAttackAreaTransform()
     {
-        if (attackAreaTransform == null || characterController == null)
+        if (characterController == null)
+        {
+            return;
+        }
+
+        UpdateAttackAreaTransform(characterController.LookDirection);
+    }
+    private void UpdateAttackAreaTransform(Vector2 attackDirection)
+    {
+        if (attackAreaTransform == null || weaponController == null)
         {
             return;
         }
@@ -100,11 +128,16 @@ public class PlayerAttackController : MonoBehaviour
             return;
         }
 
-        Vector2 lookDirection = characterController.LookDirection;
+        if (attackDirection.sqrMagnitude <= 0.001f)
+        {
+            return;
+        }
 
-        attackAreaTransform.localPosition = lookDirection * currentWeapon.AttackDistance;
+        attackDirection.Normalize();
 
-        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+        attackAreaTransform.localPosition = attackDirection * currentWeapon.AttackDistance;
+
+        float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
         attackAreaTransform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
     //애니메이터에 삽입
@@ -121,11 +154,13 @@ public class PlayerAttackController : MonoBehaviour
         {
             return;
         }
+        //공격시 방향 저장
+        Vector2 attackDirection = isAttacking ? lockedAttackDirection : characterController.LookDirection;
 
         DamageInfoSet damageInfo = new DamageInfoSet(
             currentWeapon.Damage,
             gameObject,
-            characterController.LookDirection
+            attackDirection
         );
 
         attackCollider.Init(damageInfo);
@@ -148,6 +183,8 @@ public class PlayerAttackController : MonoBehaviour
     {
         Debug.Log("EndAttack 호출됨");
         isAttacking = false;
+
+        UpdateAttackAreaTransform();
     }
     //
     private void HandleWeaponChanged(WeaponData weaponData)
