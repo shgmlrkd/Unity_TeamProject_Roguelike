@@ -27,4 +27,5 @@ public class EquipmentData : ItemData
     public float AttackSpeedRate => attackSpeedRate;        // 공격 속도 계수 (애니메이션 용도)
     public float MoveSpeedRate => moveSpeedRate;            // 이동 속도 계수
     public int ShieldHp => shieldHp;                        // 추가 체력
+
 }

@@ -9,6 +9,21 @@ public class ScenesSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
+            // instance가 null 이면
+            if (instance == null)
+            {
+                // 현재 씬에 instance가 있는지 찾기
+                instance = FindFirstObjectByType<T>();
+
+                // 그래도 null 이면
+                if (instance == null)
+                {
+                    // GameObject를 싱글톤으로 만들 클래스 이름으로 만들고 그 오브젝트에 스크립트 넣어주기
+                    GameObject obj = new GameObject(typeof(T).Name);
+                    instance = obj.AddComponent<T>();
+                }
+            }
+
             return instance;
         }
     }
