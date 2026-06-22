@@ -7,15 +7,13 @@ public class EquipmentUIController : MonoBehaviour
     [SerializeField]
     private Image[] equipmentImages;
 
-    // 이게 생기면 
     [SerializeField]
     private PlayerInventory inventory;
 
     [SerializeField]
     private EquipmentImageManager equipmentImageManager;
 
-    // 내일 수정 할 부분
-    private Image[] prevImages = new Image[4];//(int)EquipmentType.Length];
+    private Image[] prevImages = new Image[(int)EquipmentType.Length];
 
     private void OnEnable()
     {
