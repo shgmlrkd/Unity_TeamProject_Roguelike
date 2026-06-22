@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////
 //              Monster
 ///////////////////////////////////////
-public enum MonsterStateEnum 
+public enum MonsterStateEnum // 몬스터 상태
 {
     None = -1,
     Idle, 
@@ -10,6 +10,21 @@ public enum MonsterStateEnum
     Attack, 
     Dead 
 }
+
+public enum NormalMonsterPattern // 일반 몬스터 패턴
+{
+    PatternA,
+    PatternB,
+    Length
+}
+public enum BossMonsterPattern // 보스 몬스터 패턴
+{
+    BossPatternA,
+    BossPatternB,
+    BossPatternC,
+    Length
+}
+
 
 ///////////////////////////////////////
 //               Item
