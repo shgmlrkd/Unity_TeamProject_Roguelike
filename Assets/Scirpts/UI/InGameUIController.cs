@@ -1,5 +1,4 @@
-﻿using DG.Tweening;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InGameUIController : MonoBehaviour
@@ -12,22 +11,37 @@ public class InGameUIController : MonoBehaviour
     [SerializeField]
     private OptionUIAnimation optionUIAnimation;
 
-    private bool isOptionOpen = false;
+    [Header("장비 UI 패널")]
+    [SerializeField]
+    private GameObject equipmentUI;
 
-    private void Awake()
-    {
-        if (screenFader != null)
-        {
-            screenFader.gameObject.SetActive(false);
-        }
-    }
+    [Header("스탯 UI 패널")]
+    [SerializeField]
+    private GameObject statUI;
+
+    private bool isOptionOpen = false;
 
     private void Start()
     {
+        // 옵션 설정값을 기반으로 UI 활성/비활성 상태 갱신
+        ApplyUIVisibility(OptionManager.Instance.ShowStat, OptionManager.Instance.ShowEquip);
+
         screenFader.gameObject.SetActive(true);
 
         // 인게임 씬으로 넘어오면 페이드 인 진행
         screenFader.FadeIn(UIAnimationSettings.FadeDuration);
+    }
+
+    private void OnEnable()
+    {
+        // 이벤트 등록
+        OptionManager.Instance.OnUIOptionChanged += ApplyUIVisibility;
+    }
+
+    private void OnDisable()
+    {
+        // 이벤트 해제
+        OptionManager.Instance.OnUIOptionChanged -= ApplyUIVisibility;
     }
 
     private void Update()
@@ -65,11 +79,20 @@ public class InGameUIController : MonoBehaviour
     }
 
     // 옵션 닫고 게임 시간 재개
-    private void CloseOption()
+    public void CloseOption()
     {
         optionUIAnimation.Hide();
         isOptionOpen = false;
 
         Time.timeScale = 1.0f;
+    }
+
+    // 옵션에서 설정한 부분만 표시 해주기 (장비, 스탯)
+    private void ApplyUIVisibility(bool showStat, bool showEquip)
+    {
+        print($"InGameUIController : {OptionManager.Instance.ShowStat} / {OptionManager.Instance.ShowEquip}");
+
+        statUI.SetActive(showStat);
+        equipmentUI.SetActive(showEquip);
     }
 }
