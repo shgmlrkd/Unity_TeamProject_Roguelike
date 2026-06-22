@@ -8,18 +8,22 @@ public class PlayerHP : MonoBehaviour, IDamageable
     [SerializeField] private Animator animator;
 
     [SerializeField] private int maxHp = 10;
+    [SerializeField] private const int MaxBonusHp = 20;
+
 
     [SerializeField] private float invincibleTime = 0.8f;
     private int currentHp;
-
     // 추가 체력 저장할 변수
-    [SerializeField]
     private int currentBonusHp = 0;
 
     private bool isDead;
 
     private bool isInvincible;
     private Coroutine invincibleCoroutine;
+
+    [Header("아이템 테스트용")]
+    [SerializeField]
+    private Transform bonusHpObj;
 
     public int MaxHp => maxHp;
     public int CurrentHp => currentHp;
@@ -45,6 +49,11 @@ public class PlayerHP : MonoBehaviour, IDamageable
     private void Start()
     {
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
+
+        if (bonusHpObj != null)
+        {
+            Instantiate(bonusHpObj, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
+        }
     }
 
     private void Update()
@@ -52,7 +61,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
         //UpdateTestCurrentHp();
 
         // 데미지 받은것을 가정
-        if (Keyboard.current.aKey.wasPressedThisFrame)
+        /*if (Keyboard.current.aKey.wasPressedThisFrame)
         {
             TakeDamage(new DamageInfoSet(3));
         }
@@ -68,7 +77,19 @@ public class PlayerHP : MonoBehaviour, IDamageable
             }
 
             OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        }*/
+    }
+
+    public void SetBonusHp(int bonusHp)
+    {
+        if (isDead)
+        {
+            return;
         }
+
+        currentBonusHp = Mathf.Clamp(currentBonusHp + bonusHp, 0, MaxBonusHp);
+
+        OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
 
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
@@ -77,24 +98,26 @@ public class PlayerHP : MonoBehaviour, IDamageable
         {
             return;
         }
+        if (isInvincible)
+        {
+            return;
+        }
 
         // 현재 추가 체력이 있는가
         if (currentBonusHp > 0)
         {
             currentBonusHp -= damageInfoset.Damage;
+
+            if (currentBonusHp < 0)// 추가 체력으로 막지 못한 남은 데미지
+            {
+                int overflowDamage = -currentBonusHp;
+                currentHp -= overflowDamage;
+                currentBonusHp = 0;
+            }
         }
         else // 없으면 현재 체력에서 데미지 받음
         {
             currentHp -= damageInfoset.Damage;
-        }
-
-        // 추가 체력으로 막지 못한 남은 데미지
-        if (currentBonusHp < 0)
-        {
-            int remainingDamage = -currentBonusHp;
-
-            currentHp -= remainingDamage;
-            currentBonusHp = 0;
         }
 
         GameObject attacker = damageInfoset.Attacker;
