@@ -41,7 +41,8 @@ public enum EquipmentType
     Necklace,           // 장비창 1번
     Weapon,             // 장비창 2번
     Shield,             // 장비창 3번
-    Ring                // 장비창 4번
+    Ring,               // 장비창 4번
+    Length              // 전체 길이
 }
 
 public enum ConsumableType
