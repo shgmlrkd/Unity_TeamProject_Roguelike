@@ -3,7 +3,6 @@
 public class EquipmentDropSpawner : MonoBehaviour
 {
     [SerializeField] private PlayerInventory playerInventory;
-    [SerializeField] private GameObject equipmentItemPrefab;
     [SerializeField] private float droppedItemPickupDelay = 1.0f;
 
     private void Awake()
@@ -32,17 +31,14 @@ public class EquipmentDropSpawner : MonoBehaviour
 
     private void SpawnDroppedEquipment(Vector3 position, EquipmentData equipmentData)
     {
-        if (equipmentItemPrefab == null || equipmentData == null)
+        // 장착했었던 장비 데이터가 없을 때
+        if(equipmentData == null)
         {
             return;
         }
 
-        GameObject itemObject = Instantiate(equipmentItemPrefab, position, Quaternion.identity);
-
-        if (itemObject.TryGetComponent(out EquipmentItem equipmentItem))
-        {
-            equipmentItem.SetEquipmentData(equipmentData);
-            equipmentItem.SetPickupDelay(droppedItemPickupDelay);
-        }
+        // 이걸 통해 아이템이 position에 장착되있었던 아이템 데이터로 Drop함
+        Item equippedItem = ItemManager.Instance.DropEquippedItem(position, equipmentData);
+        equippedItem.SetPickupDelay(droppedItemPickupDelay);
     }
 }
