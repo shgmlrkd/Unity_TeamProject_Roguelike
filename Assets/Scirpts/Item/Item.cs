@@ -1,66 +1,65 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework.Interfaces;
+using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField]
-    private ItemDataBase itemDataBase;
+    private ItemData itemData = null;
 
     private EquipmentData equipmentData = null;
     private ConsumableData consumableData = null;
 
     private SpriteRenderer spriteRenderer;
 
+    private float canPickupTime;
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnEnable()
+    public void Initialize(ItemData data, Vector2 pos)
     {
-        // 이건 장비 타입인지 소비 타입인지 랜덤 돌린거
-        int itemType = 0;// Random.Range(0, 2);
+        itemData = data;
 
-        switch ((ItemType)itemType)
+        equipmentData = null;
+        consumableData = null;
+
+        if (data is EquipmentData equipment)
         {
-            // 장비다
-            case ItemType.Equipment:
-                EquipmentType equipmentTypeKey = (EquipmentType)Random.Range(0, 3);// Random.Range(0, 5);
-                if(equipmentTypeKey == EquipmentType.Weapon)
-                {
-                    equipmentTypeKey = EquipmentType.Necklace;
-                }
-                equipmentData = itemDataBase.GetEquipmentData(equipmentTypeKey);
-                break;
-
-            // 소비다
-            case ItemType.Consumable:
-                ConsumableType consumableTypeKey = (ConsumableType)Random.Range(0, 1);
-                consumableData = itemDataBase.GetConsumableData(consumableTypeKey);
-                break;
+            equipmentData = equipment;
+        }
+        else if (data is ConsumableData consumable)
+        {
+            consumableData = consumable;
         }
 
-        ItemData itemdata = null;
+        UpdateVisual();
+        transform.position = pos;
+    }
 
-        if (equipmentData != null) 
+    private void UpdateVisual()
+    {
+        if (equipmentData == null || spriteRenderer == null)
         {
-            itemdata = equipmentData;
-        }
-        else if(consumableData != null)
-        {
-            itemdata = consumableData;
-        }
-
-        if(itemdata == null)
-        {
-            print("아이템 데이터가 없음");
             return;
         }
 
-        spriteRenderer.sprite = itemdata.Sprite;
+        spriteRenderer.sprite = equipmentData.Sprite;
+    }
+
+    public void SetPickupDelay(float delay)
+    {
+        canPickupTime = Time.time + delay;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 아이템 줍기 쿨타임
+        if (Time.time < canPickupTime)
+        {
+            return;
+        }
+
         // 인벤토리가 생겼다면 이렇게 함
         if (collision.TryGetComponent(out PlayerInventory player))
         {
@@ -69,7 +68,7 @@ public class Item : MonoBehaviour
                 player.StoreEquipment(transform.position, equipmentData);
             }
 
-            gameObject.SetActive(false);
+            ItemManager.Instance.ReturnItem(this);
         }
 
         /* 하트 UI 표시 테스트용

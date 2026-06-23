@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,10 +21,6 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
     private bool isInvincible;
     private Coroutine invincibleCoroutine;
-
-    [Header("아이템 테스트용")]
-    [SerializeField]
-    private Transform bonusHpObj;
 
     public int MaxHp => maxHp;
     public int CurrentHp => currentHp;
@@ -46,40 +43,26 @@ public class PlayerHP : MonoBehaviour, IDamageable
             animator = GetComponent<Animator>();
         }
     }
+
     private void Start()
     {
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
-
-        if (bonusHpObj != null)
-        {
-            Instantiate(bonusHpObj, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
-        }
     }
 
-    private void Update()
+    // 이건 일반 체력용 호출 함수 (포션 먹기)
+    public void Heal(int amount)
     {
-        //UpdateTestCurrentHp();
-
-        // 데미지 받은것을 가정
-        /*if (Keyboard.current.aKey.wasPressedThisFrame)
+        if (isDead)
         {
-            TakeDamage(new DamageInfoSet(3));
+            return;
         }
 
-        // 추가 체력 아이템 먹엇다고 가정
-        if (Keyboard.current.dKey.wasPressedThisFrame)
-        {
-            currentBonusHp += 1;
+        currentHp = Mathf.Clamp(currentHp + amount, 0, MaxHp);
 
-            if (currentBonusHp > 20)
-            {
-                currentBonusHp = 20;
-            }
-
-            OnHpChanged?.Invoke(currentHp, currentBonusHp);
-        }*/
+        OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
 
+    // 이건 추가 체력용 호출 함수
     public void SetBonusHp(int bonusHp)
     {
         if (isDead)
