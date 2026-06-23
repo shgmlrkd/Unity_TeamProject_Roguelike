@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MonsterBase : MonoBehaviour 
 {
@@ -8,6 +9,8 @@ public class MonsterBase : MonoBehaviour
     protected Collider2D monsterCollider2D;
     protected MonsterHP monsterHP;
 
+    protected List<AStarNode> currentPath;
+    protected AStarPathFinder pathFinder;
     protected virtual void Awake()
     {
 
@@ -36,4 +39,19 @@ public class MonsterBase : MonoBehaviour
         
     }
    
+    protected void OnDrawGizmos()
+    {
+        if (currentPath == null) return;
+
+        Gizmos.color = Color.purple;
+
+        foreach (AStarNode node in currentPath)
+        {
+            Vector3 worldPos = pathFinder.Grid.GetWorldPosition(node);
+
+            Gizmos.DrawSphere(worldPos, 0.3f);
+
+
+        }
+    }
 }
