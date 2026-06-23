@@ -20,6 +20,8 @@ public class CharacterController2D : MonoBehaviour
     //화면 기준 마우스 위치 좌표 도출용
     private Camera mainCamera;
 
+    private PlayerInventory playerInventory;
+
     private Vector2 lookDirection = Vector2.down;
 
     public Vector2 LookDirection => lookDirection;
@@ -32,6 +34,7 @@ public class CharacterController2D : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         inputManager = GetComponent<CharacterInputManager>();
+        playerInventory = GetComponent<PlayerInventory>();
 
         if (animator == null)
         {
@@ -76,9 +79,26 @@ public class CharacterController2D : MonoBehaviour
 
     private void Move()
     {
-        rb.linearVelocity = inputManager.MoveInput * moveSpeed;
+        if (rb == null || inputManager == null)
+        {
+            return;
+        }
+
+        float finalMoveSpeed = GetFinalMoveSpeed();
+
+        rb.linearVelocity = inputManager.MoveInput * finalMoveSpeed;
     }
-    
+    private float GetFinalMoveSpeed()
+    {
+        float moveSpeedRate = 0f;
+
+        if (playerInventory != null && playerInventory.CurrentBonusStat != null)
+        {
+            moveSpeedRate = playerInventory.CurrentBonusStat.MoveSpeedRate;
+        }
+
+        return moveSpeed * Mathf.Max(0.1f, 1f + moveSpeedRate);
+    }
     private void UpdateLookDirection()
     {
         if (mainCamera == null)
