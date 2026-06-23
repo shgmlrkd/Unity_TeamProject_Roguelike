@@ -17,10 +17,13 @@ MonoBehaviour:
   monsterMaxHp: 5
   moveSpeed: 2
   attackDamage: 1
-  attakcRange: 2
+  attackRange: 1
+  attackTakeDamageRange: 0
   attackDelay: 1
-  contactRange: 4
+  contactRange: 5
   patrolSpeed: 3
   patrolWaitTime: 0.5
+  minPatrolDistance: 3
+  maxPatrolDistance: 8
   minDropGold: 0
   maxDropGold: 0
