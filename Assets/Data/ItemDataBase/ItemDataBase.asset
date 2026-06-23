@@ -23,4 +23,14 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 2b1c8847ba6ca31468b7df14c3c21949, type: 2}
     - {fileID: 11400000, guid: 2e189822b12fd0a44b8dfb25d552f463, type: 2}
     - {fileID: 11400000, guid: 74198898a7047824780ff3352b233ad4, type: 2}
+  - type: 1
+    datas:
+    - {fileID: 11400000, guid: 7fb9161dc16b9404e9bb4f2045873de0, type: 2}
+    - {fileID: 11400000, guid: ffcf8024221952f45bb0239ef43fe013, type: 2}
+    - {fileID: 11400000, guid: cecc6c5b125a39942aeb9a077302dc34, type: 2}
+  - type: 3
+    datas:
+    - {fileID: 11400000, guid: 5427fc3f492235c4bae9e74da89048a5, type: 2}
+    - {fileID: 11400000, guid: 8a7ca73f0c50a7842a5980632a27e856, type: 2}
+    - {fileID: 11400000, guid: 0748e9182a5513248bee2adf4de203e6, type: 2}
   consumableGroup: []

@@ -9,14 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37f8e4382dc48ac4a8a13eddd4ddd033, type: 3}
-  m_Name: DefaultWeapon
-  m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
+  m_Script: {fileID: 11500000, guid: acb528d961a693c4588a63127296d5d2, type: 3}
+  m_Name: MoonlightSword
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   itemType: 0
-  itemName: "\uAE30\uBCF8\uBB34\uAE30"
-  sprite: {fileID: 21300000, guid: fdc9f5cadf8e7814f8c4f70d8a6763c4, type: 3}
+  itemName: "\uC6D4\uAD11\uAC80"
+  sprite: {fileID: 21300000, guid: 7ecb537780811432fba7f3ea9ee010f6, type: 3}
   equipmentType: 1
-  attack: 1
+  attack: 3
   attackRange: 1
   attackSpeedRate: 1
   moveSpeedRate: 1
+  shieldHp: 0
+  attackBoxSize: {x: 2, y: 3}
+  weaponItemPrefab: {fileID: 0}
