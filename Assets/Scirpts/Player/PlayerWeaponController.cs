@@ -6,10 +6,8 @@ public class PlayerWeaponController : MonoBehaviour
     [Header("Weapon")]
     [SerializeField] private WeaponData defaultWeapon;
     [SerializeField] private WeaponData currentWeapon;
-    [SerializeField] private float weaponDropDistance = 0.8f;
-    [SerializeField] private float droppedWeaponPickupDelay = 2.0f;
 
-    private CharacterController2D characterController;
+    private PlayerInventory playerInventory;
 
     public WeaponData CurrentWeapon => currentWeapon;
 
@@ -17,19 +15,44 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController2D>();
+        playerInventory = GetComponent<PlayerInventory>();
 
         if (currentWeapon == null)
         {
             currentWeapon = defaultWeapon;
         }
     }
-
+    private void OnEnable()
+    {
+        if (playerInventory != null)
+        {
+            playerInventory.OnEquipmentStored += HandleEquipmentStored;
+            playerInventory.OnEquipmentRemoved += HandleEquipmentRemoved;
+        }
+    }
+    private void OnDisable()
+    {
+        if (playerInventory != null)
+        {
+            playerInventory.OnEquipmentStored -= HandleEquipmentStored;
+            playerInventory.OnEquipmentRemoved -= HandleEquipmentRemoved;
+        }
+    }
     private void Start()
     {
+        // 기본 무기도 인벤토리에 저장해야 CurrentBonusStat.Attack에 포함됨
+        if (playerInventory != null && currentWeapon != null)
+        {
+            if (!playerInventory.HasEquipment(currentWeapon.EquipmentType))
+            {
+                playerInventory.StoreEquipment(transform.position, currentWeapon);
+            }
+        }
+
         OnWeaponChanged?.Invoke(currentWeapon);
     }
     //들고 있던 무기 떨어트리고 장착
+    // 기존 WeaponItem 쪽 코드 호환용
     public void EquipWeapon(WeaponData newWeapon)
     {
         if (newWeapon == null)
@@ -37,46 +60,50 @@ public class PlayerWeaponController : MonoBehaviour
             return;
         }
 
-        DropCurrentWeapon();
+        if (playerInventory != null)
+        {
+            playerInventory.StoreEquipment(transform.position, newWeapon);
+            return;
+        }
 
+        // 인벤토리가 없을 때만 예외적으로 직접 장착
         currentWeapon = newWeapon;
         OnWeaponChanged?.Invoke(currentWeapon);
-
-        Debug.Log($"무기 장착: {currentWeapon.WeaponName}");
     }
     //무기 떨어트리는 위치 제어
-    private void DropCurrentWeapon()
+    private void HandleEquipmentStored(Vector3 pos, EquipmentData equipmentData)
     {
-        if (currentWeapon == null || currentWeapon.WeaponItemPrefab == null)
+        if (equipmentData == null)
         {
             return;
         }
 
-        Vector2 lookDirection = Vector2.down;
-
-        if (characterController != null)
+        if (equipmentData.EquipmentType != EquipmentType.Weapon)
         {
-            lookDirection = characterController.LookDirection;
+            return;
         }
 
-        Vector2 dropDirection = -lookDirection;
-
-        if (dropDirection == Vector2.zero)
+        if (equipmentData is not WeaponData weaponData)
         {
-            dropDirection = Vector2.down;
+            //Debug.LogError("Weapon 타입 장비인데 WeaponData가 아닙니다.");
+            return;
         }
 
-        Vector3 dropPosition = transform.position + (Vector3)(dropDirection.normalized * weaponDropDistance);
+        currentWeapon = weaponData;
 
-        GameObject droppedWeapon = Instantiate(
-            currentWeapon.WeaponItemPrefab,
-            dropPosition,
-            Quaternion.identity
-        );
+        OnWeaponChanged?.Invoke(currentWeapon);
 
-        if (droppedWeapon.TryGetComponent(out WeaponItem weaponItem))
+        //Debug.Log($"무기 장착: {currentWeapon.WeaponName}");
+    }
+    private void HandleEquipmentRemoved(EquipmentType equipmentType)
+    {
+        if (equipmentType != EquipmentType.Weapon)
         {
-            weaponItem.SetPickupDelay(droppedWeaponPickupDelay);
+            return;
         }
+
+        currentWeapon = null;
+
+        OnWeaponChanged?.Invoke(currentWeapon);
     }
 }

@@ -14,6 +14,7 @@ public class PlayerAttackController : MonoBehaviour
     private CharacterInputManager inputManager;
     private CharacterController2D characterController;
     private PlayerWeaponController weaponController;
+    private PlayerInventory playerInventory;
     //공격 끝 조정
     private bool isAttacking;
     //공격중 방향 고정
@@ -24,6 +25,7 @@ public class PlayerAttackController : MonoBehaviour
         inputManager = GetComponent<CharacterInputManager>();
         characterController = GetComponent<CharacterController2D>();
         weaponController = GetComponent<PlayerWeaponController>();
+        playerInventory = GetComponent<PlayerInventory>();
 
         if (animator == null)
         {
@@ -43,7 +45,7 @@ public class PlayerAttackController : MonoBehaviour
         if (inputManager != null)
         {
             inputManager.OnAttackPressed += HandleAttackPressed;
-        }
+        }   
 
         if (weaponController != null)
         {
@@ -84,7 +86,7 @@ public class PlayerAttackController : MonoBehaviour
             return;
         }
 
-        if (animator == null)
+        if (animator == null || characterController == null)
         {
             return;
         }
@@ -101,6 +103,8 @@ public class PlayerAttackController : MonoBehaviour
 
         // 저장방향으로 AttackArea를 배치
         UpdateAttackAreaTransform(lockedAttackDirection);
+        //공격 속도
+        ApplyAttackSpeedToAnimator();
 
         isAttacking = true;
         animator.SetTrigger("Attack");
@@ -135,7 +139,9 @@ public class PlayerAttackController : MonoBehaviour
 
         attackDirection.Normalize();
 
-        attackAreaTransform.localPosition = attackDirection * currentWeapon.AttackDistance;
+        float finalAttackDistance = GetFinalAttackDistance(currentWeapon);
+
+        attackAreaTransform.localPosition = attackDirection * finalAttackDistance;
 
         float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
         attackAreaTransform.rotation = Quaternion.Euler(0f, 0f, angle);
@@ -157,8 +163,10 @@ public class PlayerAttackController : MonoBehaviour
         //공격시 방향 저장
         Vector2 attackDirection = isAttacking ? lockedAttackDirection : characterController.LookDirection;
 
+        int finalDamage = GetFinalAttackDamage(currentWeapon);
+
         DamageInfoSet damageInfo = new DamageInfoSet(
-            currentWeapon.Damage,
+            finalDamage,
             gameObject,
             attackDirection
         );
@@ -207,5 +215,65 @@ public class PlayerAttackController : MonoBehaviour
         }
 
         attackBoxCollider.size = currentWeapon.AttackBoxSize;
+    }
+    //최종 공격력, 범위, 공격 속도 추가
+    private int GetFinalAttackDamage(WeaponData currentWeapon)
+    {
+        if (playerInventory != null && playerInventory.CurrentBonusStat != null)
+        {
+            int finalAttack = playerInventory.CurrentBonusStat.Attack;
+
+            if (finalAttack > 0)
+            {
+                return finalAttack;
+            }
+        }
+
+        if (currentWeapon != null)
+        {
+            return Mathf.Max(1, currentWeapon.Damage);
+        }
+
+        return 1;
+    }
+    private float GetFinalAttackDistance(WeaponData currentWeapon)
+    {
+        if (playerInventory != null && playerInventory.CurrentBonusStat != null)
+        {
+            float finalRange = playerInventory.CurrentBonusStat.AttackRange;
+
+            if (finalRange > 0f)
+            {
+                return finalRange;
+            }
+        }
+
+        if (currentWeapon != null)
+        {
+            return Mathf.Max(0.1f, currentWeapon.AttackDistance);
+        }
+
+        return 0.7f;
+    }
+    private float GetAttackSpeedMultiplier()
+    {
+        float attackSpeedRate = 0f;
+
+        if (playerInventory != null && playerInventory.CurrentBonusStat != null)
+        {
+            attackSpeedRate = playerInventory.CurrentBonusStat.AttackSpeedRate;
+        }
+
+        return Mathf.Max(0.1f, 1f + attackSpeedRate);
+    }
+
+    private void ApplyAttackSpeedToAnimator()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+
+        animator.SetFloat("AttackSpeedMultiplier", GetAttackSpeedMultiplier());
     }
 }
