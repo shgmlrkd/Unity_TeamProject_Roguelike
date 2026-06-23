@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-
 public class Doorinstall : MonoBehaviour
 {
     public Vector2Int ParentRoomGridPos { get; set; }
@@ -36,7 +35,6 @@ public class Doorinstall : MonoBehaviour
             }
         }
     }
-
     private void SpawnDoor()
     {
         instantiatedDoor = Instantiate(doorPrefab, transform.position, Quaternion.identity);
@@ -73,4 +71,5 @@ public class Doorinstall : MonoBehaviour
     {
         destinationRoomPos = dest;
     }
+    
 }

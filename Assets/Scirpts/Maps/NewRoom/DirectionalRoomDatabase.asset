@@ -15,22 +15,39 @@ MonoBehaviour:
   startRoom:
     roomName: 
     roomPrefab: {fileID: 8833705308829559481, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
-  normalRooms_Any:
-  - roomName: 
-    roomPrefab: {fileID: 8833705308829559481, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
-  normalRooms_Up: []
-  normalRooms_Down: []
-  normalRooms_Left: []
-  normalRooms_Right: []
-  bossRooms_Up: []
-  bossRooms_Down: []
-  bossRooms_Left: []
-  bossRooms_Right: []
-  storeRooms_Up: []
-  storeRooms_Down: []
-  storeRooms_Left: []
-  storeRooms_Right: []
-  treasureRooms_Up: []
-  treasureRooms_Down: []
-  treasureRooms_Left: []
-  treasureRooms_Right: []
+  normalRooms:
+    up:
+    - roomName: 
+      roomPrefab: {fileID: 5040826379469326472, guid: dc90fb5be17f1d448a8db685c426bbf3, type: 3}
+    down:
+    - roomName: 
+      roomPrefab: {fileID: 5040826379469326472, guid: dc90fb5be17f1d448a8db685c426bbf3, type: 3}
+    left:
+    - roomName: 
+      roomPrefab: {fileID: 8118879689239770615, guid: abf4149042b762c4a912f373c7fc6910, type: 3}
+    right:
+    - roomName: 
+      roomPrefab: {fileID: 8118879689239770615, guid: abf4149042b762c4a912f373c7fc6910, type: 3}
+    any:
+    - roomName: 
+      roomPrefab: {fileID: 8099211862079072021, guid: a7470a7d6c883c8458d5ec497197528e, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 8833705308829559481, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
+  bossRooms:
+    up: []
+    down: []
+    left: []
+    right: []
+    any: []
+  treasureRooms:
+    up: []
+    down: []
+    left: []
+    right: []
+    any: []
+  storeRooms:
+    up: []
+    down: []
+    left: []
+    right: []
+    any: []
