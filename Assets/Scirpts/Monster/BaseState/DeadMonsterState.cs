@@ -10,6 +10,9 @@ public class DeadMonsterState : MonsterBase
 
     private void EnterDeadState()
     {
+        // 예시로 몬스터가 죽었을 때
+        //ItemManager.Instance.DropItem(transform.position);
+
 
         rb.linearVelocity = Vector2.zero; // 죽었을 때 움직임 멈추기
         monsterCollider2D.enabled = false; // 충돌 끄기

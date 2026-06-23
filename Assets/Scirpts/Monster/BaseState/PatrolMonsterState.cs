@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PatrolMonsterState : MonsterBase
 {
-    //// 길찾기 용    
-    private AStarPathFinder pathFinder;                // A* 길찾기
-    private List<AStarNode> currentPath;               // 현재 이동중인 경로 저장용
-    private int pathIndex;                              // 목표로 하는 노드 번호
-
     // 대기시간 및 코루틴 저장용
     private WaitForSeconds wait;
     private Coroutine patrolCo;
+
+    private int pathIndex;                              // 목표로 하는 노드 번호
 
     protected override void Awake() 
     {
@@ -39,25 +37,21 @@ public class PatrolMonsterState : MonsterBase
             patrolCo = null;
         }
         
-
     }
 
     private IEnumerator PatrolCo()  // 랜덤 위치 순찰
     {
-        while (true)
+        bool hasPath = TrySetRandomPath(); // 랜덤 순찰 목표까지의 경로 생성
+
+        if (hasPath) // 목표 경로가 있다면 이동
         {
-
-            bool hasPath = TrySetRandomPath(); // 랜덤 순찰 목표까지의 경로 생성
-
-            if (hasPath) // 목표 경로가 있다면 이동
-            {
-                yield return MovePath();
-                
-            }
-
-            yield return wait; // 도착후 대기
-
+            yield return MovePath();
         }
+
+        monsterStateManager.SetState(MonsterStateEnum.Idle);
+
+        yield break; // 도착후 대기
+
     }
 
     private IEnumerator MovePath()
@@ -73,7 +67,9 @@ public class PatrolMonsterState : MonsterBase
 
             rb.MovePosition(nextPosition);
 
-            if(Vector2.Distance(nextPosition, targetPos) < 0.25f) // 목표 노드에 도착했다면 다음 목표 노드로 변경 도착 판정을 널널하게
+            monsterStateManager.FlipTo(targetPos);
+
+            if (Vector2.Distance(nextPosition, targetPos) < 0.35f) // 목표 노드에 도착했다면 다음 목표 노드로 변경 도착 판정을 널널하게
             {
                 pathIndex++;
             }
