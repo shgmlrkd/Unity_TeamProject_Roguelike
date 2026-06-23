@@ -15,7 +15,8 @@ public class MonsterData : ScriptableObject
     [Header("몬스터 공격")]
     [SerializeField] private int attackDamage;
     [Header("공격 사거리")]
-    [SerializeField] private float attakcRange;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float attackTakeDamageRange;
     [Header("몬스터 공격 딜레이")]
     [SerializeField] private float attackDelay;
     [Header("플레이어 인식 범위")]
@@ -37,7 +38,8 @@ public class MonsterData : ScriptableObject
     public int MonsterMaxHp { get { return monsterMaxHp; } }
     public float MoveSpeed { get { return moveSpeed; } }
     public int AttackDamage { get { return attackDamage; } }
-    public float AttakcRange { get { return attakcRange; } }
+    public float AttackRange { get { return attackRange; } }
+    public float AttackTakeDamageRange { get { return attackTakeDamageRange; } }
     public float AttakcDelay { get { return attackDelay; } }
     public float ContactRange { get { return contactRange; } }
     public float PatrolSpeed { get {return patrolSpeed; } }
