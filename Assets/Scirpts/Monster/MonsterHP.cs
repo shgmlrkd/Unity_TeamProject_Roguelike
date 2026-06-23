@@ -9,8 +9,10 @@ public class MonsterHP : MonoBehaviour, IDamageable
     
     private void Awake()
     {
-        currentHp = monsterData.MonsterMaxHp;
+        monsterData = GetComponent<MonsterData>();
+        monsterStateManager = GetComponent<MonsterStateManager>();
 
+        currentHp = monsterData.MonsterMaxHp;
     }
 
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
@@ -20,11 +22,12 @@ public class MonsterHP : MonoBehaviour, IDamageable
         GameObject attacker = damageInfoset.Attacker;
         Vector2 Direction = damageInfoset.AttackDirection;
 
+        print($"{currentHp} / {monsterData.MonsterMaxHp}");
+
         if (currentHp <= 0)
         {
             currentHp = 0;
-            Die();
-            monsterStateManager.SetState(MonsterStateEnum.Dead);
+            Die(); 
         }
     }
 
@@ -35,8 +38,7 @@ public class MonsterHP : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        // 풀링
-        Destroy(gameObject);
+        monsterStateManager.SetState(MonsterStateEnum.Dead);
 
     }
     
