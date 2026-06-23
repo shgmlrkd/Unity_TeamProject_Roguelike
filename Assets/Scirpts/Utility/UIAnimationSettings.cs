@@ -24,7 +24,7 @@
     public const float NormalDuration = 0.2f;
 
     // 느린 애니메이션
-    public const float SlowDuration = 0.3f;
+    public const float SlowDuration = 0.5f;
 
     // 페이드 인/아웃 애니메이션
     public const float FadeDuration = 1.0f;
