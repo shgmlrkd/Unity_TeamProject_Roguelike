@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerWeaponController : MonoBehaviour
@@ -38,8 +39,11 @@ public class PlayerWeaponController : MonoBehaviour
             playerInventory.OnEquipmentRemoved -= HandleEquipmentRemoved;
         }
     }
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
+
+
         // 기본 무기도 인벤토리에 저장해야 CurrentBonusStat.Attack에 포함됨
         if (playerInventory != null && currentWeapon != null)
         {

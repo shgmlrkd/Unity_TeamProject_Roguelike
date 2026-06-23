@@ -33,7 +33,8 @@ public enum BossMonsterPattern // 보스 몬스터 패턴
 public enum ItemType
 {
     Equipment,          // 장비
-    Consumable          // 소비
+    Consumable,         // 소비
+    Length              // 전체 길이
 }
 
 public enum EquipmentType
@@ -47,7 +48,8 @@ public enum EquipmentType
 
 public enum ConsumableType
 { 
-    HpPotion            // Hp 회복 포션
+    HpPotion,           // Hp 회복 포션
+    Length              // 전체 길이
 }
 
 ///////////////////////////////////////
@@ -64,9 +66,17 @@ public enum VolumeType
 
 public enum HeartType 
 {
-    fullHeart,      // 체력이 가득 찬 하트
-    halfHeart,       // 체력이 절반인 하트
-    emptyHeart     // 체력이 없는 빈 하트  
+    fullHeart,          // 체력이 가득 찬 하트
+    halfHeart,          // 체력이 절반인 하트
+    emptyHeart          // 체력이 없는 빈 하트  
+}
+
+public enum BonusType
+{
+    MoveSpeed,          // 이동 속도   
+    Attack,             // 공격력
+    AttackSpeed,        // 공격 속도
+    Length
 }
 
 ///////////////////////////////////////

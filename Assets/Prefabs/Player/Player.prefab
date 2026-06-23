@@ -961,7 +961,7 @@ GameObject:
   - component: {fileID: 7820719079268240423}
   - component: {fileID: 2757228547413607857}
   - component: {fileID: 776053869790109601}
-  - component: {fileID: 1644630315882973051}
+  - component: {fileID: 3674753703933226043}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1138,7 +1138,6 @@ MonoBehaviour:
   animator: {fileID: 8335872964775510835}
   maxHp: 10
   invincibleTime: 0.8
-  bonusHpObj: {fileID: 3136714810789463403, guid: 69645738871715346b05636673805b9b, type: 3}
 --- !u!114 &7820719079268240423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1274,7 +1273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b1f2403abd9ac46a70b4c008533d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BonusStatSystem
---- !u!114 &1644630315882973051
+--- !u!114 &3674753703933226043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1287,7 +1286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentDropSpawner
   playerInventory: {fileID: 7820719079268240423}
-  equipmentItemPrefab: {fileID: 0}
+  droppedItemPickupDelay: 1
 --- !u!1 &2658598303617437336
 GameObject:
   m_ObjectHideFlags: 0
