@@ -5,12 +5,43 @@ public class AStarPathFinder : MonoBehaviour
 {
     [SerializeField] private AStarGrid grid;
 
-    public AStarGrid Grid { get { return grid; } }
-
     private List<AStarNode> openList;
     private List<AStarNode> closeList;
 
+    public AStarGrid Grid { get { return grid; } }
 
+
+    private int GetDistance(AStarNode NodeA, AStarNode NodeB)
+    {
+        int dstX = Mathf.Abs(NodeA.Position.x - NodeB.Position.x);  // x 축 차이 개수
+        int dstY = Mathf.Abs(NodeA.Position.y - NodeB.Position.y);  // y 축 차이 개수
+
+        if(dstX > dstY)
+        {
+            return 14 * dstY + 10 * (dstX - dstY); // 대각선 이동 비용 + 남은 직선 이동 비용
+        }
+        return 14 * dstX + 10 * (dstY - dstX); // 대각선 이동 비용 + 남은 직선 이동 비용
+
+    }
+
+    private List<AStarNode> RetracePath(AStarNode startNode, AStarNode targetNode)
+    {
+        List<AStarNode> path = new List<AStarNode>(); // 최종 경로를 저장할 리스트
+
+        AStarNode currentNode = targetNode;            // 경로 복원을 위해 목표 노드 부터 시작
+
+        while (currentNode != startNode)                // 시작 노드에 도착할 때 까지
+        {
+            path.Add(currentNode);                      // 현재 노드를 경로 리스트에 저장
+            currentNode = currentNode.Parent;           // 부모 노드로 이동
+        }
+
+        path.Add(startNode);        // 반복이 끝나고 경로에 시작점 추가
+
+        path.Reverse();             // 저장된 순서 뒤집어서 스타트가 먼저 인식되게함
+
+        return path;
+    }
     public List<AStarNode> FindPath(Vector3 startPos, Vector3 targetPos)
     {
         AStarNode startNode = grid.GetNodeFromWorld(startPos);     // 시작 위치 가져오기
@@ -90,38 +121,5 @@ public class AStarPathFinder : MonoBehaviour
         }
         return null;
     }
-
-    private int GetDistance(AStarNode NodeA, AStarNode NodeB)
-    {
-        int dstX = Mathf.Abs(NodeA.Position.x - NodeB.Position.x);  // x 축 차이 개수
-        int dstY = Mathf.Abs(NodeA.Position.y - NodeB.Position.y);  // y 축 차이 개수
-
-        if(dstX > dstY)
-        {
-            return 14 * dstY + 10 * (dstX - dstY); // 대각선 이동 비용 + 남은 직선 이동 비용
-        }
-        return 14 * dstX + 10 * (dstY - dstX); // 대각선 이동 비용 + 남은 직선 이동 비용
-
-    }
-
-    private List<AStarNode> RetracePath(AStarNode startNode, AStarNode targetNode)
-    {
-        List<AStarNode> path = new List<AStarNode>(); // 최종 경로를 저장할 리스트
-
-        AStarNode currentNode = targetNode;            // 경로 복원을 위해 목표 노드 부터 시작
-
-        while (currentNode != startNode)                // 시작 노드에 도착할 때 까지
-        {
-            path.Add(currentNode);                      // 현재 노드를 경로 리스트에 저장
-            currentNode = currentNode.Parent;           // 부모 노드로 이동
-        }
-
-        path.Add(startNode);        // 반복이 끝나고 경로에 시작점 추가
-
-        path.Reverse();             // 저장된 순서 뒤집어서 스타트가 먼저 인식되게함
-
-        return path;
-    }
-
 
 }
