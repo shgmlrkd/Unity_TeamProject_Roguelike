@@ -13,15 +13,15 @@ public enum MonsterStateEnum // 몬스터 상태
 
 public enum NormalMonsterPattern // 일반 몬스터 패턴
 {
+    BaseAttack,
     PatternA,
-    PatternB,
     Length
 }
 public enum BossMonsterPattern // 보스 몬스터 패턴
 {
+    BaseAttack,
     BossPatternA,
     BossPatternB,
-    BossPatternC,
     Length
 }
 
