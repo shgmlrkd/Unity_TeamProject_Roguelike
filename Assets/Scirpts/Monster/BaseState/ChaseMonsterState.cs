@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class ChaseMonsterState : MonsterBase
 {
-    
-    private AStarPathFinder pathFinder;
-    private int pathIndex;
-    private float pathTimer;
-
     [SerializeField] private float pathUpdateTime = 0.3f;
     
     private Transform player;
+    private int pathIndex;
+    private float pathTimer;
     
-    List<AStarNode> currentPath;
     
-
     protected override void Awake()
     {
         base.Awake();
@@ -38,9 +33,9 @@ public class ChaseMonsterState : MonsterBase
             pathIndex = 1;
         }
 
-
         MovePath();
     }
+
     private void MovePath()
     {
         if (currentPath == null || currentPath.Count == 0) return;
@@ -61,20 +56,6 @@ public class ChaseMonsterState : MonsterBase
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    if (currentPath == null) return;
-
-    //    Gizmos.color = Color.purple;
-
-    //    foreach (AStarNode node in currentPath)
-    //    {
-    //        Vector3 worldPos = pathFinder.Grid.GetWorldPosition(node);
-
-    //        Gizmos.DrawSphere(worldPos, 0.3f);
-
-            
-    //    }
-    //}
+    
 
 }

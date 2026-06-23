@@ -4,6 +4,7 @@ public class AnimationController : MonoBehaviour
 {
     [SerializeField] private Animator refAnimator;
 
+    private int monsterStateHash = Animator.StringToHash("MonsterState");
 
     private void Awake()
     {
@@ -17,9 +18,9 @@ public class AnimationController : MonoBehaviour
     {
         if (refAnimator == null) return;
 
-        refAnimator.SetInteger("MonsterState", (int)monsterState);
+        refAnimator.SetInteger(monsterStateHash, (int)monsterState);
     }
-
+ 
     public void SetBossMonsterPattern(BossMonsterPattern bossMonsterPattern)
     {
         if (refAnimator == null) return;
