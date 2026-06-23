@@ -1,18 +1,32 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MonsterHP : MonoBehaviour, IDamageable
 {
-
     private MonsterData monsterData;
     private MonsterStateManager monsterStateManager;
-    protected int currentHp;
     
+    protected int currentHp;
+
+    public bool IsDead
+    {
+        get { return currentHp <= 0; }
+    }
+
     private void Awake()
     {
-        monsterData = GetComponent<MonsterData>();
         monsterStateManager = GetComponent<MonsterStateManager>();
+        monsterData = monsterStateManager.MonsterData;
 
         currentHp = monsterData.MonsterMaxHp;
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            Die();
+        }
     }
 
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
@@ -31,13 +45,13 @@ public class MonsterHP : MonoBehaviour, IDamageable
         }
     }
 
-    public bool IsDead
-    {
-        get { return currentHp <= 0; }
-    }
+    
 
     public void Die()
     {
+        // 예시로 몬스터가 죽었을 때
+        ItemManager.Instance.DropItem(transform.position);
+
         monsterStateManager.SetState(MonsterStateEnum.Dead);
 
     }

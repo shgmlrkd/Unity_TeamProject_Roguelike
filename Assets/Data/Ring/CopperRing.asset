@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37f8e4382dc48ac4a8a13eddd4ddd033, type: 3}
-  m_Name: Ring3
+  m_Name: CopperRing
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
   itemType: 0
-  itemName: "\uBC18\uC9C03"
-  sprite: {fileID: 0}
+  itemName: "\uAD6C\uB9AC \uBC18\uC9C0"
+  sprite: {fileID: 21300000, guid: 5ea77f5b850c64c1c8c61fa70ff44da7, type: 3}
   equipmentType: 3
   attack: 1
   attackRange: 1
