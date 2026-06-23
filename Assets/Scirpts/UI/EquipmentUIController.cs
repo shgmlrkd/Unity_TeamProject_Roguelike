@@ -45,11 +45,11 @@ public class EquipmentUIController : MonoBehaviour
         image.transform.position = screenPos;
 
         // 움직임
-        image.transform.DOMove(targetPos, 0.5f).SetEase(Ease.OutQuad).OnComplete(() =>
+        image.transform.DOMove(targetPos, UIAnimationSettings.SlowDuration).SetEase(Ease.OutQuad).OnComplete(() =>
         {
-            if(prevImages[(int)data.EquipmentType] != null)
+            if (prevImages[(int)data.EquipmentType] != null)
             {
-                prevImages[(int)data.EquipmentType].gameObject.SetActive(false);
+                equipmentImageManager.ReturnEquipmentImage(prevImages[(int)data.EquipmentType]);
             }
 
             prevImages[(int)data.EquipmentType] = image;
