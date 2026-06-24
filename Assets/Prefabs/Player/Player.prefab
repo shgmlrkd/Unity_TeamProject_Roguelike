@@ -962,7 +962,7 @@ GameObject:
   - component: {fileID: 2757228547413607857}
   - component: {fileID: 776053869790109601}
   - component: {fileID: 3674753703933226043}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1136,8 +1136,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   animator: {fileID: 8335872964775510835}
+  bodyCollider: {fileID: 0}
   maxHp: 10
   invincibleTime: 0.8
+  fadeOutDuration: 1
+  disableAlphaThreshold: 0.02
 --- !u!114 &7820719079268240423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3674,7 +3677,7 @@ GameObject:
   - component: {fileID: 122270440451433849}
   - component: {fileID: 6885738485870916180}
   - component: {fileID: 2310373804084963693}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: AttackArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
