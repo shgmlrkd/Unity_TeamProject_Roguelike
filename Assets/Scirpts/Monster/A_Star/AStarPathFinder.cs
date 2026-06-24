@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class AStarPathFinder : MonoBehaviour
 {
-    [SerializeField] private AStarGrid grid;
-
+    private AStarGrid grid;
     private List<AStarNode> openList;
     private List<AStarNode> closeList;
 
+
     public AStarGrid Grid { get { return grid; } }
 
+    private void Awake()
+    {
+        grid = GetComponent<AStarGrid>();
+    }
 
     private int GetDistance(AStarNode NodeA, AStarNode NodeB)
     {
