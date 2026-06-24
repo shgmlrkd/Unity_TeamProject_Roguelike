@@ -1,6 +1,8 @@
 ﻿using Cainos.PixelArtTopDown_Basic;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class RoomManager1 : ScenesSingleton<RoomManager1>
@@ -15,6 +17,9 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
     [SerializeField] private Transform playerTransform;
     [SerializeField] private DirectionalRoomDatabaseSO roomDatabase;
     [SerializeField] private float roomWidth = 11f, roomHeight = 7f, tileOffset = 3.0f;
+
+    [Header("카메라 모듈")]
+    [SerializeField] private CameraRig cameraRig;
 
     private Dictionary<Vector2Int, RoomInfo> dungeonMap = new Dictionary<Vector2Int, RoomInfo>();
     private Dictionary<Vector2Int, Vector3> roomPositions = new Dictionary<Vector2Int, Vector3>();
@@ -80,11 +85,6 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
         // 1. 이미 방이 있는지 확인
         if (dungeonMap.ContainsKey(nextGridPos))
         {
-            // 방이 있다면 좌표를 가져옴 (TryGetValue를 써야 에러가 안 납니다)
-            if (roomPositions.TryGetValue(nextGridPos, out Vector3 targetPos))
-            {
-                Camera.main.transform.position = new Vector3(targetPos.x, targetPos.y, -10);
-            }
             teleporter.TeleportToDoor(player, doorSensor.transform.position, dir, tileOffset);
         }
         else
@@ -99,7 +99,6 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
             // 중요: 생성된 방을 맵 데이터에 기록
             dungeonMap[nextGridPos] = info;
             roomPositions[nextGridPos] = nextRoomPos;
-            Camera.main.transform.position = new Vector3(nextRoomPos.x, nextRoomPos.y, -10);
             teleporter.TeleportToDoor(player, doorSensor.transform.position, dir, tileOffset);
 
             ruleChecker.CurrentDoorUsedCount++;
@@ -108,7 +107,7 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
                 ruleChecker.GeneratedNormalRoomCount++;
             }
         }
-        StartCoroutine(ResetCameraLock(0.2f));
+        CameraMove();
     }
     // 방 타입과 연결 방향에 따라 사용 가능한 방 리스트 중 하나를 무작위로 반환하는 함수
     private RoomInfo GetTargetRoomInfo(Vector2Int exitDir, RoomType type)
@@ -162,22 +161,16 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
         }
         return false;
     }
-    private IEnumerator ResetCameraLock(float delay)
+    private void CameraMove()
     {
-        // 0.2초 대기
-        yield return new WaitForSeconds(delay);
-
-        // 1. 대기가 끝난 직후, 플레이어의 현재 위치를 다시 한번 확실히 파악
         Vector2Int currentGrid = GetCurrentRoomGridPos(playerTransform.position);
-
-        // 2. 만약 카메라가 현재 위치와 다른 곳을 보고 있다면 마지막으로 한번 더 강제 세팅
-        if (roomPositions.ContainsKey(currentGrid))
+        if (roomPositions.TryGetValue(currentGrid, out Vector3 targetPos))
         {
-            Vector3 targetPos = roomPositions[currentGrid];
-            Camera.main.transform.position = new Vector3(targetPos.x, targetPos.y, -10);
+            isChangingRoom = true; 
+            cameraRig.MoveToRoom(targetPos, UIAnimationSettings.SlowDuration, () =>
+            {
+                isChangingRoom = false; 
+            });
         }
-
-        // 3. 이제 LateUpdate에게 제어권 반환
-        isChangingRoom = false;
     }
 }
