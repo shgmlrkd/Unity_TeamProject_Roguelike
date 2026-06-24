@@ -375,8 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aef9f5eae2a3e94689f2f6697381d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraRig
-  target: {fileID: 1484952265}
-  followSpeed: 5
   offset: {x: 0, y: 0, z: -10}
 --- !u!1 &534363253
 GameObject:
@@ -519,6 +517,10 @@ PrefabInstance:
     - target: {fileID: 2617234061336637363, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: m_Name
       value: Player (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086462135723915612, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5824612967443884266, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2571,9 +2573,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   animator: {fileID: 1484952268}
+  bodyCollider: {fileID: 0}
   maxHp: 10
   invincibleTime: 0.8
-  bonusHpObj: {fileID: 3136714810789463403, guid: 69645738871715346b05636673805b9b, type: 3}
+  fadeOutDuration: 1
+  disableAlphaThreshold: 0.02
 --- !u!224 &1514318684 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3732926286377063122, guid: aa015f15c2afcf2449b5e0c89c2341de, type: 3}

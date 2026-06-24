@@ -22,6 +22,11 @@ public class AttackCollider : MonoBehaviour
             return;
         }
 
+        if (IsSelf(other))
+        {
+            return;
+        }
+
         if (!other.TryGetComponent(out IDamageable damageable))
         {
             return;
@@ -39,4 +44,31 @@ public class AttackCollider : MonoBehaviour
         }
         damageable.TakeDamage(damageInfo);
     }
+    //자기 자신 공격 방지
+    private bool IsSelf(Collider2D other)
+    {
+        if (damageInfo.Attacker == null || other == null)
+        {
+            return false;
+        }
+
+        Transform attackerTransform = damageInfo.Attacker.transform;
+
+        if (other.transform == attackerTransform)
+        {
+            return true;
+        }
+
+        if (other.transform.IsChildOf(attackerTransform))
+        {
+            return true;
+        }
+
+        if (attackerTransform.IsChildOf(other.transform))
+        {
+            return true;
+        }
+
+        return false;
+    }   
 }
