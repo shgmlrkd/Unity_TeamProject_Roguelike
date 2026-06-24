@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e98967d330d5a2644ac6ac88083fed77, type: 3}
-  m_Name: MonsterData
+  m_Name: Gobiln
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
-  monsterName: 
-  monsterPrefab: {fileID: 0}
+  monsterName: "\uACE0\uBE14\uB9B0"
   monsterMaxHp: 5
   moveSpeed: 2
   attackDamage: 1
