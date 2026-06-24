@@ -3706,7 +3706,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 627648027
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -3963,6 +3963,7 @@ GameObject:
   - component: {fileID: 942278747837273311}
   - component: {fileID: 2012204912103897362}
   - component: {fileID: 2374321509989188260}
+  - component: {fileID: 953349941483149299}
   m_Layer: 0
   m_Name: NomalMap
   m_TagString: Untagged
@@ -4016,3 +4017,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633d9d5537efdae429667fb22825d07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DynamicRoom
+--- !u!210 &953349941483149299
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833705308829559481}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -1
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
