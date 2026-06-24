@@ -43,6 +43,11 @@ public class PoolManager : ScenesSingleton<PoolManager>
         uiPoolRoot = uiRootObj.transform;
     }
 
+    public void SetPoolVisible(Type type, bool active)
+    {
+        poolParents[type].gameObject.SetActive(active);
+    }
+
     private void CreatePoolRoot()
     {
         GameObject rootObj = new GameObject("PoolRoot"); // PoolRoot 빈 게임 오브젝트 생성
