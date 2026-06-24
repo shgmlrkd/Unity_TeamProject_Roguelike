@@ -101,7 +101,7 @@ public class CharacterController2D : MonoBehaviour
     }
     private void UpdateLookDirection()
     {
-        if (mainCamera == null)
+        if (mainCamera == null || inputManager == null)
         {
             return;
         }
@@ -146,7 +146,7 @@ public class CharacterController2D : MonoBehaviour
     }
     private void UpdateMoveAnimation()
     {
-        if (animator == null)
+        if (animator == null || inputManager == null)
         {
             return;
         }
