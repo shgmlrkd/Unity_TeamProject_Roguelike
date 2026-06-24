@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerHP : MonoBehaviour, IDamageable
 {
     [SerializeField] private Animator animator;
+    [SerializeField] private BoxCollider2D bodyCollider;
 
     [SerializeField] private int maxHp = 10;
     [SerializeField] private const int MaxBonusHp = 20;
@@ -56,6 +57,10 @@ public class PlayerHP : MonoBehaviour, IDamageable
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
+        }
+        if (bodyCollider == null)
+        {
+            bodyCollider = GetComponent<BoxCollider2D>();
         }
 
         characterController = GetComponent<CharacterController2D>();
@@ -299,6 +304,12 @@ public class PlayerHP : MonoBehaviour, IDamageable
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
+        }
+
+
+        if (bodyCollider != null)
+        {
+            bodyCollider.enabled = false;
         }
 
         if (characterController != null)
