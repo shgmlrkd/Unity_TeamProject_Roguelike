@@ -22,6 +22,9 @@ public class PlayerHP : MonoBehaviour, IDamageable
     private bool isInvincible;
     private Coroutine invincibleCoroutine;
 
+    private PlayerInventory playerInventory;
+    private int previousEquipmentShieldHp;
+
     public int MaxHp => maxHp;
     public int CurrentHp => currentHp;
     public int CurrentBonusHp => currentBonusHp;
@@ -38,17 +41,34 @@ public class PlayerHP : MonoBehaviour, IDamageable
     private void Awake()
     {
         currentHp = maxHp;
+
         if (animator == null)
         {
-            animator = GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
         }
+
+        playerInventory = GetComponent<PlayerInventory>();
     }
 
     private void Start()
     {
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
+    private void OnEnable()
+    {
+        if (playerInventory != null)
+        {
+            playerInventory.OnBonusStatChanged += HandleBonusStatChanged;
+        }
+    }
 
+    private void OnDisable()
+    {
+        if (playerInventory != null)
+        {
+            playerInventory.OnBonusStatChanged -= HandleBonusStatChanged;
+        }
+    }
     // 이건 일반 체력용 호출 함수 (포션 먹기)
     public void Heal(int amount)
     {
@@ -74,7 +94,29 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
+    //추가체력 변동 대응
+    private void HandleBonusStatChanged(BonusStat bonusStat)
+    {
+        if (bonusStat == null || isDead)
+        {
+            return;
+        }
 
+        int newShieldHp = bonusStat.ShieldHp;
+        int deltaShieldHp = newShieldHp - previousEquipmentShieldHp;
+
+        if (deltaShieldHp > 0)
+        {
+            SetBonusHp(deltaShieldHp);
+        }
+        else if (deltaShieldHp < 0)
+        {
+            currentBonusHp = Mathf.Clamp(currentBonusHp + deltaShieldHp, 0, MaxBonusHp);
+            OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        }
+
+        previousEquipmentShieldHp = newShieldHp;
+    }
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
     {
         if (isDead)
