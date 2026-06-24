@@ -17,6 +17,7 @@ public class CharacterController2D : MonoBehaviour
 
     private Rigidbody2D rb;
     private CharacterInputManager inputManager;
+    private PlayerAttackController attackController;
     //화면 기준 마우스 위치 좌표 도출용
     private Camera mainCamera;
 
@@ -35,6 +36,7 @@ public class CharacterController2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         inputManager = GetComponent<CharacterInputManager>();
         playerInventory = GetComponent<PlayerInventory>();
+        attackController = GetComponent<PlayerAttackController>();
 
         if (animator == null)
         {
@@ -124,6 +126,10 @@ public class CharacterController2D : MonoBehaviour
     //바라보는 방향 따라 플립
     private void UpdateVisualFlip()
     {
+        if (attackController != null && attackController.IsAttacking)
+        {
+            return;
+        }
         if (visualRoot == null)
         {
             return;
