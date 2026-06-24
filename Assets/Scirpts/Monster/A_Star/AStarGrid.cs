@@ -4,16 +4,19 @@ using UnityEngine.Tilemaps;
 
 public class AStarGrid : MonoBehaviour
 {
-    [SerializeField] private Tilemap wallTilemap; // 좌표 변환 / 맵 크기 용
-    [SerializeField] private LayerMask obstacleLayer; // 벽 판정용
+    private AStarNode[,] nodes; // 2차원 배열의 노드 배열 선언
+    private Tilemap wallTilemap; // 좌표 변환 / 맵 크기 용
+    private LayerMask obstacleLayer; // 벽 판정용
 
     BoundsInt bounds; // 타일맵의 범위와 크기 정보 저장
 
-    private AStarNode[,] nodes; // 2차원 배열의 노드 배열 선언
 
 
     private void Awake()
     {
+        obstacleLayer = LayerMask.GetMask("Obstacle");
+
+        wallTilemap = GetComponentInChildren<Tilemap>();
         CreateGrid();
     }
 
