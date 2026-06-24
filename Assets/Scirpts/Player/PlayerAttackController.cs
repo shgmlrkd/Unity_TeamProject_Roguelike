@@ -17,8 +17,12 @@ public class PlayerAttackController : MonoBehaviour
     private PlayerInventory playerInventory;
     //공격 끝 조정
     private bool isAttacking;
+
+    public bool IsAttacking => isAttacking;
     //공격중 방향 고정
     private Vector2 lockedAttackDirection = Vector2.down;
+
+
 
     private void Awake()
     {
