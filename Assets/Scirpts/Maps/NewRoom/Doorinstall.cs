@@ -31,13 +31,42 @@ public class Doorinstall : MonoBehaviour
             }
             else
             {
+                OpenDoor();
                 StartCoroutine(OpenAndTeleportRoutine());
             }
         }
     }
     private void SpawnDoor()
     {
-        instantiatedDoor = Instantiate(doorPrefab, transform.position, Quaternion.identity);
+        float angle = 0f;
+        if (wallDirection == new Vector2Int(0, 1)) angle = 0f;    // 위
+        else if (wallDirection == new Vector2Int(0, -1)) angle = 180f; // 아래
+        else if (wallDirection == new Vector2Int(-1, 0)) angle = 90f;  // 왼쪽
+        else if (wallDirection == new Vector2Int(1, 0)) angle = -90f; // 오른쪽
+
+        instantiatedDoor = Instantiate(doorPrefab, transform.position, Quaternion.Euler(0, 0, angle));
+
+        SetDoorState(false);
+    }
+    //열린 문 상태
+    private void OpenDoor()
+    {
+        SetDoorState(true);
+    }
+    //닫힌 문 상태
+    public void CloseDoor()
+    {
+        SetDoorState(false); 
+    }
+    private void SetDoorState(bool isOpen)
+    {
+        if (instantiatedDoor == null) return;
+
+        Transform openTrans = instantiatedDoor.transform.Find("OpenDoor");
+        Transform closedTrans = instantiatedDoor.transform.Find("CloseDoor");
+
+        if (openTrans != null) openTrans.gameObject.SetActive(isOpen);
+        if (closedTrans != null) closedTrans.gameObject.SetActive(!isOpen);
     }
     private IEnumerator OpenAndTeleportRoutine()
     {
