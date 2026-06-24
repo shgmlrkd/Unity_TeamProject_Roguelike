@@ -10,7 +10,7 @@ public class AStarGrid : MonoBehaviour
 
     BoundsInt bounds; // 타일맵의 범위와 크기 정보 저장
 
-
+    public AStarNode[,] AllNodes => nodes;
 
     private void Awake()
     {

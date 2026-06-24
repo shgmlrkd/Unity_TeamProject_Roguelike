@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class AStarPathFinder : MonoBehaviour
 {
+    private int straightCost = 10; // 이동 비용
+    private int diagonalCost = 14;
+    private const int minNode = 4;
+    private const int maxNode = 8;
+
     private AStarGrid grid;
     private List<AStarNode> openList;
     private List<AStarNode> closeList;
-
 
     public AStarGrid Grid { get { return grid; } }
 
@@ -22,9 +26,9 @@ public class AStarPathFinder : MonoBehaviour
 
         if(dstX > dstY)
         {
-            return 14 * dstY + 10 * (dstX - dstY); // 대각선 이동 비용 + 남은 직선 이동 비용
+            return diagonalCost * dstY + straightCost * (dstX - dstY); // 대각선 이동 비용 + 남은 직선 이동 비용
         }
-        return 14 * dstX + 10 * (dstY - dstX); // 대각선 이동 비용 + 남은 직선 이동 비용
+        return diagonalCost * dstX + straightCost * (dstY - dstX); // 대각선 이동 비용 + 남은 직선 이동 비용
 
     }
 
@@ -43,6 +47,13 @@ public class AStarPathFinder : MonoBehaviour
         path.Add(startNode);        // 반복이 끝나고 경로에 시작점 추가
 
         path.Reverse();             // 저장된 순서 뒤집어서 스타트가 먼저 인식되게함
+
+        int randomLength = Random.Range(minNode, maxNode); // 3~7 민 맥스 상수 변수
+
+        if (path.Count > randomLength)
+        {
+            path = path.GetRange(0, randomLength);
+        }
 
         return path;
     }
@@ -68,11 +79,9 @@ public class AStarPathFinder : MonoBehaviour
 
         startNode.G = 0;                // 시작점에서 시작점까지 비용은 0 (초기화: MaxValue에서 0으로)
         startNode.H = GetDistance(startNode, targetNode);  // 시작점에서 목표 지점까지의 예상 비용 계산 (초기화)
-                  
 
         openList.Add(startNode);        // 시작노드 openList에 넣기
 
-        
         while(openList.Count > 0)
         {
             AStarNode currentNode = openList[0];       // 임시 최고 순위 후보 지정
@@ -93,8 +102,6 @@ public class AStarPathFinder : MonoBehaviour
             {
                 return RetracePath(startNode, targetNode);
             }
-
-
 
             foreach (AStarNode neighbor in grid.GetNeighbors(currentNode))  
             {
