@@ -5,7 +5,6 @@ public class MonsterData : ScriptableObject
 {
     [Header("몬스터 정보")]
     [SerializeField] private string monsterName;
-    [SerializeField] private MonsterBase monsterPrefab;
 
     [Header("몬스터 능력치")]
     [Header("몬스터 체력")]
@@ -34,7 +33,6 @@ public class MonsterData : ScriptableObject
 
 
     public string MonsterName { get { return monsterName; } }
-    public MonsterBase MonsterPrefab { get { return monsterPrefab; } }
     public int MonsterMaxHp { get { return monsterMaxHp; } }
     public float MoveSpeed { get { return moveSpeed; } }
     public int AttackDamage { get { return attackDamage; } }
