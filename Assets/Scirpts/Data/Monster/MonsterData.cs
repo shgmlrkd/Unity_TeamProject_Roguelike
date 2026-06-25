@@ -30,7 +30,9 @@ public class MonsterData : ScriptableObject
     [Header("드랍 골드")]
     [SerializeField] private int minDropGold;
     [SerializeField] private int maxDropGold;
-
+    [Header("드랍 아이템 수")]
+    [SerializeField] private int minDropItemCount;
+    [SerializeField] private int maxDropItemCount;
 
     public string MonsterName { get { return monsterName; } }
     public int MonsterMaxHp { get { return monsterMaxHp; } }
@@ -45,6 +47,6 @@ public class MonsterData : ScriptableObject
     public int MinPatrolDistance { get { return minPatrolDistance; } }
     public int MaxPatrolDistance { get { return maxPatrolDistance; } }
     public int DropGold { get { return Random.Range(minDropGold, maxDropGold); } }
-   
+    public int DropItemCount { get { return Random.Range(minDropItemCount, maxDropItemCount); } }
 
 }
