@@ -11,10 +11,17 @@ public class PlayerAttackController : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private Animator animator;
 
+    [Header("Attack VFX")]
+    [SerializeField] private GameObject attackVfxPrefab;
+    [SerializeField] private float attackVfxLifeTime = 0.35f;
+    [SerializeField] private float attackVfxAngleOffset = 0f;
+    [SerializeField] private Vector3 attackVfxPositionOffset;
+
     private CharacterInputManager inputManager;
     private CharacterController2D characterController;
     private PlayerWeaponController weaponController;
     private PlayerInventory playerInventory;
+    private PlayerStartStatBonus startStatBonus;
     //공격 끝 조정
     private bool isAttacking;
 
@@ -30,6 +37,7 @@ public class PlayerAttackController : MonoBehaviour
         characterController = GetComponent<CharacterController2D>();
         weaponController = GetComponent<PlayerWeaponController>();
         playerInventory = GetComponent<PlayerInventory>();
+        startStatBonus = GetComponent<PlayerStartStatBonus>();
 
         if (animator == null)
         {
@@ -68,6 +76,9 @@ public class PlayerAttackController : MonoBehaviour
         {
             weaponController.OnWeaponChanged -= HandleWeaponChanged;
         }
+
+        isAttacking = false;
+        DisableAttackCollider();
     }
 
     private void Update()
@@ -167,6 +178,8 @@ public class PlayerAttackController : MonoBehaviour
         //공격시 방향 저장
         Vector2 attackDirection = isAttacking ? lockedAttackDirection : characterController.LookDirection;
 
+        SpawnAttackVfx(attackDirection);
+
         int finalDamage = GetFinalAttackDamage(currentWeapon);
 
         DamageInfoSet damageInfo = new DamageInfoSet(
@@ -198,6 +211,19 @@ public class PlayerAttackController : MonoBehaviour
 
         UpdateAttackAreaTransform();
     }
+    public void CancelAttack()
+    {
+        if (!isAttacking)
+        {
+            return;
+        }
+
+        isAttacking = false;
+
+        DisableAttackCollider();
+
+        UpdateAttackAreaTransform();
+    }
     //
     private void HandleWeaponChanged(WeaponData weaponData)
     {
@@ -223,14 +249,21 @@ public class PlayerAttackController : MonoBehaviour
     //최종 공격력, 범위, 공격 속도 추가
     private int GetFinalAttackDamage(WeaponData currentWeapon)
     {
+        int finalAttack = 0;
+
         if (playerInventory != null && playerInventory.CurrentBonusStat != null)
         {
-            int finalAttack = playerInventory.CurrentBonusStat.Attack;
+            finalAttack += playerInventory.CurrentBonusStat.Attack;
+        }
 
-            if (finalAttack > 0)
-            {
-                return finalAttack;
-            }
+        if (startStatBonus != null)
+        {
+            finalAttack += startStatBonus.Attack;
+        }
+
+        if (finalAttack > 0)
+        {
+            return finalAttack;
         }
 
         if (currentWeapon != null)
@@ -265,7 +298,12 @@ public class PlayerAttackController : MonoBehaviour
 
         if (playerInventory != null && playerInventory.CurrentBonusStat != null)
         {
-            attackSpeedRate = playerInventory.CurrentBonusStat.AttackSpeedRate;
+            attackSpeedRate += playerInventory.CurrentBonusStat.AttackSpeedRate;
+        }
+
+        if (startStatBonus != null)
+        {
+            attackSpeedRate += startStatBonus.AttackSpeedRate;
         }
 
         return Mathf.Max(0.1f, 1f + attackSpeedRate);
@@ -279,5 +317,51 @@ public class PlayerAttackController : MonoBehaviour
         }
 
         animator.SetFloat("AttackSpeedMultiplier", GetAttackSpeedMultiplier());
+    }
+    //VFX생성
+    private void SpawnAttackVfx(Vector2 attackDirection)
+    {
+        if (attackVfxPrefab == null || attackAreaTransform == null)
+        {
+            return;
+        }
+
+        if (attackDirection.sqrMagnitude <= 0.001f)
+        {
+            attackDirection = Vector2.down;
+        }
+        //공격방향 정규화
+        attackDirection.Normalize();
+        //방향을 각도로
+        float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.Euler(0f, 0f, angle + attackVfxAngleOffset);
+
+        Vector3 spawnPosition = attackAreaTransform.position + attackVfxPositionOffset;
+
+        GameObject vfxObject = Instantiate(
+            attackVfxPrefab,
+            spawnPosition,
+            rotation
+        );
+        //공격속도 맞게
+        float attackSpeedMultiplier = GetAttackSpeedMultiplier();
+
+        if (vfxObject.TryGetComponent(out Animator vfxAnimator))
+        {
+            vfxAnimator.speed = attackSpeedMultiplier;
+        }
+        else
+        {
+            Animator childAnimator = vfxObject.GetComponentInChildren<Animator>();
+
+            if (childAnimator != null)
+            {
+                childAnimator.speed = attackSpeedMultiplier;
+            }
+        }
+
+        float adjustedLifeTime = attackVfxLifeTime / attackSpeedMultiplier;
+
+        Destroy(vfxObject, adjustedLifeTime);
     }
 }

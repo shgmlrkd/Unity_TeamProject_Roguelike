@@ -23,6 +23,8 @@ public class CharacterController2D : MonoBehaviour
 
     private PlayerInventory playerInventory;
 
+    private PlayerStartStatBonus startStatBonus;
+
     private Vector2 lookDirection = Vector2.down;
 
     public Vector2 LookDirection => lookDirection;
@@ -37,6 +39,7 @@ public class CharacterController2D : MonoBehaviour
         inputManager = GetComponent<CharacterInputManager>();
         playerInventory = GetComponent<PlayerInventory>();
         attackController = GetComponent<PlayerAttackController>();
+        startStatBonus = GetComponent<PlayerStartStatBonus>();
 
         if (animator == null)
         {
@@ -94,12 +97,17 @@ public class CharacterController2D : MonoBehaviour
     {
         float moveSpeedRate = 0f;
 
-        if (playerInventory != null && playerInventory.CurrentBonusStat != null)
-        {
-            moveSpeedRate = playerInventory.CurrentBonusStat.MoveSpeedRate;
-        }
+    if (playerInventory != null && playerInventory.CurrentBonusStat != null)
+    {
+        moveSpeedRate += playerInventory.CurrentBonusStat.MoveSpeedRate;
+    }
 
-        return moveSpeed * Mathf.Max(0.1f, 1f + moveSpeedRate);
+    if (startStatBonus != null)
+    {
+        moveSpeedRate += startStatBonus.MoveSpeedRate;
+    }
+
+    return moveSpeed * Mathf.Max(0.1f, 1f + moveSpeedRate);
     }
     private void UpdateLookDirection()
     {

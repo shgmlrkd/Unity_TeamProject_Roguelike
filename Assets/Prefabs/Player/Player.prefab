@@ -962,6 +962,8 @@ GameObject:
   - component: {fileID: 2757228547413607857}
   - component: {fileID: 776053869790109601}
   - component: {fileID: 3674753703933226043}
+  - component: {fileID: 960318227865341817}
+  - component: {fileID: 3876616974539314070}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -1109,6 +1111,10 @@ MonoBehaviour:
   attackAreaTransform: {fileID: 122270440451433849}
   attackBoxCollider: {fileID: 2310373804084963693}
   animator: {fileID: 8335872964775510835}
+  attackVfxPrefab: {fileID: 8718933197550812533, guid: 7bdbb8ca37a65fe4da39b05887ffaee3, type: 3}
+  attackVfxLifeTime: 0.35
+  attackVfxAngleOffset: 0
+  attackVfxPositionOffset: {x: 0, y: 0.4, z: 0}
 --- !u!114 &3811552240430662186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,6 +1296,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentDropSpawner
   playerInventory: {fileID: 7820719079268240423}
   droppedItemPickupDelay: 1
+--- !u!114 &960318227865341817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617234061336637363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502e844b8de6a124794fb01ddc1b2b09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStartStatBonus
+--- !u!114 &3876616974539314070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617234061336637363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5228efd1cc6be5a46bcec5aa25fec97e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStartStatApplier
+  playerHp: {fileID: 7961975366001377439}
+  startStatBonus: {fileID: 960318227865341817}
 --- !u!1 &2658598303617437336
 GameObject:
   m_ObjectHideFlags: 0
@@ -2676,7 +2708,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4923377853014311604}
   - component: {fileID: 1063135661439981518}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: BonusStatSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
