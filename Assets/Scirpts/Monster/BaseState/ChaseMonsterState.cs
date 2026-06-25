@@ -10,10 +10,8 @@ public class ChaseMonsterState : MonsterBase
     private int pathIndex;
     private float pathTimer;
     
-    
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
         pathFinder = monsterStateManager.PathFinder;
     }
 

@@ -14,7 +14,6 @@ public class MonsterBase : MonoBehaviour
     protected virtual void Awake()
     {
 
-  
         if (monsterTransform == null)
         {
             monsterTransform = transform;
@@ -38,10 +37,19 @@ public class MonsterBase : MonoBehaviour
         }    
         
     }
-   
+
     protected void OnDrawGizmos()
     {
         if (currentPath == null) return;
+
+        foreach (var node in pathFinder.Grid.AllNodes)
+        {
+            Gizmos.color = node.IsWall ? Color.yellow : Color.red;
+
+            Gizmos.DrawWireCube(
+                pathFinder.Grid.GetWorldPosition(node),
+                Vector3.one * 0.9f);
+        }
 
         Gizmos.color = Color.purple;
 
@@ -53,5 +61,7 @@ public class MonsterBase : MonoBehaviour
 
 
         }
+
     }
+
 }

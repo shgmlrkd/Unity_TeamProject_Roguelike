@@ -14,14 +14,12 @@ public class PatrolMonsterState : MonsterBase
     protected override void Awake() 
     {
         base.Awake();
-
-        pathFinder = monsterStateManager.PathFinder;
         wait = new WaitForSeconds(monsterStateManager.MonsterData.PatrolWaitTime); // 정찰 대기 시간
     }
-
+ 
     private void OnEnable() // 순찰 시작
     {
-
+        pathFinder = monsterStateManager.PathFinder;
         patrolCo = StartCoroutine(PatrolCo());
 
     }
@@ -74,7 +72,7 @@ public class PatrolMonsterState : MonsterBase
 
             monsterStateManager.FlipTo(targetPos);
 
-            if (Vector2.Distance(nextPosition, targetPos) < 0.35f) // 목표 노드에 도착했다면 다음 목표 노드로 변경 도착 판정을 널널하게
+            if (Vector2.Distance(nextPosition, targetPos) < 0.15f) // 목표 노드에 도착했다면 다음 목표 노드로 변경 도착 판정을 널널하게
             {
                 print($"도착 {pathIndex}");
                 pathIndex++;
