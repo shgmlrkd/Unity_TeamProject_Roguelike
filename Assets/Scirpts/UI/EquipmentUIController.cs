@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +24,7 @@ public class EquipmentUIController : MonoBehaviour
     {
         // 플레이어 인벤토리 구현 시 이벤트에 구독 
         inventory.OnEquipmentStored += UpdateEquipmentUI;
+        inventory.OnEquipmentRemoved += HideShieldUI;
 
         OptionManager.Instance.OnEquipShowEnabled += StartRestoreEquipmentImages;
     }
@@ -31,6 +33,7 @@ public class EquipmentUIController : MonoBehaviour
     {
         // 플레이어 인벤토리 구현 시 이벤트에 구독 해제
         inventory.OnEquipmentStored -= UpdateEquipmentUI;
+        inventory.OnEquipmentRemoved -= HideShieldUI;
 
         OptionManager.Instance.OnEquipShowEnabled -= StartRestoreEquipmentImages;
     }
@@ -81,6 +84,12 @@ public class EquipmentUIController : MonoBehaviour
 
         // 새 이미지 저장
         prevEquipImages[index] = newImage;
+    }
+
+    // 장비 UI도 이미지를 풀링했으므로 풀로 넣기
+    private void HideShieldUI(EquipmentType type = EquipmentType.Shield)
+    {
+        equipmentImageManager.ReturnEquipmentImage(prevEquipImages[(int)type]); 
     }
 
     private void StartRestoreEquipmentImages()
