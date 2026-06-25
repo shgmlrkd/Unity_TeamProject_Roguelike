@@ -54,9 +54,6 @@ public class MonsterHP : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        // 예시로 몬스터가 죽었을 때
-        ItemManager.Instance.DropItem(transform.position);
-
         monsterStateManager.SetState(MonsterStateEnum.Dead);
 
     }
