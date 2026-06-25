@@ -9,11 +9,7 @@ public class ChaseMonsterState : MonsterBase
     private Transform player;
     private int pathIndex;
     private float pathTimer;
-    
-    private void Start()
-    {
-        pathFinder = monsterStateManager.PathFinder;
-    }
+
 
     private void FixedUpdate()
     {

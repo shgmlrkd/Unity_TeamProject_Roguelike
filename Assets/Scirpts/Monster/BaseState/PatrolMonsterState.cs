@@ -17,11 +17,10 @@ public class PatrolMonsterState : MonsterBase
         wait = new WaitForSeconds(monsterStateManager.MonsterData.PatrolWaitTime); // 정찰 대기 시간
     }
  
-    private void OnEnable() // 순찰 시작
+    protected override void OnEnable() // 순찰 시작
     {
-        pathFinder = monsterStateManager.PathFinder;
+        base.OnEnable();
         patrolCo = StartCoroutine(PatrolCo());
-
     }
 
     private void OnDisable() // 코루틴 종료
