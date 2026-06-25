@@ -244,7 +244,15 @@ public class PlayerAttackController : MonoBehaviour
             return;
         }
 
-        attackBoxCollider.size = currentWeapon.AttackBoxSize;
+       Vector2 attackBoxSize = currentWeapon.AttackBoxSize;
+
+        attackBoxCollider.size = attackBoxSize;
+
+        float attackDistance = GetFinalAttackDistance(currentWeapon);
+        //캐릭터 뒤로 공격범위넘어오는 것 방지
+        float forwardOffset = Mathf.Max(0f, attackBoxSize.x * 0.5f - attackDistance);
+
+        attackBoxCollider.offset = new Vector2(forwardOffset, 0f);
     }
     //최종 공격력, 범위, 공격 속도 추가
     private int GetFinalAttackDamage(WeaponData currentWeapon)
