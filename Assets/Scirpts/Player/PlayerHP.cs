@@ -109,7 +109,26 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
+    //최대체력 2의 배수 닐시 1더함
+    public void SetMaxHp(int newMaxHp)
+    {
+        if (isDead)
+        {
+            return;
+        }
 
+        newMaxHp = Mathf.Max(2, newMaxHp);
+
+        if (newMaxHp % 2 != 0)
+        {
+            newMaxHp += 1;
+        }
+
+        maxHp = newMaxHp;
+        currentHp = maxHp;
+
+        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+    }
     // 이건 추가 체력용 호출 함수
     public void SetBonusHp(int bonusHp)
     {
@@ -130,20 +149,8 @@ public class PlayerHP : MonoBehaviour, IDamageable
             return;
         }
 
-        int newShieldHp = bonusStat.ShieldHp;
-        int deltaShieldHp = newShieldHp - previousEquipmentShieldHp;
-
-        if (deltaShieldHp > 0)
-        {
-            SetBonusHp(deltaShieldHp);
-        }
-        else if (deltaShieldHp < 0)
-        {
-            currentBonusHp = Mathf.Clamp(currentBonusHp + deltaShieldHp, 0, MaxBonusHp);
-            OnHpChanged?.Invoke(currentHp, currentBonusHp);
-        }
-
-        previousEquipmentShieldHp = newShieldHp;
+        currentBonusHp = bonusStat.ShieldHp;
+        OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
     {
@@ -161,11 +168,12 @@ public class PlayerHP : MonoBehaviour, IDamageable
         {
             currentBonusHp -= damageInfoset.Damage;
 
-            if (currentBonusHp < 0)// 추가 체력으로 막지 못한 남은 데미지
+            if (currentBonusHp <= 0)// 추가 체력으로 막지 못한 남은 데미지
             {
                 int overflowDamage = -currentBonusHp;
                 currentHp -= overflowDamage;
                 currentBonusHp = 0;
+                playerInventory.RemoveEquipment(EquipmentType.Shield);
             }
         }
         else // 없으면 현재 체력에서 데미지 받음
@@ -186,6 +194,10 @@ public class PlayerHP : MonoBehaviour, IDamageable
             Die();
             return;
         }
+        if (attackController != null)
+        {
+            attackController.CancelAttack();
+        }
         if (animator != null)
         {
             animator.SetTrigger("Hit");
@@ -198,6 +210,11 @@ public class PlayerHP : MonoBehaviour, IDamageable
     private void Die()
     {
         isDead = true;
+
+        if (attackController != null)
+        {
+            attackController.CancelAttack();
+        }
 
         DisableControl();
         

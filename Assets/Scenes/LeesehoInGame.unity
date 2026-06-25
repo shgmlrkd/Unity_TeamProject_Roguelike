@@ -518,6 +518,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4491191673263214828, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4491191673263214828, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 407995435
+      objectReference: {fileID: 0}
     - target: {fileID: 5086462135723915612, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -566,8 +574,25 @@ PrefabInstance:
       propertyPath: bonusStatSystem
       value: 
       objectReference: {fileID: 591083273}
+    - target: {fileID: 9105330616483280830, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: attackVfxPrefab
+      value: 
+      objectReference: {fileID: 8718933197550812533, guid: 7bdbb8ca37a65fe4da39b05887ffaee3, type: 3}
+    - target: {fileID: 9105330616483280830, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: attackVfxLifeTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9105330616483280830, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: attackVfxPositionOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9105330616483280830, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: attackVfxPositionOffset.y
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1190255557927545029, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
@@ -619,7 +644,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000ad4de2de
+  m_ApplyToSortingLayers: 000000000bd7abf7
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2560,6 +2585,10 @@ MonoBehaviour:
   attackAreaTransform: {fileID: 0}
   attackBoxCollider: {fileID: 0}
   animator: {fileID: 1484952268}
+  attackVfxPrefab: {fileID: 0}
+  attackVfxLifeTime: 0.35
+  attackVfxAngleOffset: 0
+  attackVfxPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1484952271
 MonoBehaviour:
   m_ObjectHideFlags: 0
