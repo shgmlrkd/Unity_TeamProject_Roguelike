@@ -20,19 +20,20 @@ public class DirectionalRoomSet
 public class DirectionalRoomDatabaseSO : ScriptableObject
 {
     public RoomInfo startRoom;
+    public RoomInfo bossRoom;
 
     [Header("일반 방 (방향별 분류)")]
     public DirectionalRoomSet normalRooms;
 
     [Header("특수 방 (방향별 분류)")]
-    public DirectionalRoomSet bossRooms;
+    public DirectionalRoomSet bossEntranceRoom;
     public DirectionalRoomSet treasureRooms;
     public DirectionalRoomSet storeRooms;
 
     // 데이터 가져오기 편의 함수
     public DirectionalRoomSet GetSetByType(RoomType type) => type switch
     {
-        RoomType.Boss => bossRooms,
+        RoomType.Boss => bossEntranceRoom,
         RoomType.Treasure => treasureRooms,
         RoomType.Store => storeRooms,
         _ => normalRooms
