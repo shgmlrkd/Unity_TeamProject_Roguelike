@@ -35,8 +35,9 @@ public class DeadMonsterState : MonsterBase
 
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+
         isItemDrop = false;
         DeadStart(); // 죽었을때 이동 정지 / 충돌 끄기
         controller.OnDaedTrigger();

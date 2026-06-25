@@ -43,6 +43,11 @@ public class MonsterBase : MonoBehaviour
 
     }
 
+    protected virtual void OnEnable()
+    {
+        pathFinder = monsterStateManager.PathFinder;
+    }
+
     protected void OnDrawGizmos()
     {
         if (currentPath == null) return;

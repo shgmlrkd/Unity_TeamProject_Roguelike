@@ -6,10 +6,8 @@ public class AttackMonsterState : MonsterBase
 {
     private bool isAttacking = false;
 
-    protected virtual void OnEnable()
-    {
-        // 공격 할 몬스터에 따라 다르기 때문에 상속 준비
-    }
+
+    // 공격 할 몬스터에 따라 다르기 때문에 상속 준비  
 
     public void AttackDamage()
     {

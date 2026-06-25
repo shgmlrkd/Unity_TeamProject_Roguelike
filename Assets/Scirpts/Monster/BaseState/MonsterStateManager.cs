@@ -16,7 +16,7 @@ public class MonsterStateManager : MonoBehaviour
     private Transform target;
     private Vector3 monsterScale;
     private WaitForSeconds waitForCheckState = new WaitForSeconds(1.0f);
-    AStarPathFinder pathFinder;
+    AStarPathFinder pathFinder = null;
     MonsterHP monsterHP;
 
 
