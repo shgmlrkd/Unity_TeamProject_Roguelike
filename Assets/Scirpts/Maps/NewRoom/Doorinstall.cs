@@ -68,6 +68,10 @@ public class Doorinstall : MonoBehaviour
         if (openTrans != null) openTrans.gameObject.SetActive(isOpen);
         if (closedTrans != null) closedTrans.gameObject.SetActive(!isOpen);
     }
+    protected virtual void ExecuteDoorAction()
+    {
+        RoomManager1.Instance.BuildRoomFromDoor(this, playerTransform);
+    }
     private IEnumerator OpenAndTeleportRoutine()
     {
         isProcessing = true; // 처리 중 상태로 변경
@@ -75,8 +79,7 @@ public class Doorinstall : MonoBehaviour
         // 설정한 시간만큼 대기 (딜레이)
         yield return new WaitForSeconds(openDelay);
 
-        // RoomManager의 로직 호출
-        RoomManager1.Instance.BuildRoomFromDoor(this, playerTransform);
+        ExecuteDoorAction();
 
         isProcessing = false; // 다시 처리 가능 상태로 변경
     }
