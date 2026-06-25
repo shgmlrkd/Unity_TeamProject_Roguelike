@@ -11,12 +11,13 @@ public class MonsterStateManager : MonoBehaviour
     [SerializeField] private UnityEvent<MonsterStateEnum> OnstateChanged;
     [SerializeField] private LayerMask PlayerLayer;
 
-    AStarPathFinder pathFinder;
     private float attackRangeLostTime;
     private bool isStartCheckState = false;
     private Transform target;
     private Vector3 monsterScale;
     private WaitForSeconds waitForCheckState = new WaitForSeconds(1.0f);
+    AStarPathFinder pathFinder;
+    MonsterHP monsterHP;
 
 
     public bool IsStartCheckState => isStartCheckState;
@@ -26,7 +27,7 @@ public class MonsterStateManager : MonoBehaviour
         yield return waitForCheckState;
         isStartCheckState = true;
     }
-
+    public MonsterStateEnum CurrentState => monsterState;
     public Transform Target { get { return target; } }
     public MonsterData MonsterData {get {return monsterData;}}
     public AStarPathFinder PathFinder {get {return pathFinder;}}
@@ -35,15 +36,12 @@ public class MonsterStateManager : MonoBehaviour
     {
         monsterScale = transform.localScale;
     }
-    private void Start()
-    {
-        SetState(MonsterStateEnum.Idle);
-    }
-
+   
     private void OnEnable()
     {
         pathFinder = null;
         isStartCheckState = false;
+        SetState(MonsterStateEnum.Idle);
         StartCoroutine(WaitForCheck());
     }
     private void FixedUpdate()
@@ -61,6 +59,11 @@ public class MonsterStateManager : MonoBehaviour
     }
     private void CheckState() // 플레이어 감지및 행동 지정
     {
+
+        if(monsterState == MonsterStateEnum.Dead)
+        {
+            return;
+        }
 
         Collider2D player = Physics2D.OverlapCircle(transform.position, monsterData.ContactRange, PlayerLayer);
 
@@ -99,16 +102,19 @@ public class MonsterStateManager : MonoBehaviour
                 SetState(MonsterStateEnum.Chase);
             }
         }
+
     }
     public void SetState(MonsterStateEnum newState) // 상태 교체
     {
+
         if (monsterState == newState) return;
-        if( monsterState != MonsterStateEnum.None)
+
+        if ( monsterState != MonsterStateEnum.None)
         {
             stateBeses[(int)monsterState].enabled = false;
         }
-        stateBeses[(int) newState].enabled = true;
         monsterState = newState;
+        stateBeses[(int) newState].enabled = true;
         OnstateChanged?.Invoke(monsterState);
     }
 

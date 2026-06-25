@@ -5,6 +5,8 @@ public class AnimationController : MonoBehaviour
     [SerializeField] private Animator refAnimator;
 
     private int monsterStateHash = Animator.StringToHash("MonsterState");
+    private int daedTriggerHash = Animator.StringToHash("IsDaed");
+
 
     private void Awake()
     {
@@ -16,9 +18,11 @@ public class AnimationController : MonoBehaviour
 
     public void OnStateChanged(MonsterStateEnum monsterState)
     {
-        if (refAnimator == null) return;
-
         refAnimator.SetInteger(monsterStateHash, (int)monsterState);
+    }
+    public void OnDaedTrigger()
+    {
+        refAnimator.SetTrigger(daedTriggerHash);
     }
  
     public void SetBossMonsterPattern(BossMonsterPattern bossMonsterPattern)
