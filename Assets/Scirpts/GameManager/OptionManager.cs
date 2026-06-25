@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class OptionManager : GlobalSingleton<OptionManager>
@@ -60,7 +61,10 @@ public class OptionManager : GlobalSingleton<OptionManager>
 
         OnUIOptionChanged?.Invoke(ShowStat, ShowEquip);
 
-        PoolManager.Instance.SetPoolVisible(typeof(Image), ShowEquip);
+        if (SceneManager.GetActiveScene().name == SceneNames.GetSceneName(SceneType.InGame))
+        { 
+            PoolManager.Instance.SetPoolVisible(typeof(Image), ShowEquip);
+        }
     }
 
     // 옵션을 PlayerPrefs로 저장
