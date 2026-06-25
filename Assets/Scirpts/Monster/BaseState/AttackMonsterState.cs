@@ -6,16 +6,6 @@ public class AttackMonsterState : MonsterBase
 {
     private bool isAttacking = false;
 
-    protected AnimationController controller;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        if(controller == null )
-        {
-            controller = GetComponent<AnimationController>();
-        }
-    }
     protected virtual void OnEnable()
     {
         // 공격 할 몬스터에 따라 다르기 때문에 상속 준비
@@ -23,6 +13,12 @@ public class AttackMonsterState : MonsterBase
 
     public void AttackDamage()
     {
+        // 이미 공격 상태가 아니면 데미지를 주지 않음
+        // 죽었거나 다른 상태로 넘어간 뒤에 공격 이벤트가 늦게 들어오는 상황 방지
+        if (monsterStateManager.CurrentState != MonsterStateEnum.Attack)
+        {
+            return;
+        }
 
         if (monsterStateManager.Target == null) return;
 
@@ -50,9 +46,17 @@ public class AttackMonsterState : MonsterBase
 
     public void AnimEventEndAttack() // 공격 애니메이션 마지막 프레임 이벤트로 연결
     {
+        // 공격 상태일 때 공격 애니메이션이 정상적으로 끝난 경우에만 Idle로 보냄
+        // 이미 Dead 상태거나 다른 상태로 넘어간 뒤라면 이 이벤트는 무시함
+        if (monsterStateManager.CurrentState != MonsterStateEnum.Attack)
+        {
+            return;
+        }
+
         isAttacking = false;
+
+        // 공격 후 잠깐 텀을 주기 위해 Idle 상태로 전환
         monsterStateManager.SetState(MonsterStateEnum.Idle);
     }
-    // 애니메이션 프레임으로 이벤트 추가로 공격이 되게 연결 할 예정
-    // 코루틴으로 안해도 충분하다
+    
 }
