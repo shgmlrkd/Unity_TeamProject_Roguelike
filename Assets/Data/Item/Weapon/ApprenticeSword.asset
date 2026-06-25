@@ -21,5 +21,5 @@ MonoBehaviour:
   attackSpeedRate: 1
   moveSpeedRate: 1
   shieldHp: 0
-  attackBoxSize: {x: 2, y: 3}
+  attackBoxSize: {x: 3, y: 4}
   weaponItemPrefab: {fileID: 0}
