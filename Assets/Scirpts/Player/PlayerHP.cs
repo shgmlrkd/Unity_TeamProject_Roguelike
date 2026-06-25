@@ -82,6 +82,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
     {
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
+
     private void OnEnable()
     {
         if (playerInventory != null)
@@ -97,6 +98,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
             playerInventory.OnBonusStatChanged -= HandleBonusStatChanged;
         }
     }
+
     // 이건 일반 체력용 호출 함수 (포션 먹기)
     public void Heal(int amount)
     {
@@ -109,6 +111,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
+
     //최대체력 2의 배수 닐시 1더함
     public void SetMaxHp(int newMaxHp)
     {
@@ -129,18 +132,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
-    // 이건 추가 체력용 호출 함수
-    public void SetBonusHp(int bonusHp)
-    {
-        if (isDead)
-        {
-            return;
-        }
-
-        currentBonusHp = Mathf.Clamp(currentBonusHp + bonusHp, 0, MaxBonusHp);
-
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
-    }
+    
     //추가체력 변동 대응
     private void HandleBonusStatChanged(BonusStat bonusStat)
     {
@@ -152,6 +144,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
         currentBonusHp = bonusStat.ShieldHp;
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
+
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
     {
         if (isDead)
@@ -174,6 +167,10 @@ public class PlayerHP : MonoBehaviour, IDamageable
                 currentHp -= overflowDamage;
                 currentBonusHp = 0;
                 playerInventory.RemoveEquipment(EquipmentType.Shield);
+            }
+            else
+            {
+                playerInventory.DamageShield(damageInfoset.Damage); // 방패가 살아있을 때만 내구도 갱신
             }
         }
         else // 없으면 현재 체력에서 데미지 받음
@@ -204,7 +201,6 @@ public class PlayerHP : MonoBehaviour, IDamageable
         }
 
         StartInvincible();
-
     }
 
     private void Die()
@@ -228,6 +224,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
             StartFadeOut();
         }
     }
+
     //피격시 무적 설정
     private void StartInvincible()
     {
@@ -247,11 +244,13 @@ public class PlayerHP : MonoBehaviour, IDamageable
         isInvincible = false;
         invincibleCoroutine = null;
     }
+
     //사망 애니메이션 마지막 프레임에 호출
     public void DestroyPlayer()
     {
         StartFadeOut();
     }
+
     private void StartFadeOut()
     {
         if (fadeOutCoroutine != null)
@@ -261,6 +260,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
         fadeOutCoroutine = StartCoroutine(FadeOutAndDisableCo());
     }
+
     private IEnumerator FadeOutAndDisableCo()
     {
         if (spriteRenderers == null || spriteRenderers.Length == 0)
@@ -312,10 +312,12 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
         DisablePlayer();
     }
+
     private void DisablePlayer()
     {
         gameObject.SetActive(false);
     }
+
     private void DisableControl()
     {
         if (rb != null)
@@ -344,6 +346,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
             inputManager.enabled = false;
         }
     }
+
     //private void UpdateTestCurrentHp()
     //{
     //    if (testCurrentHp == previousTestCurrentHp)

@@ -2652,6 +2652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1612525295}
   - component: {fileID: 1612525294}
+  - component: {fileID: 1612525296}
   m_Layer: 0
   m_Name: GameObjectPoolManager
   m_TagString: Untagged
@@ -2688,6 +2689,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1612525296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612525293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f9f25b14bd28ad438cf7b4611190801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterManager
+  monsterPrefabs:
+  - {fileID: 1723123436}
 --- !u!224 &1629604623 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8703451249113484492, guid: a0bfec88aac355949829de0f00e24497, type: 3}
@@ -2725,7 +2740,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 251105551509319640, guid: ce7ab330facf1b14ca0daf1c660a73f1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5.48
       objectReference: {fileID: 0}
     - target: {fileID: 251105551509319640, guid: ce7ab330facf1b14ca0daf1c660a73f1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2769,7 +2784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2008492938012638545, guid: ce7ab330facf1b14ca0daf1c660a73f1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5269943068838215692, guid: ce7ab330facf1b14ca0daf1c660a73f1, type: 3}
       propertyPath: m_Enabled
@@ -2780,6 +2795,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce7ab330facf1b14ca0daf1c660a73f1, type: 3}
+--- !u!114 &1723123436 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5078300678617987942, guid: ce7ab330facf1b14ca0daf1c660a73f1, type: 3}
+  m_PrefabInstance: {fileID: 1723123435}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b76abc6bb7fa344bebab9976b85493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
 --- !u!114 &1801658597 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6369726714023790558, guid: a0bfec88aac355949829de0f00e24497, type: 3}
@@ -3334,6 +3360,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 407995435
       objectReference: {fileID: 0}
+    - target: {fileID: 2310373804084963693, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2427295748777729705, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: m_SortingLayer
       value: 5
@@ -3412,7 +3442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5824612967443884266, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5824612967443884266, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: m_LocalPosition.z

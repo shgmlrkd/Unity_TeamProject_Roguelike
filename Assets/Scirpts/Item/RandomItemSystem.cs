@@ -2,6 +2,9 @@
 
 public class RandomItemSystem
 {
+    private const int EquipmentDropChance = 20;
+    private const int ConsumableDropChance = 10;
+
     private ItemDataBase itemDataBase;
 
     public RandomItemSystem(ItemDataBase itemDataBase)
@@ -9,28 +12,33 @@ public class RandomItemSystem
         this.itemDataBase = itemDataBase;
     }
 
+    // 아이템 카운트가 2개이상이면 아이템 드랍
     public ItemData GetRandomItem()
     {
-        // 이건 장비 타입인지 소비 타입인지 랜덤 돌린거
-        int itemType = 0;// Random.Range(0, (int)ItemType.Length);
+        int random = Random.Range(0, 100);
 
-        switch ((ItemType)itemType)
+        if (random < EquipmentDropChance)
         {
-            // 장비
-            case ItemType.Equipment:
-                EquipmentType equipmentTypeKey =
-                    (EquipmentType)Random.Range(0, (int)EquipmentType.Length);
+            EquipmentType equipmentTypeKey =
+                (EquipmentType)Random.Range(0, (int)EquipmentType.Length);
 
-                return itemDataBase.GetEquipmentData(equipmentTypeKey);
-            
-            // 소비
-            case ItemType.Consumable:
-                ConsumableType consumableTypeKey =
-                    (ConsumableType)Random.Range(0, (int)ConsumableType.Length);
+            return itemDataBase.GetEquipmentData(equipmentTypeKey);
+        }
 
-                return itemDataBase.GetConsumableData(consumableTypeKey);
+        if (random < EquipmentDropChance + ConsumableDropChance)
+        {
+            ConsumableType consumableTypeKey =
+                (ConsumableType)Random.Range(0, (int)ConsumableType.Length);
+
+            return itemDataBase.GetConsumableData(consumableTypeKey);
         }
 
         return null;
+    }
+
+    // 아이템 카운트가 1개면 골드만 나옴
+    public ItemData GetGoldItem()
+    {
+        return itemDataBase.GetGoldData();
     }
 }

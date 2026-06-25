@@ -81,7 +81,9 @@ public class DeadMonsterState : MonsterBase
             if (alpha < 0.4f && !isItemDrop)
             {
                 isItemDrop = true;
-                ItemManager.Instance.DropItem(transform.position);
+                ItemManager.Instance.DropItem(monsterStateManager.MonsterData.DropItemCount,
+                                              monsterStateManager.MonsterData.DropGold,
+                                              transform.position);
             }
 
             for(int i = 0; i < spriteRenderers.Length; i++) // 모든 spriteRenderers에 값 적용

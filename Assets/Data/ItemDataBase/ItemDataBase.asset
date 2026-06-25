@@ -25,14 +25,21 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 74198898a7047824780ff3352b233ad4, type: 2}
   - type: 1
     datas:
-    - {fileID: 11400000, guid: 7fb9161dc16b9404e9bb4f2045873de0, type: 2}
     - {fileID: 11400000, guid: ffcf8024221952f45bb0239ef43fe013, type: 2}
     - {fileID: 11400000, guid: cecc6c5b125a39942aeb9a077302dc34, type: 2}
+    - {fileID: 11400000, guid: 13df077f0dca0554b8e14076934a3cb4, type: 2}
   - type: 3
     datas:
     - {fileID: 11400000, guid: 5427fc3f492235c4bae9e74da89048a5, type: 2}
     - {fileID: 11400000, guid: 8a7ca73f0c50a7842a5980632a27e856, type: 2}
     - {fileID: 11400000, guid: 0748e9182a5513248bee2adf4de203e6, type: 2}
-  consumableGroup: []
+  consumableGroup:
+  - type: 0
+    datas:
+    - {fileID: 11400000, guid: bcbe7b404acdb644fb4e647df0f692da, type: 2}
+    - {fileID: 11400000, guid: 5219d553f0346cc4586f12bad934768a, type: 2}
+    - {fileID: 11400000, guid: cf47c3af736bb964c9cd0f34d9e514e5, type: 2}
+    - {fileID: 11400000, guid: bb2be5353dca37645afbeab2896950c9, type: 2}
+    - {fileID: 11400000, guid: a7abafc046e57c448971010f37a008cd, type: 2}
   gold:
     Data: {fileID: 11400000, guid: 94d3a8b60b0dbb44fa3f1d00552280b2, type: 2}

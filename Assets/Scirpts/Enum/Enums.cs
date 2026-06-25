@@ -34,6 +34,7 @@ public enum ItemType
 {
     Equipment,          // 장비
     Consumable,         // 소비
+    Gold,               // 골드
     Length              // 전체 길이
 }
 
