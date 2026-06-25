@@ -26,3 +26,5 @@ MonoBehaviour:
   maxPatrolDistance: 8
   minDropGold: 0
   maxDropGold: 0
+  minDropItemCount: 1
+  maxDropItemCount: 4

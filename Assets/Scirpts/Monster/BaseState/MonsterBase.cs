@@ -8,6 +8,7 @@ public class MonsterBase : MonoBehaviour
     protected Rigidbody2D rb;
     protected Collider2D monsterCollider2D;
     protected MonsterHP monsterHP;
+    protected AnimationController controller;
 
     protected List<AStarNode> currentPath;
     protected AStarPathFinder pathFinder;
@@ -34,8 +35,12 @@ public class MonsterBase : MonoBehaviour
         if (monsterHP == null) 
         {
             monsterHP = GetComponent<MonsterHP>();
-        }    
-        
+        }
+        if (controller == null)
+        {
+            controller = GetComponentInChildren<AnimationController>();
+        }
+
     }
 
     protected void OnDrawGizmos()

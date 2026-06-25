@@ -190,10 +190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4266d960a9f3a3a4f8c488c7843a0980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarGrid
-  wallTilemap: {fileID: 0}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &-5113150458520517522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276443436e5d3ee4ea0beabae45ac55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarPathFinder
-  grid: {fileID: 0}
 --- !u!61 &1697258119960069150
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -278,7 +273,7 @@ Transform:
   m_GameObject: {fileID: 2013402417457040657}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: 2, z: 0}
+  m_LocalPosition: {x: -6.37, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2514,6 +2509,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3664357743022752618}
+  - component: {fileID: 8549202318855896964}
   m_Layer: 0
   m_Name: MonsterSpawner
   m_TagString: Untagged
@@ -2540,6 +2536,19 @@ Transform:
   - {fileID: 1239158759233488954}
   m_Father: {fileID: 4036455306265097409}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8549202318855896964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6009305945903180911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4ce6b6229eafb4b8bb01c016c4129f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnerRoom
+  spawnPoints: []
 --- !u!1 &6864080493119612968
 GameObject:
   m_ObjectHideFlags: 0
@@ -2554,7 +2563,7 @@ GameObject:
   - component: {fileID: 2614782619797427511}
   - component: {fileID: 6821878746004257563}
   - component: {fileID: 3776334751991122533}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4621,7 +4630,7 @@ Transform:
   m_GameObject: {fileID: 8367648810166578227}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 0}
+  m_LocalPosition: {x: -6.32, y: -0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

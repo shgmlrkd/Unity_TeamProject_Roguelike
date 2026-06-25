@@ -2456,7 +2456,7 @@ GameObject:
   - component: {fileID: 5025349999900978497}
   - component: {fileID: 7867461207193392402}
   - component: {fileID: 7093452284650785071}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2491,7 +2491,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -4180,10 +4180,10 @@ Tilemap:
     m_Data: {fileID: 1979961720, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
   - m_RefCount: 10
     m_Data: {fileID: -1614916469, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -74423128, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -74423128, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 2019816352, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
   - m_RefCount: 1
@@ -5011,10 +5011,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4266d960a9f3a3a4f8c488c7843a0980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarGrid
-  wallTilemap: {fileID: 0}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &9047558672224216122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5027,7 +5023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276443436e5d3ee4ea0beabae45ac55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarPathFinder
-  grid: {fileID: 0}
 --- !u!61 &5211767911434894748
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5083,6 +5078,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5926305816316225549}
+  - component: {fileID: 2841817261365096967}
   m_Layer: 0
   m_Name: MonsterSpawner
   m_TagString: Untagged
@@ -5110,3 +5106,16 @@ Transform:
   - {fileID: 8299136772018715624}
   m_Father: {fileID: 2687224371984812023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2841817261365096967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9005896047889304198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4ce6b6229eafb4b8bb01c016c4129f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnerRoom
+  spawnPoints: []

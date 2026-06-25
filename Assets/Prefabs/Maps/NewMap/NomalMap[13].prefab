@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 467075064980749347}
   - component: {fileID: 3485488564981143887}
   - component: {fileID: 6149510318618747424}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1774,7 +1774,7 @@ Tilemap:
       - {fileID: -862285523, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
       - {fileID: -1908798161, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
       - {fileID: -674141793, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: 1, z: 0}
@@ -1804,7 +1804,7 @@ Tilemap:
       - {fileID: -862285523, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
       - {fileID: -1908798161, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
       - {fileID: -674141793, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 7, y: 1, z: 0}
@@ -1814,7 +1814,7 @@ Tilemap:
       - {fileID: -862285523, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
       - {fileID: -1908798161, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
       - {fileID: -674141793, guid: a37af35b412794c42bf467fb391eccd8, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: 2, z: 0}
@@ -2570,10 +2570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4266d960a9f3a3a4f8c488c7843a0980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarGrid
-  wallTilemap: {fileID: 0}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &6801043357159637517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2586,7 +2582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276443436e5d3ee4ea0beabae45ac55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarPathFinder
-  grid: {fileID: 0}
 --- !u!61 &7296005656508239114
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2642,6 +2637,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1129329173161118581}
+  - component: {fileID: 1223430390125960079}
   m_Layer: 0
   m_Name: MonsterSpawner
   m_TagString: Untagged
@@ -2668,6 +2664,19 @@ Transform:
   - {fileID: 5019066784328764996}
   m_Father: {fileID: 6817579812866211703}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1223430390125960079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6664139791941411196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4ce6b6229eafb4b8bb01c016c4129f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnerRoom
+  spawnPoints: []
 --- !u!1 &6819577514272906413
 GameObject:
   m_ObjectHideFlags: 0

@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 1266500015107470014}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 1, z: 0}
+  m_LocalPosition: {x: 4.39, y: 0.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -248,7 +248,7 @@ Transform:
   m_GameObject: {fileID: 2966372394203797363}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7, y: -3, z: 0}
+  m_LocalPosition: {x: 6.5, y: 0.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -263,6 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4085547421814605289}
+  - component: {fileID: 2718830853012594037}
   m_Layer: 0
   m_Name: MonsterSpawner
   m_TagString: Untagged
@@ -279,7 +280,7 @@ Transform:
   m_GameObject: {fileID: 2971183157792336965}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.27718496, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -289,6 +290,23 @@ Transform:
   - {fileID: 6195785312255690568}
   m_Father: {fileID: 4963119129866307848}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2718830853012594037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2971183157792336965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4ce6b6229eafb4b8bb01c016c4129f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestSpawnerRoom
+  spawnPoints:
+  - {fileID: 1918661580837523642}
+  - {fileID: 9058651430649795383}
+  - {fileID: 3735531335305565715}
+  - {fileID: 6195785312255690568}
 --- !u!1 &3804675626636150124
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,7 +524,7 @@ Transform:
   m_GameObject: {fileID: 4889583596491351187}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.7, y: 0, z: 0}
+  m_LocalPosition: {x: -3.08, y: -2.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -526,7 +544,7 @@ GameObject:
   - component: {fileID: 4086751126160422126}
   - component: {fileID: 4390041595510763121}
   - component: {fileID: 6440032893252749130}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2011,7 +2029,7 @@ Transform:
   m_GameObject: {fileID: 6846854743326455616}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3, y: 2.4, z: 0}
+  m_LocalPosition: {x: -6.18, y: 0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4078,10 +4096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4266d960a9f3a3a4f8c488c7843a0980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarGrid
-  wallTilemap: {fileID: 0}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &-6088150716369834641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4094,7 +4108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276443436e5d3ee4ea0beabae45ac55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarPathFinder
-  grid: {fileID: 0}
 --- !u!61 &-1841003965468597256
 BoxCollider2D:
   m_ObjectHideFlags: 0
