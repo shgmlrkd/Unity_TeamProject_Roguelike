@@ -1142,14 +1142,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b76abc6bb7fa344bebab9976b85493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
-  monsterData: {fileID: 11400000, guid: ffefe0b6e0cd8b340b48c471b621b727, type: 2}
+  monsterData: {fileID: 11400000, guid: 81585ac7396dbc548b25d21f1524661a, type: 2}
   stateBeses:
   - {fileID: 2795105761392571508}
   - {fileID: 756013279911399792}
   - {fileID: 7280803269159834430}
   - {fileID: 750741714924514029}
   - {fileID: 8776839850756766451}
-  pathFinder: {fileID: 0}
   monsterState: -1
   OnstateChanged:
     m_PersistentCalls:

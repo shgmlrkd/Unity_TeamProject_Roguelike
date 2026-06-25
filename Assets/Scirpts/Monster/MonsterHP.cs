@@ -17,10 +17,15 @@ public class MonsterHP : MonoBehaviour, IDamageable
     {
         monsterStateManager = GetComponent<MonsterStateManager>();
         monsterData = monsterStateManager.MonsterData;
-
+    }
+    private void OnEnable()
+    {
         currentHp = monsterData.MonsterMaxHp;
     }
-
+    private void OnDisable()
+    {
+        // 죽기전에 해야할걸 하는곳
+    }
     private void Update()
     {
         if (Keyboard.current.qKey.wasPressedThisFrame)

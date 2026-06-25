@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class MonsterStateManager : MonoBehaviour
@@ -6,14 +7,25 @@ public class MonsterStateManager : MonoBehaviour
 
     [SerializeField] private MonsterData monsterData;
     [SerializeField] private MonsterBase[] stateBeses;
-    [SerializeField] private AStarPathFinder pathFinder;
     [SerializeField] private MonsterStateEnum monsterState = MonsterStateEnum.None;
     [SerializeField] private UnityEvent<MonsterStateEnum> OnstateChanged;
     [SerializeField] private LayerMask PlayerLayer;
 
+    AStarPathFinder pathFinder;
     private float attackRangeLostTime;
+    private bool isStartCheckState = false;
     private Transform target;
     private Vector3 monsterScale;
+    private WaitForSeconds waitForCheckState = new WaitForSeconds(1.0f);
+
+
+    public bool IsStartCheckState => isStartCheckState;
+
+    private IEnumerator WaitForCheck()
+    {
+        yield return waitForCheckState;
+        isStartCheckState = true;
+    }
 
     public Transform Target { get { return target; } }
     public MonsterData MonsterData {get {return monsterData;}}
@@ -30,13 +42,23 @@ public class MonsterStateManager : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        pathFinder = null;
+        isStartCheckState = false;
+        StartCoroutine(WaitForCheck());
     }
     private void FixedUpdate()
     {
+        if (!isStartCheckState) return;
         CheckState();
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out AStarPathFinder pathFinder))
+        {
+            this.pathFinder = pathFinder;
+        }  
+    }
     private void CheckState() // 플레이어 감지및 행동 지정
     {
 
@@ -77,9 +99,6 @@ public class MonsterStateManager : MonoBehaviour
                 SetState(MonsterStateEnum.Chase);
             }
         }
-
-
-
     }
     public void SetState(MonsterStateEnum newState) // 상태 교체
     {
@@ -92,13 +111,14 @@ public class MonsterStateManager : MonoBehaviour
         monsterState = newState;
         OnstateChanged?.Invoke(monsterState);
     }
-  
+
     public void FlipTo()
     {
         Vector3 scale = monsterScale;
-        float directionX = transform.position.x - target.position.x;
+        Vector3 dir = transform.position - target.position;
+        dir.Normalize();
 
-        scale.x = directionX > 0 ? 1 : -1;
+        scale.x = dir.x > 0 ? 1 : -1;
 
         transform.localScale = scale;
     }
@@ -106,9 +126,10 @@ public class MonsterStateManager : MonoBehaviour
     public void FlipTo(Vector3 pos)
     {
         Vector3 scale = monsterScale;
-        float directionX = transform.position.x - pos.x;
+        Vector3 dir = transform.position - pos;
+        dir.Normalize();
 
-        scale.x = directionX > 0 ? 1 : -1;
+        scale.x = dir.x > 0 ? 1 : -1;
 
         transform.localScale = scale;
     }

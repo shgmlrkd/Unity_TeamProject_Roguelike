@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OptionManager : GlobalSingleton<OptionManager>
 {
@@ -10,11 +11,14 @@ public class OptionManager : GlobalSingleton<OptionManager>
     public bool ShowStat { get; private set; }
     public bool ShowEquip { get; private set; }
 
+    public event Action OnEquipShowEnabled;
     public event Action<bool, bool> OnUIOptionChanged;
 
     [Header("옵션 초기화 체크박스")]
     [SerializeField]
     private bool settingInit = false;
+
+    private bool prevShowEquip = false;
 
     protected override void Awake()
     {
@@ -46,8 +50,17 @@ public class OptionManager : GlobalSingleton<OptionManager>
         ShowEquip = showEquip;
 
         SaveOption();
+        
+        if(ShowEquip && !prevShowEquip)
+        {
+            OnEquipShowEnabled?.Invoke();
+        }
+
+        prevShowEquip = showEquip;
 
         OnUIOptionChanged?.Invoke(ShowStat, ShowEquip);
+
+        PoolManager.Instance.SetPoolVisible(typeof(Image), ShowEquip);
     }
 
     // 옵션을 PlayerPrefs로 저장
@@ -72,6 +85,8 @@ public class OptionManager : GlobalSingleton<OptionManager>
 
         ShowStat = PlayerPrefs.GetInt("ShowStat", 1) == 1;
         ShowEquip = PlayerPrefs.GetInt("ShowEquipment", 1) == 1;
+
+        prevShowEquip = ShowEquip;  // 기존 장비 표시 옵션 저장
 
         // 저장된 표시 옵션 이벤트 발행
         OnUIOptionChanged?.Invoke(ShowStat, ShowEquip);
