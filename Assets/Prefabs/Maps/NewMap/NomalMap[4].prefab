@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 678147484936118537}
+  - component: {fileID: 285304075682003017}
   m_Layer: 0
   m_Name: MonsterSpawner
   m_TagString: Untagged
@@ -67,6 +68,19 @@ Transform:
   - {fileID: 255592497845116081}
   m_Father: {fileID: 1150014345461396430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &285304075682003017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873862781644621988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4ce6b6229eafb4b8bb01c016c4129f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnerRoom
+  spawnPoints: []
 --- !u!1 &2150403557454759609
 GameObject:
   m_ObjectHideFlags: 0
@@ -2699,7 +2713,7 @@ GameObject:
   - component: {fileID: 2390931626238784466}
   - component: {fileID: 8328219826710600392}
   - component: {fileID: 7877743253358758043}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4349,10 +4363,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4266d960a9f3a3a4f8c488c7843a0980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarGrid
-  wallTilemap: {fileID: 0}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &-6557997606884692948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4365,7 +4375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276443436e5d3ee4ea0beabae45ac55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarPathFinder
-  grid: {fileID: 0}
 --- !u!61 &7785042735800807451
 BoxCollider2D:
   m_ObjectHideFlags: 0
