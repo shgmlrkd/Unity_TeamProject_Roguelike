@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework.Interfaces;
+using UnityEngine;
 
 public class ItemManager : ScenesSingleton<ItemManager>
 {
@@ -23,19 +24,40 @@ public class ItemManager : ScenesSingleton<ItemManager>
         randomItem = new RandomItemSystem(itemDataBase);
     }
 
+    // 풀에 아이템 넣기
     public void ReturnItem(Item item)
     {
         PoolManager.Instance.ReturnPool(item);
     }
 
     // 여기서 아이템의 데이터를 랜덤으로 뽑고 적용함
-    public void DropItem(Vector3 pos)
+    public void DropItem(int itemCount, int gold, Vector3 pos)
     {
-        ItemData itemData = randomItem.GetRandomItem();
-        
+        // 무조건 골드를 받아옴
+        SpawnItem(randomItem.GetGoldItem(), 0, itemCount, gold, pos);
+
+        // count가 2개 이상이면 장비, 소비, 꽝 중 랜덤으로 당첨됨
+        for(int i = 1; i < itemCount; i++)
+        {
+            ItemData itemData = randomItem.GetRandomItem();
+
+            // 꽝이면 넘어감
+            if (itemData == null) continue; 
+
+            SpawnItem(itemData, i, itemCount, 0, pos);
+        }
+    }
+
+    // 풀에서 아이템 꺼내고 초기화
+    private void SpawnItem(ItemData data, int index, int itemCount, int gold, Vector3 pos)
+    {
         Item item = PoolManager.Instance.GetPool(itemPrefab);
 
-        item.Initialize(itemData, pos);
+        Vector3 itemPos = item.GetScatterOffset(index, itemCount);
+
+        Vector3 finalPos = itemPos + pos;
+
+        item.Initialize(data, gold, finalPos);
     }
 
     // 장착된 아이템을 드롭하는 메서드
