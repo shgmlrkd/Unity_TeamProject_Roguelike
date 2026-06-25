@@ -53,6 +53,19 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
         StartCoroutine(CloseDoorDelayed(door));
         MoveCamera();
     }
+    public void ForceMoveToBossRoom(Vector3 pos, Vector2Int grid)
+    {
+        // 1. 보스방 생성
+        generator.CreateRoom(roomDatabase.bossRoom, pos, grid, Vector2Int.zero);
+
+        // 2. 맵 데이터 저장
+        map.DungeonMap[grid] = roomDatabase.bossRoom;
+        map.RoomPositions[grid] = pos;
+
+        // 3. 순간이동 및 카메라 이동
+        playerTransform.position = pos;
+        MoveCamera();
+    }
     // 문을 통과한 후 플레이어가 방에서 완전히 벗어날 시간을 벌고 문을 닫는 함수
     private IEnumerator CloseDoorDelayed(Doorinstall door)
     {
