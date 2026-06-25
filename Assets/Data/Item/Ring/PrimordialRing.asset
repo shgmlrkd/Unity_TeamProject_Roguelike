@@ -17,7 +17,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 70823dbd12fa940b28908ffe822ee806, type: 3}
   equipmentType: 3
   attack: 3
-  attackRange: 1
+  attackRange: 0
   attackSpeedRate: 1
   moveSpeedRate: 1
   shieldHp: 0
