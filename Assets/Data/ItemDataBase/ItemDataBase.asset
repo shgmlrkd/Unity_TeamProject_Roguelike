@@ -34,3 +34,5 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 8a7ca73f0c50a7842a5980632a27e856, type: 2}
     - {fileID: 11400000, guid: 0748e9182a5513248bee2adf4de203e6, type: 2}
   consumableGroup: []
+  gold:
+    Data: {fileID: 11400000, guid: 94d3a8b60b0dbb44fa3f1d00552280b2, type: 2}
