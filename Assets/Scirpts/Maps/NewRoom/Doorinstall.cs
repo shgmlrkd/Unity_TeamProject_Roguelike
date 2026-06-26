@@ -23,6 +23,7 @@ public class Doorinstall : MonoBehaviour
 
     private void Update()
     {
+        //if (!MonsterManager.Instance.IsAllMonsterDead) return;
         if (isPlayerNearby && Keyboard.current.eKey.wasPressedThisFrame)
         {
             if (instantiatedDoor == null)
