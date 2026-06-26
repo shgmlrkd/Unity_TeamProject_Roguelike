@@ -997,6 +997,7 @@ GameObject:
   - component: {fileID: 756013279911399792}
   - component: {fileID: 7280803269159834430}
   - component: {fileID: 750741714924514029}
+  - component: {fileID: 5219069679086743667}
   - component: {fileID: 8776839850756766451}
   m_Layer: 6
   m_Name: Goblin
@@ -1148,6 +1149,7 @@ MonoBehaviour:
   - {fileID: 756013279911399792}
   - {fileID: 7280803269159834430}
   - {fileID: 750741714924514029}
+  - {fileID: 5219069679086743667}
   - {fileID: 8776839850756766451}
   monsterState: -1
   OnstateChanged:
@@ -1217,6 +1219,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f88b90456673dd40806072efe73682e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackMonsterState
+--- !u!114 &5219069679086743667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008492938012638545}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2f775044ffe204e96597d97c3e32dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitMonsterState
+  visualRoot: {fileID: 1122769834691038834}
 --- !u!114 &8776839850756766451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1229,6 +1244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4651b01139e21eb40b21b3f8052b311b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeadMonsterState
+  visualRoot: {fileID: 1122769834691038834}
 --- !u!1 &2047387896397727053
 GameObject:
   m_ObjectHideFlags: 0
@@ -4158,7 +4174,7 @@ GameObject:
   - component: {fileID: 2975865107403888872}
   m_Layer: 0
   m_Name: Shadow
-  m_TagString: Untagged
+  m_TagString: Shadow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4595,7 +4611,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -12
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 5053251350606442050, guid: c6a5efa382266954e847098019d55dc9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4862,7 +4878,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -3
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1583482623376728253, guid: c6a5efa382266954e847098019d55dc9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
