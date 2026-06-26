@@ -6,7 +6,7 @@ public class PlayerStartStatApplier : MonoBehaviour
     [SerializeField] private PlayerHP playerHp;
     [SerializeField] private PlayerStartStatBonus startStatBonus;
 
-    private void Awake()
+    private void Start()
     {
         if (playerHp == null)
         {
@@ -32,7 +32,7 @@ public class PlayerStartStatApplier : MonoBehaviour
 
         if (playerHp != null)
         {
-            playerHp.SetMaxHp(stat.MaxHp);
+            playerHp.SetHp(stat.Hp);
             //playerHp.SetBonusHp(stat.ShieldHp);
         }
 
