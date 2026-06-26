@@ -9,7 +9,7 @@ public class Doorinstall : MonoBehaviour
     [Header("설정")]
     [SerializeField] private Vector2Int wallDirection; // 문이 어느 방향으로 방을 생성할지
     [SerializeField] private GameObject doorPrefab;    // 소환할 문 프리팹
-
+    public bool isBossEntranceDoor;
     [Header("연출 설정")]
     [SerializeField] private float openDelay = 0.5f; // 문이 열리는 연출 시간
 
@@ -23,6 +23,7 @@ public class Doorinstall : MonoBehaviour
 
     private void Update()
     {
+        //if (!MonsterManager.Instance.IsAllMonsterDead) return;
         if (isPlayerNearby && Keyboard.current.eKey.wasPressedThisFrame)
         {
             if (instantiatedDoor == null)
