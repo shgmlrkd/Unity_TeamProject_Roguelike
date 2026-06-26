@@ -94,13 +94,14 @@ public enum SceneType
 //              Map
 ///////////////////////////////////////
 ///
-public enum RoomType 
+public enum RoomType
 { 
+    None,
     Start,
     Normal,
     Boss, 
     Store,
-    Treasure 
+    Treasure,
 }
 
 ///////////////////////////////////////
