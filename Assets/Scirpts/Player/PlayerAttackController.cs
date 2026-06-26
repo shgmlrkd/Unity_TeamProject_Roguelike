@@ -156,6 +156,8 @@ public class PlayerAttackController : MonoBehaviour
 
         float finalAttackDistance = GetFinalAttackDistance(currentWeapon);
 
+        ApplyWeaponAttackSetting(currentWeapon, finalAttackDistance);
+
         attackAreaTransform.localPosition = attackDirection * finalAttackDistance;
 
         float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
@@ -232,7 +234,7 @@ public class PlayerAttackController : MonoBehaviour
     //무기 데이터에서 정보 뽑아 적용
     private void ApplyWeaponAttackSetting()
     {
-        if (weaponController == null || attackBoxCollider == null)
+        if (weaponController == null)
         {
             return;
         }
@@ -244,14 +246,23 @@ public class PlayerAttackController : MonoBehaviour
             return;
         }
 
-       Vector2 attackBoxSize = currentWeapon.AttackBoxSize;
+        float attackDistance = GetFinalAttackDistance(currentWeapon);
+
+        ApplyWeaponAttackSetting(currentWeapon, attackDistance);
+    }
+    private void ApplyWeaponAttackSetting(WeaponData currentWeapon, float attackDistance)
+    {
+        if (currentWeapon == null || attackBoxCollider == null)
+        {
+            return;
+        }
+
+        Vector2 attackBoxSize = currentWeapon.AttackBoxSize;
 
         attackBoxCollider.size = attackBoxSize;
 
-        float attackDistance = GetFinalAttackDistance(currentWeapon);
-        //캐릭터 뒤로 공격범위넘어오는 것 방지
         float forwardOffset = Mathf.Max(0f, attackBoxSize.x * 0.5f - attackDistance);
-
+        //캐릭터 뒤로 공격범위넘어오는 것 방지
         attackBoxCollider.offset = new Vector2(forwardOffset, 0f);
     }
     //최종 공격력, 범위, 공격 속도 추가
