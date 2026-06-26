@@ -1,6 +1,4 @@
-﻿using NUnit.Framework;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnerRoom : MonoBehaviour
@@ -41,9 +39,19 @@ public class SpawnerRoom : MonoBehaviour
         }
 
     }
+    private void OnEnable()
+    {
+        MonsterManager.Instance.CheckAllMonstersDead(false);
+    }
+
     private void Start()
     {
-        totalSpawnCount = Random.Range(minTotalSpawnCount, maxTotalSpawnCount + 1); // 몇 마리 소환될지 결정
+        if (spawnPoints.Length == 0)
+        {
+            MonsterManager.Instance.CheckAllMonstersDead(true);
+        }
+
+        totalSpawnCount = UnityEngine.Random.Range(minTotalSpawnCount, maxTotalSpawnCount + 1); // 몇 마리 소환될지 결정
 
         // 게임 시작하면 바로 몬스터 생성
         SpawnMonsters();
@@ -53,7 +61,25 @@ public class SpawnerRoom : MonoBehaviour
         CheckAliveMonster(); // 풀로 돌아가서 비활성화 된 몬스터 리스트에서 제거
 
         TryRespwanMonster(); // 조건이 맞다면 추가 소환
+
+        CheckRoomClear();
     }
+
+    private void CheckRoomClear()
+    {
+        if (currentSpawnCount < totalSpawnCount)
+        {
+            return;
+        }
+
+        if (ailveMonsters.Count > 0)
+        {
+            return;
+        }
+
+        MonsterManager.Instance.CheckAllMonstersDead(true);
+    }
+
     public void SpawnMonsters()
     {
         if (spawnPoints == null || spawnPoints.Length == 0)
@@ -96,7 +122,7 @@ public class SpawnerRoom : MonoBehaviour
         {
             if (ailveMonsters[i] == null || !ailveMonsters[i].gameObject.activeSelf)
             {
-                ailveMonsters.Remove(ailveMonsters[i]);
+                ailveMonsters?.Remove(ailveMonsters[i]);
             }
         }
     }
