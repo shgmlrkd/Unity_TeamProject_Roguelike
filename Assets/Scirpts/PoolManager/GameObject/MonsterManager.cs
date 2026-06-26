@@ -2,10 +2,13 @@
 
 public class MonsterManager : ScenesSingleton<MonsterManager>
 {
-    [Header("프리펩")]
+    [Header("프리팹")]
     [SerializeField] private MonsterStateManager[] monsterPrefabs;
 
     private int poolSize = 10;
+
+    private bool isAllMonsterDead = false;
+    public bool IsAllMonsterDead => isAllMonsterDead;
 
     protected override void Awake()
     {
@@ -35,5 +38,8 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
 
     }
 
-
+    public void CheckAllMonstersDead(bool isAllMonsterDead)
+    {
+        this.isAllMonsterDead = isAllMonsterDead;
+    }
 }
