@@ -15,6 +15,9 @@ MonoBehaviour:
   startRoom:
     roomName: 
     roomPrefab: {fileID: 8833705308829559481, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
+  bossRoom:
+    roomName: 
+    roomPrefab: {fileID: 4157049713048895851, guid: 99e8c51563224234a89ba72b276ce7af, type: 3}
   normalRooms:
     up: []
     down: []
@@ -23,9 +26,11 @@ MonoBehaviour:
     any:
     - roomName: 
       roomPrefab: {fileID: 8833705308829559481, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
-  bossRooms:
+  bossEntranceRoom:
     up: []
-    down: []
+    down:
+    - roomName: 
+      roomPrefab: {fileID: 4118817552218282813, guid: e6c12eeefcdc7074d9030d0778ccaff3, type: 3}
     left: []
     right: []
     any: []
