@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e98967d330d5a2644ac6ac88083fed77, type: 3}
-  m_Name: Gobiln
+  m_Name: Skeleton
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
-  monsterName: "\uACE0\uBE14\uB9B0"
+  monsterName: "\uC2A4\uCF08\uB808\uD1A4"
   monsterMaxHp: 5
-  moveSpeed: 2
+  moveSpeed: 1
   attackDamage: 1
-  attackRange: 1
+  attackRange: 3
   attackTakeDamageRange: 0
   attackDelay: 1
-  contactRange: 5
-  patrolSpeed: 3
-  patrolWaitTime: 0.5
+  contactRange: 6
+  patrolSpeed: 2
+  patrolWaitTime: 1
   minPatrolDistance: 3
-  maxPatrolDistance: 8
+  maxPatrolDistance: 5
   minDropGold: 1
-  maxDropGold: 2
+  maxDropGold: 3
   minDropItemCount: 1
   maxDropItemCount: 4
