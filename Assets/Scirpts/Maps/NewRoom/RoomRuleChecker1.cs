@@ -3,7 +3,7 @@
 public class RoomRuleChecker1
 {
     public int GeneratedNormalRoomCount { get; set; } = 0;
-    public int MaxDoorCount { get; set; } = 3; // 보스 방 등장을 위한 제한 횟수
+    public int MaxDoorCount { get; set; } = 10; // 보스 방 등장을 위한 제한 횟수
     public int CurrentDoorUsedCount { get; set; } = 0;
 
     // 진행도와 이동 방향을 분석하여 다음 생성할 방의 타입을 결정합니다.
