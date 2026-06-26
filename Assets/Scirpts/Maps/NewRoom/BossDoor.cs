@@ -10,6 +10,8 @@ public class BossDoor : Doorinstall
     [SerializeField] private float normalRoomCameraSize = 5f; // 일반방 복귀 시 카메라 사이즈
     protected override void ExecuteDoorAction()
     {
+        RoomRuleChecker1.Instance.MaxDoorCount++;
+        RoomRuleChecker1.Instance.CanGenerateMoreRooms = true;
         // 일반 이동 대신 연출 및 강제 이동 호출
         StartCoroutine(BossEnterSequence());
     }
@@ -20,7 +22,7 @@ public class BossDoor : Doorinstall
             yield return blackScreen.DOFade(1f, 2.0f).WaitForCompletion();
 
         // 보스방 이동 좌표 계산 
-        Vector3 bossCenterPos = transform.position + new Vector3(0, 35, 0);
+        Vector3 bossCenterPos = transform.position + new Vector3(0, 500, 0);
         Vector3 spawnPos = bossCenterPos + new Vector3(0, -3f, 0);
         Vector2Int bossGridPos = new Vector2Int(myRoomPos.x, myRoomPos.y + 1);
 
@@ -41,5 +43,9 @@ public class BossDoor : Doorinstall
             yield return new WaitForSeconds(0.5f);
             Camera.main.DOOrthoSize(bossRoomCameraSize, 1.0f);
         }
+    }
+    public void OnBossDoorTriggered(Doorinstall door)
+    {
+        RoomManager1.Instance.SpawnBossRoomOnly(door);
     }
 }
