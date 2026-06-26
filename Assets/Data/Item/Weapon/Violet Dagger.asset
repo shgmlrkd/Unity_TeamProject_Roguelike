@@ -17,9 +17,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: a5108b9cfec7c4485a10fca61d8a2758, type: 3}
   equipmentType: 1
   attack: 3
-  attackRange: 5
+  attackRange: 1
   attackSpeedRate: 1
   moveSpeedRate: 1
   shieldHp: 0
-  attackBoxSize: {x: 5, y: 2}
+  attackBoxSize: {x: 6, y: 3}
   weaponItemPrefab: {fileID: 0}

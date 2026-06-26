@@ -18,6 +18,6 @@ MonoBehaviour:
   equipmentType: 0
   attack: 2
   attackRange: 0
-  attackSpeedRate: 0.5
-  moveSpeedRate: 1.2
+  attackSpeedRate: 0.05
+  moveSpeedRate: 0.2
   shieldHp: 0
