@@ -43,6 +43,9 @@ public class PlayerHP : MonoBehaviour, IDamageable
     public bool IsDead => isDead;
 
     public event Action<int, int> OnHpChanged;
+    
+    public event Action OnPlayerDead;
+    private bool isAlphaFaded = false;
 
     //현재 체력 갱신 테스트
     //[Header("Test")]
@@ -112,23 +115,22 @@ public class PlayerHP : MonoBehaviour, IDamageable
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
 
-    //최대체력 2의 배수 닐시 1더함
-    public void SetMaxHp(int newMaxHp)
+    //현재 체력 2의 배수 닐시 1더함
+    public void SetHp(int newHp)
     {
         if (isDead)
         {
             return;
         }
 
-        newMaxHp = Mathf.Max(2, newMaxHp);
+        newHp = Mathf.Max(2, newHp);
 
-        if (newMaxHp % 2 != 0)
+        if (newHp % 2 != 0)
         {
-            newMaxHp += 1;
+            newHp += 1;
         }
 
-        maxHp = newMaxHp;
-        currentHp = maxHp;
+        currentHp = newHp;
 
         OnHpChanged?.Invoke(currentHp, currentBonusHp);
     }
@@ -277,6 +279,13 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
             float t = Mathf.Clamp01(elapsedTime / fadeOutDuration);
             float alphaMultiplier = Mathf.Lerp(1f, 0f, t);
+
+            // 테스트 코드
+            if(alphaMultiplier < 0.4f && !isAlphaFaded)
+            {
+                isAlphaFaded = true;
+                OnPlayerDead?.Invoke();
+            }
 
             for (int i = 0; i < spriteRenderers.Length; i++)
             {

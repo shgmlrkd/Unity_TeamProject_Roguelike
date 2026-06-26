@@ -29,7 +29,7 @@ public class StartStatRoller : MonoBehaviour
         PlayerRolledStat rolledStat = new PlayerRolledStat
         {
             //랜덤 돌림
-            MaxHp = 2*(Random.Range(minMaxHp, maxMaxHp + 1)),
+            Hp = 2*(Random.Range(minMaxHp, maxMaxHp + 1)),
             Attack = Random.Range(minAttack, maxAttack + 1),
             AttackSpeedRate = Random.Range(minAttackSpeedRate, maxAttackSpeedRate),
             MoveSpeedRate = Random.Range(minMoveSpeedRate, maxMoveSpeedRate),
