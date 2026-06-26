@@ -420,6 +420,7 @@ MonoBehaviour:
   destinationRoomPos: {x: 0, y: 0}
   wallDirection: {x: 0, y: -1}
   doorPrefab: {fileID: 7841760728125186997, guid: 1f866b5014be9c740868251c033c359f, type: 3}
+  isBossEntranceDoor: 0
   openDelay: 0.5
 --- !u!61 &2619448532815777236
 BoxCollider2D:
@@ -516,6 +517,7 @@ MonoBehaviour:
   destinationRoomPos: {x: 0, y: 0}
   wallDirection: {x: -1, y: 0}
   doorPrefab: {fileID: 7841760728125186997, guid: 1f866b5014be9c740868251c033c359f, type: 3}
+  isBossEntranceDoor: 0
   openDelay: 0.5
 --- !u!61 &4830230049712879668
 BoxCollider2D:
@@ -595,6 +597,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2319158909135477656}
   - {fileID: 7209820890719440305}
   - {fileID: 8652758122881815698}
   - {fileID: 2696384706222635803}
@@ -4831,6 +4834,51 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!1 &7247871232580053856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2319158909135477656}
+  - component: {fileID: 4939815534015732756}
+  m_Layer: 0
+  m_Name: Monster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2319158909135477656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7247871232580053856}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2018794768370254596}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4939815534015732756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7247871232580053856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4ce6b6229eafb4b8bb01c016c4129f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnerRoom
+  spawnPoints: []
 --- !u!1 &7382704323937375407
 GameObject:
   m_ObjectHideFlags: 0
@@ -4926,6 +4974,7 @@ MonoBehaviour:
   destinationRoomPos: {x: 0, y: 0}
   wallDirection: {x: 0, y: 0}
   doorPrefab: {fileID: 7841760728125186997, guid: ddcd408fef0fbe343a3f5769ceb0dd7b, type: 3}
+  isBossEntranceDoor: 0
   openDelay: 0.5
   blackScreen: {fileID: 7456076581392203325}
   bossRoomCameraSize: 9
@@ -5081,6 +5130,7 @@ MonoBehaviour:
   destinationRoomPos: {x: 0, y: 0}
   wallDirection: {x: 1, y: 0}
   doorPrefab: {fileID: 7841760728125186997, guid: 1f866b5014be9c740868251c033c359f, type: 3}
+  isBossEntranceDoor: 0
   openDelay: 0.5
 --- !u!61 &1335928472811413623
 BoxCollider2D:
