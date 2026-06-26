@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using NUnit.Framework.Interfaces;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -36,6 +35,7 @@ public class Item : MonoBehaviour
     {
         itemData = data;
         this.goldAmount = goldAmount;
+        print($"초기화 골드 : {this.goldAmount}");
 
         equipmentData = null;
         consumableData = null;
@@ -137,24 +137,18 @@ public class Item : MonoBehaviour
             if(consumableData != null)
             {
                 playerHp.Heal(consumableData.HealAmount);
+
+                ItemManager.Instance.ReturnItem(this);
+
+                return;
             }
-
-            ItemManager.Instance.ReturnItem(this);
-
-            return;
         }
 
         // 골드 아이템 일 때
-
-        /* 하트 UI 표시 테스트용
-        if (collision.TryGetComponent(out PlayerHP playe))
+        if (collision.CompareTag("Player"))
         {
-            if (equipmentData != null)
-            {
-                playe.SetBonusHp(equipmentData.ShieldHp);
-            }
-
-            gameObject.SetActive(false);
-        }*/
+            InGameManager.Instance.CollectedGold(goldAmount);
+            ItemManager.Instance.ReturnItem(this);
+        }
     }
 }

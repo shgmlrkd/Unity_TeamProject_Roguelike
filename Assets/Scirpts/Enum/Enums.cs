@@ -10,9 +10,6 @@ public enum MonsterStateEnum // 몬스터 상태
     Attack, 
     Hit,
     Dead
-
-
-
 }
 
 public enum NormalMonsterPattern // 일반 몬스터 패턴
@@ -82,6 +79,13 @@ public enum BonusType
     Attack,             // 공격력
     AttackSpeed,        // 공격 속도
     Length
+}
+
+public enum GameOverTextType
+{
+    PlayTime,           // 플레이 시간
+    BossClearCheck,     // 보스 처치 유무
+    MonsterKillCount    // 몬스터 처치 수
 }
 
 ///////////////////////////////////////
