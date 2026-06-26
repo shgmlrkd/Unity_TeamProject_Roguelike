@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e98967d330d5a2644ac6ac88083fed77, type: 3}
-  m_Name: Gobiln
+  m_Name: Gobiln 2
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
-  monsterName: "\uACE0\uBE14\uB9B0"
+  monsterName: 
   monsterMaxHp: 5
   moveSpeed: 2
   attackDamage: 1
@@ -24,7 +24,7 @@ MonoBehaviour:
   patrolWaitTime: 0.5
   minPatrolDistance: 3
   maxPatrolDistance: 8
-  minDropGold: 1
-  maxDropGold: 2
+  minDropGold: 0
+  maxDropGold: 0
   minDropItemCount: 1
   maxDropItemCount: 4
