@@ -10,6 +10,9 @@ public enum MonsterStateEnum // 몬스터 상태
     Attack, 
     Hit,
     Dead
+
+
+
 }
 
 public enum NormalMonsterPattern // 일반 몬스터 패턴
