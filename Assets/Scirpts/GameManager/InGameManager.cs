@@ -38,7 +38,7 @@ public class InGameManager : ScenesSingleton<InGameManager>
     protected override void Awake()
     {
         base.Awake();
-        gameOverUI.gameObject.SetActive(false);
+
         playerStat.RollStats();         // 플레이어 랜덤 스탯 뽑기
     }
 
