@@ -10,6 +10,8 @@ public class InGameTimer : MonoBehaviour
 
     private float playTimer;
 
+    public string TimerText => timerText.text;
+
     private void Update()
     {
         playTimer += Time.deltaTime;
