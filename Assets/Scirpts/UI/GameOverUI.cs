@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,14 @@ public class GameOverUI : MonoBehaviour
  
     [SerializeField]
     private Button[] gameOverButtons;
+
+    [Header("스크린 페이더")]
+    [SerializeField]
+    private ScreenFader screenFader;
+
+    [Header("인게임 캔버스 그룹")]
+    [SerializeField]
+    private CanvasGroup InGameCanvasGroup;
 
     public void Result()
     {
@@ -28,22 +37,49 @@ public class GameOverUI : MonoBehaviour
     // 다시 하기
     public void OnClickRetry()
     {
-        GameSceneManager.Instance.ReloadCurScene();
+        FadeAndExecute(() =>
+        {
+            GameSceneManager.Instance.ReloadCurScene();
+        });
     }
 
     // 메인 메뉴
     public void OnClickMainMenu()
     {
-        GameSceneManager.Instance.LoadScene(SceneType.Title);
+        FadeAndExecute(() =>
+        {
+            GameSceneManager.Instance.LoadScene(SceneType.Title);
+        });
     }
 
     // 게임 종료
     public void OnClickQuitGame()
     {
+        FadeAndExecute(() =>
+        {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
-    Application.Quit();
+        Application.Quit();
 #endif
+        });
+    }
+
+    private void FadeAndExecute(System.Action action)
+    {
+        Sequence sequence = DOTween.Sequence();
+
+        sequence.Append(screenFader.FadeOut(UIAnimationSettings.FadeDuration));
+
+        sequence.InsertCallback(UIAnimationSettings.CallbackRatio, () =>
+        {
+            InGameCanvasGroup.blocksRaycasts = false;
+        });
+
+        sequence.OnComplete(() =>
+        {
+            DOTween.KillAll();
+            action?.Invoke();
+        });
     }
 }
