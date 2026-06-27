@@ -18,10 +18,6 @@ public class InGameManager : ScenesSingleton<InGameManager>
     [SerializeField]
     private PlayerHP playerhp;
 
-    // 게임 오버 패널
-    [SerializeField]
-    private GameOverUI gameOverUI;
-
     [SerializeField]
     private InGameTimer timerText;
 
@@ -34,6 +30,7 @@ public class InGameManager : ScenesSingleton<InGameManager>
     public string GameOverTime => gameOverTime;
 
     public event Action<int> OnChangedGold;
+    public event Action OnGameOver;
 
     protected override void Awake()
     {
@@ -58,9 +55,7 @@ public class InGameManager : ScenesSingleton<InGameManager>
 
     private void ShowGameOverUI()
     {
-        // 플레이어 죽으면 패널 활성화
-        gameOverUI.gameObject.SetActive(true);
-        gameOverUI.Result();
+        OnGameOver?.Invoke();
     }
 
     // 몬스터 한 마리 죽일 때마다 호출할 함수
