@@ -70,7 +70,8 @@ public enum HeartType
 {
     fullHeart,          // 체력이 가득 찬 하트
     halfHeart,          // 체력이 절반인 하트
-    emptyHeart          // 체력이 없는 빈 하트  
+    emptyHeart,         // 체력이 없는 빈 하트  
+    lockHeart           // 쓸 수 없는 체력 (최대 체력이 랜덤이니 다 못 채울 수 있음)
 }
 
 public enum BonusType
