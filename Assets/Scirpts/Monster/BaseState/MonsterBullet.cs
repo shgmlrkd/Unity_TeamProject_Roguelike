@@ -6,9 +6,6 @@ public class MonsterBullet : MonoBehaviour
     [Header("맞을 대상")]
     [SerializeField] private LayerMask targetLayer;
 
-    [Header("벽 / 장애물 레이어")]
-    [SerializeField] private LayerMask obstacleLayer;
-
     [Header("유지 시간")]
     [SerializeField] private float lifeTime = 3.0f;
 
@@ -73,15 +70,11 @@ public class MonsterBullet : MonoBehaviour
             return;
         }
 
-        if (IsLayerMask(collision.gameObject.layer, obstacleLayer)) // 벽 이나 장애물에 닿으면 반환
-        {
-            ReturnBullet();
-            return;
-        }
         if(!IsLayerMask(collision.gameObject.layer, targetLayer)) // 맞을 대상이 아니면 무시
         {
             return;
         }
+
         if(!collision.TryGetComponent(out IDamageable damageable)) // 데미지를 받을수 없다면 무시
         {
             return;
@@ -92,8 +85,6 @@ public class MonsterBullet : MonoBehaviour
         damageInfoSet.Damage = damage; // 데미지 저장
 
         damageInfoSet.Attacker = attacker; // 공격자 저장
-
-        Debug.Log($"화살 데미지 전달 시도 / 데미지: {damage} / 맞은 대상: {collision.gameObject.name}");
 
         damageable.TakeDamage(damageInfoSet); // 데미지 전달
 
