@@ -62,6 +62,12 @@ public class InGameUIController : MonoBehaviour
 
     private void OptionToggleInput()
     {
+        // 게임 오버면 ESC 무시
+        if (InGameManager.Instance.IsGameOver)
+        {
+            return;
+        }
+
         // ESC를 누르면
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
