@@ -5,35 +5,40 @@ using UnityEngine.Events;
 public class MonsterStateManager : MonoBehaviour
 {
 
+    [Header("몬스터 Root")]
+    [SerializeField] private Transform visualRoot;
     [SerializeField] private MonsterData monsterData;
     [SerializeField] private MonsterBase[] stateBeses;
     [SerializeField] private MonsterStateEnum monsterState = MonsterStateEnum.None;
     [SerializeField] private UnityEvent<MonsterStateEnum> OnstateChanged;
     [SerializeField] private LayerMask PlayerLayer;
 
+
+
     private float attackRangeLostTime;
     private bool isStartCheckState = false;
+    private SpriteRenderer[] spriteRenderers; // 자식까지 포함한 모든 spriteRenderer
     private Transform target;
-    private Vector3 monsterScale;
     private WaitForSeconds waitForCheckState = new WaitForSeconds(1.0f);
+    private Color[] originColor;          // 풀링 재사용시 원래 색상 복구용
+    private Vector3 monsterScale;
     AStarPathFinder pathFinder = null;
-    MonsterHP monsterHP;
 
-
+    public Transform VisualRoot => visualRoot;
+    public SpriteRenderer[] SpriteRenderers => spriteRenderers;
+    public Color[] OriginColor => originColor;
     public bool IsStartCheckState => isStartCheckState;
-
-    private IEnumerator WaitForCheck()
-    {
-        yield return waitForCheckState;
-        isStartCheckState = true;
-    }
     public MonsterStateEnum CurrentState => monsterState;
     public Transform Target { get { return target; } }
     public MonsterData MonsterData {get {return monsterData;}}
     public AStarPathFinder PathFinder {get {return pathFinder;}}
 
+
     private void Awake()
     {
+        // 루트에 spriteRenderer가 없을수 있으므로 자식까지 포함해서 모든 랜더러 가져오기
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+        InitOriginColors();
         monsterScale = transform.localScale;
     }
    
@@ -41,6 +46,7 @@ public class MonsterStateManager : MonoBehaviour
     {
         pathFinder = null;
         isStartCheckState = false;
+        ResetColor();
         SetState(MonsterStateEnum.Idle);
         StartCoroutine(WaitForCheck());
     }
@@ -50,17 +56,29 @@ public class MonsterStateManager : MonoBehaviour
         CheckState();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator WaitForCheck()
+    {
+        yield return waitForCheckState;
+        isStartCheckState = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)   // 트리거로 노드 받기
     {
         if (collision.TryGetComponent(out AStarPathFinder pathFinder))
         {
             this.pathFinder = pathFinder;
         }  
     }
+
     private void CheckState() // 플레이어 감지및 행동 지정
     {
 
         if(monsterState == MonsterStateEnum.Dead)
+        {
+            return;
+        }
+
+        if(monsterState == MonsterStateEnum.Hit)
         {
             return;
         }
@@ -101,6 +119,28 @@ public class MonsterStateManager : MonoBehaviour
             {
                 SetState(MonsterStateEnum.Chase);
             }
+        }
+
+    }
+    private void InitOriginColors()
+    {
+        originColor = new Color[spriteRenderers.Length];
+
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            originColor[i] = spriteRenderers[i].color;
+        }
+    }
+    public void ResetColor() // 색상 되돌리기
+    {
+        if (spriteRenderers == null || originColor == null) // 없다면 리턴
+        {
+            return;
+        }
+
+        for (int i = 0; i < spriteRenderers.Length; i++) // 색상 되돌리기
+        {
+            spriteRenderers[i].color = originColor[i];
         }
 
     }

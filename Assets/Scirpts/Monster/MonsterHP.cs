@@ -22,10 +22,12 @@ public class MonsterHP : MonoBehaviour, IDamageable
     {
         currentHp = monsterData.MonsterMaxHp;
     }
+
     private void OnDisable()
     {
         // 죽기전에 해야할걸 하는곳
     }
+
     private void Update()
     {
         if (Keyboard.current.qKey.wasPressedThisFrame)
@@ -46,18 +48,17 @@ public class MonsterHP : MonoBehaviour, IDamageable
         if (currentHp <= 0)
         {
             currentHp = 0;
-            Die(); 
+            Die();
+            return;
         }
-    }
 
-    
+        monsterStateManager.SetState(MonsterStateEnum.Hit);
+    }
 
     public void Die()
     {
+        InGameManager.Instance.RegisterMonsterKill();
         monsterStateManager.SetState(MonsterStateEnum.Dead);
-
     }
-    
 
-    
 }

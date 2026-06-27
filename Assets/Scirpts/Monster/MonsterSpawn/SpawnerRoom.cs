@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnerRoom : MonoBehaviour
@@ -6,15 +7,17 @@ public class SpawnerRoom : MonoBehaviour
     [Header("스폰 위치들")]
     [SerializeField] private Transform[] spawnPoints;
 
+    private const int MIN_SPAWN_COUNT = 2;
+    private const int MAX_SPAWN_COUNT = 8;
+
     // 총 소환수 랜덤 범위
-    private int minTotalSpawnCount = 5;
-    private int maxTotalSpawnCount = 10;
+    private const int MIN_TOTAL_SPAWN_COUNT = 3;
+    private const int MAX_TOTAL_SPAWN_COUNT = 8;
 
     // 살아있는 몬스터가 이 수 이하가 되면 추가 소환
     private int respawnThreshold = 3;
-    private int respawnCount = 3;
 
-
+    private bool isRoomCleared;
     private int totalSpawnCount; // 실제로 소환된 몬스터의 수
     private int currentSpawnCount;      // 소환된 몬스터의 수
 
@@ -37,7 +40,6 @@ public class SpawnerRoom : MonoBehaviour
             }
             spawnPoints = points.ToArray();
         }
-
     }
     private void OnEnable()
     {
@@ -51,7 +53,7 @@ public class SpawnerRoom : MonoBehaviour
             MonsterManager.Instance.CheckAllMonstersDead(true);
         }
 
-        totalSpawnCount = UnityEngine.Random.Range(minTotalSpawnCount, maxTotalSpawnCount + 1); // 몇 마리 소환될지 결정
+        totalSpawnCount = UnityEngine.Random.Range(MIN_TOTAL_SPAWN_COUNT, MAX_TOTAL_SPAWN_COUNT); // 몇 마리 소환될지 결정
 
         // 게임 시작하면 바로 몬스터 생성
         SpawnMonsters();
@@ -67,6 +69,11 @@ public class SpawnerRoom : MonoBehaviour
 
     private void CheckRoomClear()
     {
+        if(isRoomCleared)
+        {
+            return;
+        }
+
         if (currentSpawnCount < totalSpawnCount)
         {
             return;
@@ -76,6 +83,8 @@ public class SpawnerRoom : MonoBehaviour
         {
             return;
         }
+
+        isRoomCleared = true;
 
         MonsterManager.Instance.CheckAllMonstersDead(true);
     }
@@ -88,11 +97,14 @@ public class SpawnerRoom : MonoBehaviour
         }
 
         // 처음에는 spawnPos 보다 많이 소환하지는 않음
-        int spawnCount = Mathf.Min(spawnPoints.Length, totalSpawnCount);
+        int spawnCount = Random.Range(MIN_SPAWN_COUNT, MAX_SPAWN_COUNT);
+            //Mathf.Min(spawnPoints.Length, totalSpawnCount);
 
         for (int i = 0; i < spawnCount; i++)
         {
-            SpawnMonster(spawnPoints[i]);
+            int randomIndex = Random.Range(0, spawnPoints.Length);
+
+            SpawnMonster(spawnPoints[randomIndex]);
         }
 
     }
@@ -128,17 +140,38 @@ public class SpawnerRoom : MonoBehaviour
     }
     private void TryRespwanMonster()
     {
+        if (spawnPoints.Length == 0) return;
+
+        if (isRoomCleared) return;
+       
         if (currentSpawnCount >= totalSpawnCount) return; // 총 소환수를 다썼다면 종료
 
         if (ailveMonsters.Count > respawnThreshold) return; // 살아있는 몬스터가 기존보다 많으면 종료
 
         int remainSpawnCount = totalSpawnCount - currentSpawnCount; // 앞으로 더 소환할 수 있는 남은수
 
-        int spawnCount = Mathf.Min(respawnCount, spawnPoints.Length, remainSpawnCount);
+        int spawnCount = 0;
+
+        if(remainSpawnCount <= MIN_SPAWN_COUNT)
+        {
+            spawnCount = remainSpawnCount;
+        }
+
+        else if(remainSpawnCount < MAX_SPAWN_COUNT)
+        {
+            spawnCount = Random.Range(remainSpawnCount, MAX_SPAWN_COUNT);
+        }
+
+        else if(remainSpawnCount == MAX_SPAWN_COUNT)
+        {
+            spawnCount = MAX_SPAWN_COUNT;
+        }
 
         for (int i = 0; i < spawnCount; i++)
         {
-            SpawnMonster(spawnPoints[i]);
+            int randomIndex = Random.Range(0, spawnPoints.Length);
+
+            SpawnMonster(spawnPoints[randomIndex]);
         }
     }
 }
