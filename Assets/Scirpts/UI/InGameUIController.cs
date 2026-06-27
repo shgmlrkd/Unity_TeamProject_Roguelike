@@ -21,7 +21,7 @@ public class InGameUIController : MonoBehaviour
 
     [Header("게임 오버 패널")]
     [SerializeField]
-    private GameObject gameOverUI;
+    private GameOverUI gameOverUI;
 
     private bool isOptionOpen = false;
 
@@ -31,7 +31,7 @@ public class InGameUIController : MonoBehaviour
         ApplyUIVisibility(OptionManager.Instance.ShowStat, OptionManager.Instance.ShowEquip);
 
         // 게임 오버 UI 끄기, 스크린 페이드 UI 키기
-        gameOverUI.SetActive(false);
+        gameOverUI.gameObject.SetActive(false);
         screenFader.gameObject.SetActive(true);
 
         // 인게임 씬으로 넘어오면 페이드 인 진행
@@ -40,14 +40,18 @@ public class InGameUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        // 이벤트 등록
+        // 옵션 설정 변했을 때 이벤트 등록
         OptionManager.Instance.OnUIOptionChanged += ApplyUIVisibility;
+        // 게임 결과 출력 이벤트 등록
+        InGameManager.Instance.OnGameOver += ShowResult;
     }
 
     private void OnDisable()
     {
-        // 이벤트 해제
+        // 옵션 설정 변했을 때 이벤트 해제
         OptionManager.Instance.OnUIOptionChanged -= ApplyUIVisibility;
+        // 게임 결과 출력 이벤트 해제
+        InGameManager.Instance.OnGameOver -= ShowResult;
     }
 
     private void Update()
@@ -100,5 +104,11 @@ public class InGameUIController : MonoBehaviour
 
         statUI.SetActive(showStat);
         equipmentUI.SetActive(showEquip);
+    }
+
+    private void ShowResult()
+    {
+        gameOverUI.gameObject.SetActive(true);
+        gameOverUI.Result();
     }
 }
