@@ -32,7 +32,7 @@ public class PlayerStartStatApplier : MonoBehaviour
 
         if (playerHp != null)
         {
-            playerHp.SetHp(stat.Hp);
+            playerHp.SetMaxHp(stat.MaxHp);
             //playerHp.SetBonusHp(stat.ShieldHp);
         }
 

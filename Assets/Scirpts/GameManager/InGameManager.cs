@@ -26,11 +26,14 @@ public class InGameManager : ScenesSingleton<InGameManager>
     private string gameOverTime = "";   // 게임 오버 시간
     private int monsterKillCount = 0;   // 몬스터 죽인 수
     private bool isKilledBoss = false;  // 보스 처치 했는가
+    private bool isGameOver = false;
 
     public string GameOverTime => gameOverTime;
 
     public event Action<int> OnChangedGold;
     public event Action OnGameOver;
+
+    public bool IsGameOver => isGameOver;
 
     protected override void Awake()
     {
@@ -41,6 +44,7 @@ public class InGameManager : ScenesSingleton<InGameManager>
 
     private void OnEnable()
     {
+        isGameOver = false;
         playerhp.OnPlayerDead += RegisterGameOverTime;
         playerhp.OnPlayerDead += ShowGameOverUI;
     }
@@ -55,6 +59,7 @@ public class InGameManager : ScenesSingleton<InGameManager>
 
     private void ShowGameOverUI()
     {
+        isGameOver = true;
         OnGameOver?.Invoke();
     }
 

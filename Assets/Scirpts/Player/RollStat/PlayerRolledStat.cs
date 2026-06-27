@@ -3,7 +3,7 @@
 [System.Serializable]
 public class PlayerRolledStat
 {
-    public int Hp;
+    public int MaxHp;
     public int Attack;
     public float AttackSpeedRate;
     public float MoveSpeedRate;
