@@ -3,19 +3,28 @@ using UnityEngine;
 
 public class DeadMonsterState : MonsterBase
 {
+    [Header("죽음 애니메이션에서 기울어지는 시각 Root")]
+    [SerializeField] private Transform visualRoot;
+
     private float fabeSpeed = 2.0f;         // 줄어드는 속도
     private float disableAlpha = 0.05f;     // 값 이하가 되면 완전히 사라짐
     private bool isItemDrop = false;
 
     private SpriteRenderer[] spriteRenderers; // 자식까지 포함한 모든 spriteRenderer
-    private Color[] originColor;          // 풀링 재사용시 원래 색상 복구용
     private Coroutine fadeCoroutine;
-    
-
+    private Color[] originColor;          // 풀링 재사용시 원래 색상 복구용
+    private Quaternion visualRootStartRotation; // Root의 원래 회전값 저장용
 
     protected override void Awake()
     {
         base.Awake();
+        // Root의 원래 회전값 저장
+        // Skeleton 자식 Root를 인스펙터에 연결해야 함
+        if (visualRoot != null)
+        {
+            visualRootStartRotation = visualRoot.localRotation;
+        }
+
         // 루트에 spriteRenderer가 없을수 있으므로 자식까지 포함해서 모든 랜더러 가져오기
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
 
@@ -40,7 +49,7 @@ public class DeadMonsterState : MonsterBase
 
         isItemDrop = false;
         DeadStart(); // 죽었을때 이동 정지 / 충돌 끄기
-        controller.OnDaedTrigger();
+        controller.OnDeadTrigger();
     }
 
     private void DeadStart()
@@ -69,7 +78,7 @@ public class DeadMonsterState : MonsterBase
         // spriteRenderers가 없다면 페이드 처리 불가능
         if (spriteRenderers == null || spriteRenderers.Length == 0)
         {
-            PoolManager.Instance.ReturnPool(monsterStateManager);
+            ReturnToPool();
             yield break;
         }
         float alpha = 1.0f;
@@ -107,6 +116,10 @@ public class DeadMonsterState : MonsterBase
     }
     private void ReturnToPool()
     {
+        // 풀에 들어가기 전에 Root 회전을 먼저 복구
+        // 죽은 상태의 기울어진 회전값이 남는 것을 방지
+        ResetVisualRootRotation();
+
         PoolManager.Instance.ReturnPool(monsterStateManager);
     }
 
@@ -139,6 +152,18 @@ public class DeadMonsterState : MonsterBase
             monsterCollider2D.enabled = true;
         }
 
+        ResetVisualRootRotation();
+
+    }
+    private void ResetVisualRootRotation()
+    {
+        if (visualRoot == null)
+        {
+            return;
+        }
+
+        // 저장해둔 Root의 원래 회전값으로 복구
+        visualRoot.localRotation = visualRootStartRotation;
     }
 
 }

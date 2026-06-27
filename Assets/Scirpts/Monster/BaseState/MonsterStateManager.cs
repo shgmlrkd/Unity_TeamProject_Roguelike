@@ -17,20 +17,18 @@ public class MonsterStateManager : MonoBehaviour
     private Vector3 monsterScale;
     private WaitForSeconds waitForCheckState = new WaitForSeconds(1.0f);
     AStarPathFinder pathFinder = null;
-    MonsterHP monsterHP;
-
 
     public bool IsStartCheckState => isStartCheckState;
+    public MonsterStateEnum CurrentState => monsterState;
+    public Transform Target { get { return target; } }
+    public MonsterData MonsterData {get {return monsterData;}}
+    public AStarPathFinder PathFinder {get {return pathFinder;}}
 
     private IEnumerator WaitForCheck()
     {
         yield return waitForCheckState;
         isStartCheckState = true;
     }
-    public MonsterStateEnum CurrentState => monsterState;
-    public Transform Target { get { return target; } }
-    public MonsterData MonsterData {get {return monsterData;}}
-    public AStarPathFinder PathFinder {get {return pathFinder;}}
 
     private void Awake()
     {
@@ -50,7 +48,7 @@ public class MonsterStateManager : MonoBehaviour
         CheckState();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)   // 트리거로 노드 받기
     {
         if (collision.TryGetComponent(out AStarPathFinder pathFinder))
         {
@@ -61,6 +59,11 @@ public class MonsterStateManager : MonoBehaviour
     {
 
         if(monsterState == MonsterStateEnum.Dead)
+        {
+            return;
+        }
+
+        if(monsterState == MonsterStateEnum.Hit)
         {
             return;
         }
