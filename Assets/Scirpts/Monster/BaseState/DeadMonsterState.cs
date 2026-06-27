@@ -3,16 +3,11 @@ using UnityEngine;
 
 public class DeadMonsterState : MonsterBase
 {
-    [Header("죽음 애니메이션에서 기울어지는 시각 Root")]
-    [SerializeField] private Transform visualRoot;
-
     private float fabeSpeed = 2.0f;         // 줄어드는 속도
     private float disableAlpha = 0.05f;     // 값 이하가 되면 완전히 사라짐
     private bool isItemDrop = false;
 
-    private SpriteRenderer[] spriteRenderers; // 자식까지 포함한 모든 spriteRenderer
     private Coroutine fadeCoroutine;
-    private Color[] originColor;          // 풀링 재사용시 원래 색상 복구용
     private Quaternion visualRootStartRotation; // Root의 원래 회전값 저장용
 
     protected override void Awake()
@@ -20,26 +15,9 @@ public class DeadMonsterState : MonsterBase
         base.Awake();
         // Root의 원래 회전값 저장
         // Skeleton 자식 Root를 인스펙터에 연결해야 함
-        if (visualRoot != null)
+        if (monsterStateManager.VisualRoot != null)
         {
-            visualRootStartRotation = visualRoot.localRotation;
-        }
-
-        // 루트에 spriteRenderer가 없을수 있으므로 자식까지 포함해서 모든 랜더러 가져오기
-        spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
-
-        // spriteRenderers가 하나도 없으면 color 접근에 에러나니까 방어
-        if (spriteRenderers == null || spriteRenderers.Length == 0)
-        {
-            return;
-        }
-
-        // 각 SpriteRenderers의 원래 색을 저장
-        originColor = new Color[spriteRenderers.Length];
-
-        for(int i = 0; i < spriteRenderers.Length; i++)
-        {
-            originColor[i] = spriteRenderers[i].color;
+            visualRootStartRotation = monsterStateManager.VisualRoot.localRotation;
         }
 
     }
@@ -75,6 +53,7 @@ public class DeadMonsterState : MonsterBase
 
     private IEnumerator FadeOutCo()
     {
+        
         // spriteRenderers가 없다면 페이드 처리 불가능
         if (spriteRenderers == null || spriteRenderers.Length == 0)
         {
@@ -132,20 +111,6 @@ public class DeadMonsterState : MonsterBase
             fadeCoroutine = null;
         }
 
-        // 풀에서 나왔을 때 투명한 상태로 나오지 않게 원래 색으로 복구
-        if (spriteRenderers != null && originColor != null)
-        {
-            for(int i = 0; i < spriteRenderers.Length; i++)
-            {
-                if (spriteRenderers[i] == null)
-                {
-                    continue;
-                }
-
-                spriteRenderers[i].color = originColor[i];
-            }
-        }
-
         // 풀에서 나왔을때 다시 충돌 켜기
         if(monsterCollider2D != null)
         {
@@ -157,13 +122,13 @@ public class DeadMonsterState : MonsterBase
     }
     private void ResetVisualRootRotation()
     {
-        if (visualRoot == null)
+        if (monsterStateManager.VisualRoot == null)
         {
             return;
         }
 
         // 저장해둔 Root의 원래 회전값으로 복구
-        visualRoot.localRotation = visualRootStartRotation;
+        monsterStateManager.VisualRoot.localRotation = visualRootStartRotation;
     }
 
 }
