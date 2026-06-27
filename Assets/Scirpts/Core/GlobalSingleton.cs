@@ -44,6 +44,14 @@ public class GlobalSingleton<T> : MonoBehaviour where T : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    protected virtual void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
+    }
+
     protected virtual void OnApplicationQuit()
     {
         if(instance != null)
@@ -54,13 +62,4 @@ public class GlobalSingleton<T> : MonoBehaviour where T : MonoBehaviour
 
         Destroy(gameObject);
     }
-
-    protected virtual void OnDestroy()
-    {
-        if (instance == this)
-        {
-            instance = null;
-        }
-    }
-
 }

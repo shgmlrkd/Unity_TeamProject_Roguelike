@@ -38,4 +38,15 @@ public class ScenesSingleton<T> : MonoBehaviour where T : MonoBehaviour
         if (instance == this)
             instance = null;
     }
+
+    protected virtual void OnApplicationQuit()
+    {
+        if (instance != null)
+        {
+            // 종료 직전에 정리
+            instance = null;
+        }
+
+        Destroy(gameObject);
+    }
 }
