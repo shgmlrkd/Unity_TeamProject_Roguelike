@@ -42,7 +42,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
     public int CurrentBonusHp => currentBonusHp;
     public bool IsDead => isDead;
 
-    public event Action<int, int> OnHpChanged;
+    public event Action<int, int, int> OnHpChanged;
     
     public event Action OnPlayerDead;
     private bool isAlphaFaded = false;
@@ -83,7 +83,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
     }
 
     private void OnEnable()
@@ -112,11 +112,11 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
         currentHp = Mathf.Clamp(currentHp + amount, 0, MaxHp);
 
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
     }
 
     //현재 체력 2의 배수 닐시 1더함
-    public void SetHp(int newHp)
+    public void SetMaxHp(int newHp)
     {
         if (isDead)
         {
@@ -130,9 +130,10 @@ public class PlayerHP : MonoBehaviour, IDamageable
             newHp += 1;
         }
 
-        currentHp = newHp;
+        maxHp = newHp;
+        currentHp = maxHp;
 
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
     }
     
     //추가체력 변동 대응
@@ -144,7 +145,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
         }
 
         currentBonusHp = bonusStat.ShieldHp;
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
     }
 
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
@@ -184,7 +185,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
         Vector2 Direction = damageInfoset.AttackDirection;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
 
         if (currentHp <= 0)
         {

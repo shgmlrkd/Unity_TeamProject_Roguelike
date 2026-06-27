@@ -1,5 +1,6 @@
 ﻿using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StatUIController : MonoBehaviour
@@ -35,9 +36,9 @@ public class StatUIController : MonoBehaviour
     {
         if (statUITexts.Length == 0) return;
 
-        statUITexts[(int)BonusType.MoveSpeed].text = $"{bonusStat.MoveSpeedRate}";
-        statUITexts[(int)BonusType.Attack].text = $"{bonusStat.Attack}";
-        statUITexts[(int)BonusType.AttackSpeed].text = $"{bonusStat.AttackSpeedRate}";
+        statUITexts[(int)BonusType.MoveSpeed].text = $"{bonusStat.MoveSpeedRate.ToString("F1")}";
+        statUITexts[(int)BonusType.Attack].text = $"{bonusStat.Attack.ToString("F1")}";
+        statUITexts[(int)BonusType.AttackSpeed].text = $"{bonusStat.AttackSpeedRate.ToString("F1")}";
     }
 
     private void OnToggleChanged(bool isOn)

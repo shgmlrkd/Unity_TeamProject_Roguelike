@@ -16,18 +16,8 @@ public class TitleUIController : MonoBehaviour
     [SerializeField]
     private CanvasGroup titleCanvasGroup;
 
-    private void Awake()
-    {
-        if (screenFader != null)
-        {
-            screenFader.gameObject.SetActive(false);
-        }
-    }
-
     public void OnClickGameStart()
     {
-        screenFader.gameObject.SetActive(true);
-
         Sequence sequence = DOTween.Sequence();
 
         // 페이드 아웃 진행

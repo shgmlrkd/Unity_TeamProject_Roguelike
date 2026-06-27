@@ -57,7 +57,7 @@ public class ItemManager : ScenesSingleton<ItemManager>
 
         Vector3 finalPos = itemPos + pos;
 
-        item.Initialize(data, gold, finalPos);
+        item.DropItemInit(data, gold, finalPos);
     }
 
     // 장착된 아이템을 드롭하는 메서드
@@ -65,7 +65,7 @@ public class ItemManager : ScenesSingleton<ItemManager>
     {
         Item item = PoolManager.Instance.GetPool(itemPrefab);
 
-        item.Initialize(data, pos);
+        item.OldEquipmentInit(data, pos);
 
         return item;
     }

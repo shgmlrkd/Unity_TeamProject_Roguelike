@@ -53,6 +53,12 @@ public class PlayerInventory : MonoBehaviour
         // 같은 타입 장비가 이미 있으면 기존 장비를 드롭 대상으로 보냄
         if (equipmentItems.TryGetValue(equipmentType, out EquipmentData oldEquipment))
         {
+            // 같은 아이템을 먹으려 할 경우 무시하기
+            if (oldEquipment == equipmentData)
+            {
+                return false;
+            }
+
             // 장비 타입이 쉴드일 경우 비교를 통해 방패를 떨어뜨릴지 판단하기
             if (oldEquipment.EquipmentType == EquipmentType.Shield)
             {
@@ -90,49 +96,6 @@ public class PlayerInventory : MonoBehaviour
 
         return true; // 성공
     }
-
-    /*public void StoreEquipment(Vector3 pos, EquipmentData equipmentData)
-    {
-        if (equipmentData == null)
-        {
-            return;
-        }
-
-        EquipmentType equipmentType = equipmentData.EquipmentType;
-
-        // 같은 타입 장비가 이미 있으면 기존 장비를 드롭 대상으로 보냄
-        if (equipmentItems.TryGetValue(equipmentType, out EquipmentData oldEquipment))
-        {
-            isShieldChangeable = true;
-
-            // 장비 타입이 쉴드일 경우 비교를 통해 방패를 떨어뜨릴지 판단하기
-            if (oldEquipment.EquipmentType == EquipmentType.Shield)
-            {
-                if (oldEquipment.ShieldHp >= equipmentData.ShieldHp)
-                {
-                    isShieldChangeable = false;
-                }
-            }
-
-            // 쉴드가 변경이 불가능한가? 그렇다면 함수 종료
-            if (!isShieldChangeable) return;
-            
-            OnEquipmentDropped?.Invoke(pos, oldEquipment); 
-        }
-
-        equipmentItems[equipmentType] = equipmentData;
-
-        // 타입은 데이터 안에 존재하기 때문에 없애고
-        // 위치값이 필요해서 position을 넣었습니다.
-        
-        OnEquipmentStored?.Invoke(pos, equipmentData);
-        
-        // bonusStatSystem 변수를 통해 모든 장비들의 스탯을 계산해서 반환해줍니다.
-        // 그리고 BonusStat이라는 클래스는 합산된 결과값을 갖고 있습니다.
-        RecalculateBonusStat();
-
-        //Debug.Log($"장비 저장: {equipmentType} / {equipmentData.ItemName}");
-    }*/
 
     public bool TryGetEquipment(EquipmentType equipmentType, out EquipmentData equipmentData)
     {

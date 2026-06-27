@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    private const float FLOAT_DISTANCE = 0.25f;
+    private const float SCATTER_RADIUS = 0.6f;
+    private const float FULL_CIRCLE_ANGLE = 360.0f;
+
+    private const int INFINITE_LOOP = -1;
+
     private ItemData itemData = null;
 
     private EquipmentData equipmentData = null;
@@ -20,18 +26,20 @@ public class Item : MonoBehaviour
     }
 
     // 장비창에 있던 아이템을 다른 장비와 스왑할 때
-    public void Initialize(ItemData data, Vector2 pos)
+    public void OldEquipmentInit(ItemData data, Vector2 pos)
     {
-        Initialize(data, 0, pos, false);
+        Initialize(data, 0, pos);
+        PlayFloatingAnimation();
     }
     
     // 아이템에 맞는 데이터와 위치로 초기화 및 애니메이션 재생
-    public void Initialize(ItemData data, int goldAmount, Vector2 pos)
+    public void DropItemInit(ItemData data, int goldAmount, Vector2 pos)
     {
-        Initialize(data, goldAmount, pos, true);
+        Initialize(data, goldAmount, pos);
+        PlayDropAnimation(pos);
     }
 
-    private void Initialize(ItemData data, int goldAmount, Vector2 pos, bool playAnimation)
+    private void Initialize(ItemData data, int goldAmount, Vector2 pos)
     {
         itemData = data;
         this.goldAmount = goldAmount;
@@ -52,11 +60,6 @@ public class Item : MonoBehaviour
         transform.position = pos;
 
         UpdateVisual();
-
-        if (playAnimation)
-        {
-            PlayDropAnimation(pos);
-        }
     }
 
     // 아이템 스프라이트 업데이트
@@ -89,6 +92,19 @@ public class Item : MonoBehaviour
             transform.DOJump(targetPos, jumpPower, 1, duration)
             .SetEase(Ease.OutQuad)
         );
+
+        seq.OnComplete(() =>
+        {
+            PlayFloatingAnimation();
+        });
+    }
+
+    private void PlayFloatingAnimation()
+    {
+        transform.DOKill();
+        transform.DOMoveY(transform.position.y + FLOAT_DISTANCE, UIAnimationSettings.SlowDuration)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(INFINITE_LOOP, LoopType.Yoyo);
     }
 
     // 아이템 개수에 따라 원형으로 드랍하는 위치 반환
@@ -99,9 +115,9 @@ public class Item : MonoBehaviour
             return Vector3.zero;
         }
 
-        float radius = 0.6f;
+        float radius = SCATTER_RADIUS;
 
-        float angle = (360.0f / count) * index;
+        float angle = (FULL_CIRCLE_ANGLE / count) * index;
         float rad = angle * Mathf.Deg2Rad;
 
         return new Vector3(Mathf.Cos(rad), Mathf.Sin(rad)) * radius;
@@ -124,6 +140,7 @@ public class Item : MonoBehaviour
 
                 if (success)
                 {
+                    transform.DOKill();
                     ItemManager.Instance.ReturnItem(this);
                 }
 
@@ -138,6 +155,7 @@ public class Item : MonoBehaviour
             {
                 playerHp.Heal(consumableData.HealAmount);
 
+                transform.DOKill();
                 ItemManager.Instance.ReturnItem(this);
 
                 return;
@@ -148,6 +166,8 @@ public class Item : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             InGameManager.Instance.CollectedGold(goldAmount);
+
+            transform.DOKill();
             ItemManager.Instance.ReturnItem(this);
         }
     }
