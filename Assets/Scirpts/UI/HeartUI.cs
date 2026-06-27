@@ -63,7 +63,8 @@ public class HeartUI : MonoBehaviour
             Debug.LogError("HeartUI: PlayerHP가 연결되지 않았습니다.");
             return;
         }
-        UpdateHearts(playerHp.CurrentHp, playerHp.CurrentBonusHp);
+
+        UpdateHearts(playerHp.CurrentHp, playerHp.MaxHp, playerHp.CurrentBonusHp);
     }
 
     private void CreateHearts()
@@ -96,7 +97,7 @@ public class HeartUI : MonoBehaviour
         isCreated = true;
     }
 
-    private void UpdateHearts(int curHp, int curBonusHp)
+    private void UpdateHearts(int curHp, int maxHp, int curBonusHp)
     {
         if (!isCreated)
         {
@@ -106,7 +107,7 @@ public class HeartUI : MonoBehaviour
         {
             return;
         }
-        UpdateBaseHearts(curHp);
+        UpdateBaseHearts(curHp, maxHp);
         UpdateBonusHearts(curBonusHp);
     }
     private bool IsSpriteArrayValid()
@@ -125,24 +126,42 @@ public class HeartUI : MonoBehaviour
 
         return true;
     }
-    private void UpdateBaseHearts(int curHp)
+
+    private void UpdateBaseHearts(int curHp, int maxHp)
     {
         int fullHeartCount = curHp / HpPerHeart;
         int halfHeartCount = curHp % HpPerHeart;
 
+        // 최대 체력에 따라 활성화(잠금 해제)된 하트의 개수를 계산
+        int maxActiveHearts = maxHp / HpPerHeart;
+
+        // 최대 체력이 홀수면 최대 하트 개수 1 증가
+        if (maxHp % HpPerHeart != 0) 
+        {
+            maxActiveHearts++;
+        }
+
         for (int i = 0; i < MaxHeartCount; i++)
         {
-            if (i < fullHeartCount)
+            // 이 하트는 활성화된 하트
+            if (i < maxActiveHearts) 
             {
-                baseHearts[i].sprite = heartSprites[(int)HeartType.fullHeart];
+                if (i < fullHeartCount)
+                {
+                    baseHearts[i].sprite = heartSprites[(int)HeartType.fullHeart];
+                }
+                else if (i == fullHeartCount && halfHeartCount > 0) 
+                {
+                    baseHearts[i].sprite = heartSprites[(int)HeartType.halfHeart];
+                }
+                else
+                {
+                    baseHearts[i].sprite = heartSprites[(int)HeartType.emptyHeart];
+                }
             }
-            else if (i < fullHeartCount + halfHeartCount)
+            else // 잠긴 하트
             {
-                baseHearts[i].sprite = heartSprites[(int)HeartType.halfHeart];
-            }
-            else
-            {
-                baseHearts[i].sprite = heartSprites[(int)HeartType.emptyHeart];
+                baseHearts[i].sprite = heartSprites[(int)HeartType.lockHeart];
             }
         }
     }
