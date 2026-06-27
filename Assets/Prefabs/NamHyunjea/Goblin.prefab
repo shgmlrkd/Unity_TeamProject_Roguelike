@@ -1143,6 +1143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b76abc6bb7fa344bebab9976b85493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
+  visualRoot: {fileID: 1122769834691038834}
   monsterData: {fileID: 11400000, guid: 81585ac7396dbc548b25d21f1524661a, type: 2}
   stateBeses:
   - {fileID: 2795105761392571508}
@@ -1231,7 +1232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2f775044ffe204e96597d97c3e32dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitMonsterState
-  visualRoot: {fileID: 1122769834691038834}
 --- !u!114 &8776839850756766451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1244,7 +1244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4651b01139e21eb40b21b3f8052b311b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeadMonsterState
-  visualRoot: {fileID: 1122769834691038834}
 --- !u!1 &2047387896397727053
 GameObject:
   m_ObjectHideFlags: 0

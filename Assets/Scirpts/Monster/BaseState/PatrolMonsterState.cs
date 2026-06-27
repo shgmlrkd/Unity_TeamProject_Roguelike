@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PatrolMonsterState : MonsterBase
@@ -11,8 +9,9 @@ public class PatrolMonsterState : MonsterBase
 
     private int pathIndex;                              // 목표로 하는 노드 번호
 
-    protected override void Awake() 
+    protected override void Awake()
     {
+
         base.Awake();
         wait = new WaitForSeconds(monsterStateManager.MonsterData.PatrolWaitTime); // 정찰 대기 시간
     }
@@ -21,10 +20,12 @@ public class PatrolMonsterState : MonsterBase
     {
         base.OnEnable();
         patrolCo = StartCoroutine(PatrolCo());
+
     }
 
     private void OnDisable() // 코루틴 종료
     {
+
         currentPath = null; // 경로 정보 초기화
         pathIndex = 0;
 
@@ -84,11 +85,13 @@ public class PatrolMonsterState : MonsterBase
 
     private bool TrySetRandomPath()
     {
+
+
         // 현재 몬스터 위치에 해당하는 시작 노드 가져오기
         AStarNode startNode = pathFinder.Grid.GetNodeFromWorld(rb.position);
-       
+
         // 못 가져 왔다면 실패
-        if(startNode == null)
+        if (startNode == null)
         {
             return false;
         }
