@@ -52,11 +52,13 @@ public class MonsterHP : MonoBehaviour, IDamageable
             return;
         }
 
+        SoundManager.Instance.PlaySFX(SoundKey.MonsterHit);
         monsterStateManager.SetState(MonsterStateEnum.Hit);
     }
 
     public void Die()
     {
+        SoundManager.Instance.PlaySFX(SoundKey.MonsterDead);
         InGameManager.Instance.RegisterMonsterKill();
         monsterStateManager.SetState(MonsterStateEnum.Dead);
     }

@@ -217,13 +217,16 @@ public class PlayerHP : MonoBehaviour, IDamageable
         }
 
         StartHitFlash();
-
+        SoundManager.Instance.PlaySFX(SoundKey.PlayerHit);
         StartInvincible();
     }
 
     private void Die()
     {
         isDead = true;
+
+        SoundManager.Instance.PlaySFX(SoundKey.PlayerDead);
+
         // 피격시 캐릭터가 사망했다면 피격 이펙트 출력 안함
         if (hitFlashCoroutine != null)
         {
