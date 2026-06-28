@@ -44,7 +44,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2230009819093508441}
-  - component: {fileID: 8857828728808175853}
   - component: {fileID: 5157832364654106103}
   - component: {fileID: -4544583799423809464}
   - component: {fileID: -5655924068164694574}
@@ -82,19 +81,6 @@ Transform:
   - {fileID: 6684796328760804648}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &8857828728808175853
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157080953199062489}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
-  m_SortAtRoot: 0
-  m_Sort3DAs2D: 0
 --- !u!95 &5157832364654106103
 Animator:
   serializedVersion: 7
@@ -3984,6 +3970,7 @@ GameObject:
   - component: {fileID: 336648048727566495}
   - component: {fileID: 4619416111379685832}
   - component: {fileID: 4576058847664979072}
+  - component: {fileID: 4768397129043453200}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -4550,6 +4537,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333e3d58fd5c5544bb86e7e442a74215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterResetRootRotation
+--- !u!210 &4768397129043453200
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7124567954399303841}
+  m_Enabled: 1
+  m_SortingLayerID: 407931631
+  m_SortingLayer: 5
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &7264837180686687514
 GameObject:
   m_ObjectHideFlags: 0
