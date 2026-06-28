@@ -9,6 +9,7 @@ public class MonsterBase : MonoBehaviour
     protected Collider2D monsterCollider2D;
     protected MonsterHP monsterHP;
     protected AnimationController controller;
+    protected SpriteRenderer[] spriteRenderers;
 
     protected List<AStarNode> currentPath;
     protected AStarPathFinder pathFinder;
@@ -23,6 +24,7 @@ public class MonsterBase : MonoBehaviour
         if (monsterStateManager == null)
         {
             monsterStateManager = GetComponent<MonsterStateManager>();
+            spriteRenderers = monsterStateManager.SpriteRenderers;
         }
         if(rb == null)
         {
@@ -40,9 +42,8 @@ public class MonsterBase : MonoBehaviour
         {
             controller = GetComponentInChildren<AnimationController>();
         }
-
     }
-
+  
     protected virtual void OnEnable()
     {
         pathFinder = monsterStateManager.PathFinder;

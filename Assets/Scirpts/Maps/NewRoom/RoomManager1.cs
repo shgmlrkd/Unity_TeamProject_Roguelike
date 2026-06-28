@@ -29,32 +29,76 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
 
     private void Start()
     {
-        generator.CreateRoom(roomDatabase.startRoom, playerTransform.position, Vector2Int.zero);
-        map.DungeonMap[Vector2Int.zero] = roomDatabase.startRoom;
-        map.RoomPositions[Vector2Int.zero] = playerTransform.position;
+        if (generator == null || roomDatabase == null)
+        {
+            Debug.LogError("RoomManager1: Generator 또는 RoomDatabase가 인스펙터에 연결되지 않았습니다!");
+            return;
+        }
+        if (RoomRuleChecker1.Instance != null && RoomRuleChecker1.Instance.CanGenerateMoreRooms)
+        {
+            generator.CreateRoom(roomDatabase.startRoom, playerTransform.position, Vector2Int.zero);
+            map.DungeonMap[Vector2Int.zero] = roomDatabase.startRoom;
+            map.RoomPositions[Vector2Int.zero] = playerTransform.position;
+        }
     }
     // 문을 통해 다른 방으로 이동하거나, 새로운 방을 생성하는 핵심 함수
     public void BuildRoomFromDoor(Doorinstall door, Transform player)
     {
+        if (RoomRuleChecker1.Instance.IsInBossEntranceMode) return;
+
         Vector2Int dir = door.WallDirection;
         Vector2Int nextGrid = door.ParentRoomGridPos + dir;
 
         if (map.DungeonMap.ContainsKey(nextGrid))
         {
-            teleporter.TeleportToDoor(player, door.transform.position, dir, tileOffset);
+            ExecuteTeleport(player, door, dir);
         }
-        else
+        else if (RoomRuleChecker1.Instance.CanGenerateMoreRooms || door.isBossEntranceDoor)
         {
             RoomInfo info = builder.CreateRoom(dir, door.transform.position, nextGrid, roomWidth, roomHeight);
-            map.DungeonMap[nextGrid] = info;
-            map.RoomPositions[nextGrid] = door.transform.position + ((Vector3)(Vector2)dir * (dir.x != 0 ? roomWidth : roomHeight));
-            teleporter.TeleportToDoor(player, door.transform.position, dir, tileOffset);
+            if (info != null)
+            {
+                map.DungeonMap[nextGrid] = info;
+                map.RoomPositions[nextGrid] = door.transform.position + ((Vector3)(Vector2)dir * (dir.x != 0 ? roomWidth : roomHeight));
+                ExecuteTeleport(player, door, dir);
+            }
         }
         StartCoroutine(CloseDoorDelayed(door));
         MoveCamera();
     }
+    public void SpawnBossRoomOnly(Doorinstall door)
+    {
+        Vector2Int nextGrid = door.ParentRoomGridPos + door.WallDirection;
+
+        // 이미 생성되어 있다면 중복 생성 방지
+        if (map.DungeonMap.ContainsKey(nextGrid)) return;
+
+        // 보스 방 위치 계산
+        Vector3 spawnPos = door.transform.position + ((Vector3)(Vector2)door.WallDirection * 15f);
+
+        // 보스 방 프리팹 생성 (RoomBuilder를 거치지 않고 generator에 직접 명령)
+        generator.CreateRoom(roomDatabase.bossRoom, spawnPos, nextGrid, door.WallDirection);
+
+        // 맵 데이터에 등록 (나중에 텔레포트가 작동하도록 함)
+        map.DungeonMap[nextGrid] = roomDatabase.bossRoom;
+        map.RoomPositions[nextGrid] = spawnPos;
+
+        Debug.Log("보스 방 생성 완료!");
+    }
+    private void ExecuteTeleport(Transform player, Doorinstall door, Vector2Int dir)
+    {
+        Vector2Int nextGrid = door.ParentRoomGridPos + dir;
+
+        // 방 데이터가 실제로 있는지 한 번 더 확인 (안전장치)
+        if (teleporter.CanTeleport(nextGrid, map.DungeonMap))
+        {
+            teleporter.TeleportToDoor(player, door.transform.position, dir, tileOffset);
+            MoveCamera();
+        }
+    }
     public void ForceMoveToBossRoom(Vector3 pos, Vector2Int grid)
     {
+
         // 1. 보스방 생성
         generator.CreateRoom(roomDatabase.bossRoom, pos, grid, Vector2Int.zero);
 
@@ -64,6 +108,7 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
 
         // 3. 순간이동 및 카메라 이동
         playerTransform.position = pos;
+        RoomRuleChecker1.Instance.IsInBossEntranceMode = true;
         MoveCamera();
     }
     // 문을 통과한 후 플레이어가 방에서 완전히 벗어날 시간을 벌고 문을 닫는 함수

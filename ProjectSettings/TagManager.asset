@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Shadow
   layers:
   - Default
   - TransparentFX
@@ -53,8 +54,8 @@ TagManager:
   - name: Door
     uniqueID: 1717727029
     locked: 0
-  - name: Player
-    uniqueID: 407995435
+  - name: Character
+    uniqueID: 1395425395
     locked: 0
   m_RenderingLayers:
   - Default

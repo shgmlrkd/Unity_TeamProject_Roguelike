@@ -1,11 +1,20 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScreenFader : MonoBehaviour
 {
     [SerializeField]
     private Image fadeImage;
+
+    private void Awake()
+    {
+        if (SceneManager.GetActiveScene().name == SceneNames.GetSceneName(SceneType.Title))
+        { 
+            FadeIn(UIAnimationSettings.FadeDuration);
+        }
+    }
 
     // 페이드 인
     public Tween FadeOut(float duration)

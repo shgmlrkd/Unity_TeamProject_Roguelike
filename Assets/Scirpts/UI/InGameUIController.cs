@@ -19,6 +19,10 @@ public class InGameUIController : MonoBehaviour
     [SerializeField]
     private GameObject statUI;
 
+    [Header("게임 오버 패널")]
+    [SerializeField]
+    private GameOverUI gameOverUI;
+
     private bool isOptionOpen = false;
 
     private void Start()
@@ -26,6 +30,8 @@ public class InGameUIController : MonoBehaviour
         // 옵션 설정값을 기반으로 UI 활성/비활성 상태 갱신
         ApplyUIVisibility(OptionManager.Instance.ShowStat, OptionManager.Instance.ShowEquip);
 
+        // 게임 오버 UI 끄기, 스크린 페이드 UI 키기
+        gameOverUI.gameObject.SetActive(false);
         screenFader.gameObject.SetActive(true);
 
         // 인게임 씬으로 넘어오면 페이드 인 진행
@@ -34,14 +40,18 @@ public class InGameUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        // 이벤트 등록
+        // 옵션 설정 변했을 때 이벤트 등록
         OptionManager.Instance.OnUIOptionChanged += ApplyUIVisibility;
+        // 게임 결과 출력 이벤트 등록
+        InGameManager.Instance.OnGameOver += ShowResult;
     }
 
     private void OnDisable()
     {
-        // 이벤트 해제
+        // 옵션 설정 변했을 때 이벤트 해제
         OptionManager.Instance.OnUIOptionChanged -= ApplyUIVisibility;
+        // 게임 결과 출력 이벤트 해제
+        InGameManager.Instance.OnGameOver -= ShowResult;
     }
 
     private void Update()
@@ -52,6 +62,12 @@ public class InGameUIController : MonoBehaviour
 
     private void OptionToggleInput()
     {
+        // 게임 오버면 ESC 무시
+        if (InGameManager.Instance.IsGameOver)
+        {
+            return;
+        }
+
         // ESC를 누르면
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
@@ -87,12 +103,18 @@ public class InGameUIController : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
-    // 옵션에서 설정한 부분만 표시 해주기 (장비, 스탯)
+    // 옵션에서 설정한 부분만 표시 해주기 (장비, 스탯) + 
     private void ApplyUIVisibility(bool showStat, bool showEquip)
     {
         print($"InGameUIController : {OptionManager.Instance.ShowStat} / {OptionManager.Instance.ShowEquip}");
 
         statUI.SetActive(showStat);
         equipmentUI.SetActive(showEquip);
+    }
+
+    private void ShowResult()
+    {
+        gameOverUI.gameObject.SetActive(true);
+        gameOverUI.Result();
     }
 }
