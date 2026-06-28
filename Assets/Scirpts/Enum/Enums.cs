@@ -104,10 +104,15 @@ public enum SoundKey
     PlayerFootStep,
     SwordSwing,
     CollectedItem,
-    NormalDoorOpen,
+    MapClear,
     BossDoorOpen,
     ButtonClick,
     ButtonHover,
+    PlayerHit,
+    PlayerDead,
+    MonsterHit,
+    MonsterDead,
+    DoorOpen
 }
 
 ///////////////////////////////////////

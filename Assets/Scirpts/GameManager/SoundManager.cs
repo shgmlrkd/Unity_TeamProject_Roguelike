@@ -20,15 +20,10 @@ public class SoundManager : GlobalSingleton<SoundManager>
     [Header("BGM 오디오 소스")]
     [SerializeField] private AudioSource bgmSource;
 
-    /*[Header("SFX 오디오 소스")]
-    [SerializeField] private AudioSource[] sfxSources;*/
-    
     [Header("SFX Pool")]
     [SerializeField] private int sfxPoolSize = 10;
 
     private readonly Queue<AudioSource> sfxPool = new();
-
-    //private int currentSFXIndex;
 
     protected override void Awake()
     {
@@ -102,6 +97,26 @@ public class SoundManager : GlobalSingleton<SoundManager>
         return source;
     }
 
+    // 현재 키 값에 맞는 오디오 소스를 찾아서 플레이 중인지 확인
+    public bool IsPlayingSFX(SoundKey key)
+    {
+        foreach (Transform child in transform)
+        {
+            AudioSource source = child.GetComponent<AudioSource>();
+
+            if (source != null &&
+                source.isPlaying &&
+                source.clip != null &&
+                soundData.TryGetValue(key, out AudioClip clip) &&
+                source.clip == clip)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     #endregion
 
     #region BGM
@@ -131,47 +146,11 @@ public class SoundManager : GlobalSingleton<SoundManager>
         bgmSource.volume = BGMVolume * OptionManager.Instance.MasterVolume;
     }
 
-    // 현재 키 값에 맞는 오디오 소스를 찾아서 플레이 중인지 확인
-    public bool IsPlayingSFX(SoundKey key)
-    {
-        foreach (Transform child in transform)
-        {
-            AudioSource source = child.GetComponent<AudioSource>();
-
-            if (source != null &&
-                source.isPlaying &&
-                source.clip != null &&
-                soundData.TryGetValue(key, out AudioClip clip) &&
-                source.clip == clip)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /*public void StopBGM()
-    {
-        bgmSource.Stop();
-    }*/
-
-    /*public void PauseBGM(bool pause)
-    {
-        if (pause)
-        {
-            bgmSource.Pause();
-        }
-        else
-        { 
-            bgmSource.UnPause(); 
-        }
-    }*/
-
     #endregion
 
-    /*public void SetMasterVolume(float volume)
+    public void PlayerHoverButton()
     {
-        AudioListener.volume = volume;
-    }*/
+        PlaySFX(SoundKey.ButtonHover);
+    }
+
 }

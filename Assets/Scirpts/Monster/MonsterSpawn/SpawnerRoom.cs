@@ -98,6 +98,7 @@ public class SpawnerRoom : MonoBehaviour
         }
 
         isRoomCleared = true;
+        SoundManager.Instance.PlaySFX(SoundKey.MapClear);
         MonsterManager.Instance.CheckAllMonstersDead(true);
     }
 
