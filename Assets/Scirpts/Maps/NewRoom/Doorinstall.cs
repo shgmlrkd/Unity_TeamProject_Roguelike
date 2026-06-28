@@ -54,6 +54,7 @@ public class Doorinstall : MonoBehaviour
     private void OpenDoor()
     {
         SetDoorState(true);
+        SoundManager.Instance.PlaySFX(SoundKey.NormalDoorOpen);
     }
     //닫힌 문 상태
     public void CloseDoor()

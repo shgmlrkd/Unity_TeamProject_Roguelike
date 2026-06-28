@@ -205,6 +205,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4491191673263214828, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4491191673263214828, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1395425395
+      objectReference: {fileID: 0}
     - target: {fileID: 5824612967443884266, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1846,8 +1854,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x  0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 697e046a223fe794694c30e8110700aa, type: 2}
-  m_sharedMaterial: {fileID: 856415124177070664, guid: 697e046a223fe794694c30e8110700aa, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 630be8648456c874b9e087d5b30149bd, type: 2}
+  m_sharedMaterial: {fileID: 856415124177070664, guid: 630be8648456c874b9e087d5b30149bd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4557,7 +4565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ac1cd32ee4b16428d2d0f980a4dc6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldUI
+  goldUITransform: {fileID: 1251273600}
   goldText: {fileID: 1015272258}
+  equipmentImageManager: {fileID: 701150009}
 --- !u!224 &2131612235 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8703451249113484492, guid: a0bfec88aac355949829de0f00e24497, type: 3}

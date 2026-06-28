@@ -27,6 +27,8 @@ public class InGameUIController : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.Instance.PlayBGM(SoundKey.InGameBGM);
+
         // 옵션 설정값을 기반으로 UI 활성/비활성 상태 갱신
         ApplyUIVisibility(OptionManager.Instance.ShowStat, OptionManager.Instance.ShowEquip);
 
