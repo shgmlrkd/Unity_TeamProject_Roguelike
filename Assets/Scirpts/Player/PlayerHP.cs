@@ -21,6 +21,16 @@ public class PlayerHP : MonoBehaviour, IDamageable
     private Color[] originalSpriteColors;
     private Coroutine fadeOutCoroutine;
 
+    [Header("Hit Flash")]
+    [SerializeField] private Transform hitFlashRoot;
+    [SerializeField] private SpriteRenderer[] hitFlashRenderers;
+    [SerializeField] private Color hitFlashColor = Color.red;
+    [SerializeField] private int hitFlashCount = 3;
+    [SerializeField] private float hitFlashInterval = 0.06f;
+
+    private Color[] hitFlashOriginalColors;
+    private Coroutine hitFlashCoroutine;
+
     private int currentHp;
     // 추가 체력 저장할 변수
     private int currentBonusHp = 0;
@@ -53,6 +63,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
     //private int previousTestCurrentHp = -1;
 
+    public event Action OnPlayerDead;
     private void Awake()
     {
         currentHp = maxHp;
@@ -79,6 +90,9 @@ public class PlayerHP : MonoBehaviour, IDamageable
         {
             originalSpriteColors[i] = spriteRenderers[i].color;
         }
+
+        //피격 이펙트
+        CacheHitFlashRenderers();
     }
 
     private void Start()
@@ -203,12 +217,22 @@ public class PlayerHP : MonoBehaviour, IDamageable
             animator.SetTrigger("Hit");
         }
 
+        StartHitFlash();
+
         StartInvincible();
     }
 
     private void Die()
     {
         isDead = true;
+        // 피격시 캐릭터가 사망했다면 피격 이펙트 출력 안함
+        if (hitFlashCoroutine != null)
+        {
+            StopCoroutine(hitFlashCoroutine);
+            hitFlashCoroutine = null;
+        }
+
+        RestoreHitFlashColor();
 
         if (attackController != null)
         {
@@ -227,7 +251,95 @@ public class PlayerHP : MonoBehaviour, IDamageable
             StartFadeOut();
         }
     }
+    //피격시 깜빡임 추가
+    private void StartHitFlash()
+    {
+        if (isDead)
+        {
+            return;
+        }
 
+        if (hitFlashCoroutine != null)
+        {
+            StopCoroutine(hitFlashCoroutine);
+        }
+
+        hitFlashCoroutine = StartCoroutine(HitFlashCo());
+    }
+
+    private IEnumerator HitFlashCo()
+    {
+        for (int i = 0; i < hitFlashCount; i++)
+        {
+            SetHitFlashColor(hitFlashColor);
+            yield return new WaitForSeconds(hitFlashInterval);
+
+            RestoreHitFlashColor();
+            yield return new WaitForSeconds(hitFlashInterval);
+        }
+
+        hitFlashCoroutine = null;
+    }
+
+    private void SetHitFlashColor(Color color)
+    {
+        if (hitFlashRenderers == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < hitFlashRenderers.Length; i++)
+        {
+            if (hitFlashRenderers[i] != null)
+            {
+                hitFlashRenderers[i].color = color;
+            }
+        }
+    }
+
+    private void RestoreHitFlashColor()
+    {
+        if (hitFlashRenderers == null || hitFlashOriginalColors == null)
+        {
+            return;
+        }
+        //색입힘
+        for (int i = 0; i < hitFlashRenderers.Length; i++)
+        {
+            if (hitFlashRenderers[i] != null && i < hitFlashOriginalColors.Length)
+            {
+                hitFlashRenderers[i].color = hitFlashOriginalColors[i];
+            }
+        }
+    }
+    // 다수의 렌더러를 통제하기 위한 모음
+    private void CacheHitFlashRenderers()
+    {
+        if (hitFlashRoot == null && animator != null)
+        {
+            hitFlashRoot = animator.transform;
+        }
+        //애니메이터에서 동작하는 물체의 스프라이트 랜더러 모음
+        if ((hitFlashRenderers == null || hitFlashRenderers.Length == 0) && hitFlashRoot != null)
+        {
+            hitFlashRenderers = hitFlashRoot.GetComponentsInChildren<SpriteRenderer>(true);
+        }
+
+        if (hitFlashRenderers == null)
+        {
+            hitFlashRenderers = new SpriteRenderer[0];
+        }
+
+        hitFlashOriginalColors = new Color[hitFlashRenderers.Length];
+
+        for (int i = 0; i < hitFlashRenderers.Length; i++)
+        {
+            if (hitFlashRenderers[i] != null)
+            {
+                hitFlashOriginalColors[i] = hitFlashRenderers[i].color;
+            }
+        }
+    }
     //피격시 무적 설정
     private void StartInvincible()
     {

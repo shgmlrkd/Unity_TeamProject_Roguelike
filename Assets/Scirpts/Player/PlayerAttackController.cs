@@ -29,7 +29,7 @@ public class PlayerAttackController : MonoBehaviour
     //공격중 방향 고정
     private Vector2 lockedAttackDirection = Vector2.down;
 
-
+    private PlayerSfxController sfxController;
 
     private void Awake()
     {
@@ -50,6 +50,8 @@ public class PlayerAttackController : MonoBehaviour
         }
 
         ApplyWeaponAttackSetting();
+
+        sfxController = GetComponent<PlayerSfxController>();
     }
 
     private void OnEnable()
@@ -181,6 +183,11 @@ public class PlayerAttackController : MonoBehaviour
         Vector2 attackDirection = isAttacking ? lockedAttackDirection : characterController.LookDirection;
 
         SpawnAttackVfx(attackDirection);
+
+        if (sfxController != null)
+        {
+            sfxController.PlayAttackSfx();
+        }
 
         int finalDamage = GetFinalAttackDamage(currentWeapon);
 
