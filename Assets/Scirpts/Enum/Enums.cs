@@ -90,6 +90,27 @@ public enum GameOverTextType
 }
 
 ///////////////////////////////////////
+//              Sound
+///////////////////////////////////////
+
+public enum SoundKey
+{
+    // 씬 브금
+    TitleBGM,
+    InGameBGM,
+    BoosRoomBGM,
+
+    // 효과음
+    PlayerFootStep,
+    SwordSwing,
+    CollectedItem,
+    NormalDoorOpen,
+    BossDoorOpen,
+    ButtonClick,
+    ButtonHover,
+}
+
+///////////////////////////////////////
 //             SceneType
 ///////////////////////////////////////
 
