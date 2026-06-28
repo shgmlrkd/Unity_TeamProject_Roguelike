@@ -301,6 +301,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3724962702911032894}
     m_Modifications:
+    - target: {fileID: 2309212543015801137, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
+      propertyPath: useHover
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3413458366365491627, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
       propertyPath: m_Name
       value: Button
@@ -392,8 +396,29 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4835872298381161357, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8636342223161933161}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3413458366365491627, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 7450890575762966208}
   m_SourcePrefab: {fileID: 100100000, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
+--- !u!1 &1678678132162977343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3413458366365491627, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}
+  m_PrefabInstance: {fileID: 4041090685947264916}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7450890575762966208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678678132162977343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30cd4973d14acbe4fae04dd8e16f1ccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonToggle
+  checkObj: {fileID: 2949984276108399656}
 --- !u!224 &8865527914417851417 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4835872298381161357, guid: a7571dac5c6c8ef4a8b2cd27fcfd215c, type: 3}

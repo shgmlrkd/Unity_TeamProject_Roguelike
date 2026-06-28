@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 81a355642789f7f42904ff63a2886c91
+guid: f615f601b821e5241a95a420afb9761e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6601782974297541371
-    second: HP_Image2_0
+      213: 4712381424420886853
+    second: HP_Image4_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,11 +109,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HP_Image2_0
+      name: HP_Image4_0
       rect:
         serializedVersion: 2
         x: 1
@@ -128,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 505f5c4dc51c164a0800000000000000
-      internalID: -6601782974297541371
+      spriteID: 54991c030fdb56140800000000000000
+      internalID: 4712381424420886853
       vertices: []
       indices: 
       edges: []
@@ -148,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HP_Image2_0: -6601782974297541371
+      HP_Image4_0: 4712381424420886853
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
