@@ -8,7 +8,8 @@ public enum MonsterStateEnum // 몬스터 상태
     Patrol, 
     Chase,
     Attack, 
-    Dead 
+    Hit,
+    Dead
 }
 
 public enum NormalMonsterPattern // 일반 몬스터 패턴
@@ -69,7 +70,8 @@ public enum HeartType
 {
     fullHeart,          // 체력이 가득 찬 하트
     halfHeart,          // 체력이 절반인 하트
-    emptyHeart          // 체력이 없는 빈 하트  
+    emptyHeart,         // 체력이 없는 빈 하트  
+    lockHeart           // 쓸 수 없는 체력 (최대 체력이 랜덤이니 다 못 채울 수 있음)
 }
 
 public enum BonusType
@@ -78,6 +80,13 @@ public enum BonusType
     Attack,             // 공격력
     AttackSpeed,        // 공격 속도
     Length
+}
+
+public enum GameOverTextType
+{
+    PlayTime,           // 플레이 시간
+    BossClearCheck,     // 보스 처치 유무
+    MonsterKillCount    // 몬스터 처치 수
 }
 
 ///////////////////////////////////////
@@ -94,13 +103,14 @@ public enum SceneType
 //              Map
 ///////////////////////////////////////
 ///
-public enum RoomType 
+public enum RoomType
 { 
+    None,
     Start,
     Normal,
     Boss, 
     Store,
-    Treasure 
+    Treasure,
 }
 
 ///////////////////////////////////////

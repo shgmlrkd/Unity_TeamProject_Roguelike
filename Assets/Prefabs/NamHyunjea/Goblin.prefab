@@ -997,6 +997,7 @@ GameObject:
   - component: {fileID: 756013279911399792}
   - component: {fileID: 7280803269159834430}
   - component: {fileID: 750741714924514029}
+  - component: {fileID: 5219069679086743667}
   - component: {fileID: 8776839850756766451}
   m_Layer: 6
   m_Name: Goblin
@@ -1142,12 +1143,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b76abc6bb7fa344bebab9976b85493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
+  visualRoot: {fileID: 1122769834691038834}
   monsterData: {fileID: 11400000, guid: 81585ac7396dbc548b25d21f1524661a, type: 2}
   stateBeses:
   - {fileID: 2795105761392571508}
   - {fileID: 756013279911399792}
   - {fileID: 7280803269159834430}
   - {fileID: 750741714924514029}
+  - {fileID: 5219069679086743667}
   - {fileID: 8776839850756766451}
   monsterState: -1
   OnstateChanged:
@@ -1217,6 +1220,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f88b90456673dd40806072efe73682e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackMonsterState
+--- !u!114 &5219069679086743667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008492938012638545}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2f775044ffe204e96597d97c3e32dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitMonsterState
 --- !u!114 &8776839850756766451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2735,6 +2750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122769834691038834}
   - component: {fileID: 3107086357036965143}
+  - component: {fileID: 3983388543918503354}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -3289,6 +3305,19 @@ MonoBehaviour:
     Color:
       serializedVersion: 2
       rgba: 4294967295
+--- !u!210 &3983388543918503354
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4151041133716584472}
+  m_Enabled: 1
+  m_SortingLayerID: 1395425395
+  m_SortingLayer: 5
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &4235386173821544856
 GameObject:
   m_ObjectHideFlags: 0
@@ -4158,7 +4187,7 @@ GameObject:
   - component: {fileID: 2975865107403888872}
   m_Layer: 0
   m_Name: Shadow
-  m_TagString: Untagged
+  m_TagString: Shadow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4595,7 +4624,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -12
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 5053251350606442050, guid: c6a5efa382266954e847098019d55dc9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4862,7 +4891,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -3
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1583482623376728253, guid: c6a5efa382266954e847098019d55dc9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -2,10 +2,11 @@
 using UnityEngine;
 using static RoomManager;
 [System.Serializable]
-public struct RoomInfo
+public class RoomInfo
 {
     public string roomName;  // 방 이름 
     public GameObject roomPrefab; // 실제 배치될 방 프리팹
+    public RoomType type;
 }
 [System.Serializable]
 public class DirectionalRoomSet

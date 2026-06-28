@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1730cfe206b6a4142b803ab88fa829fe
+guid: f5deb5a022dd24e49a567afd32c3bda9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6017545880149320427
-    second: Untitled 06-15-2026 10-28-33_0
+      213: -8045293088578294850
+    second: Button_Bg2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -109,30 +109,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Untitled 06-15-2026 10-28-33_0
+      name: Button_Bg2_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 2
-        width: 14
-        height: 12
+        x: 0
+        y: 0
+        width: 61
+        height: 67
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: be26aed781e928350800000000000000
-      internalID: 6017545880149320427
+      spriteID: ebba26dcf80695090800000000000000
+      internalID: -8045293088578294850
       vertices: []
       indices: 
       edges: []
@@ -151,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Untitled 06-15-2026 10-28-33_0: 6017545880149320427
+      Button_Bg2_0: -8045293088578294850
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

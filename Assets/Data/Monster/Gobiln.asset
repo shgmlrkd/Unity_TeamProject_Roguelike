@@ -24,7 +24,7 @@ MonoBehaviour:
   patrolWaitTime: 0.5
   minPatrolDistance: 3
   maxPatrolDistance: 8
-  minDropGold: 0
-  maxDropGold: 0
+  minDropGold: 1
+  maxDropGold: 2
   minDropItemCount: 1
   maxDropItemCount: 4

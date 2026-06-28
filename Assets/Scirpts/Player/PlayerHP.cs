@@ -52,7 +52,10 @@ public class PlayerHP : MonoBehaviour, IDamageable
     public int CurrentBonusHp => currentBonusHp;
     public bool IsDead => isDead;
 
-    public event Action<int, int> OnHpChanged;
+    public event Action<int, int, int> OnHpChanged;
+    
+    public event Action OnPlayerDead;
+    private bool isAlphaFaded = false;
 
     //현재 체력 갱신 테스트
     //[Header("Test")]
@@ -94,7 +97,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
     }
 
     private void OnEnable()
@@ -123,28 +126,28 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
         currentHp = Mathf.Clamp(currentHp + amount, 0, MaxHp);
 
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
     }
 
-    //최대체력 2의 배수 닐시 1더함
-    public void SetMaxHp(int newMaxHp)
+    //현재 체력 2의 배수 닐시 1더함
+    public void SetMaxHp(int newHp)
     {
         if (isDead)
         {
             return;
         }
 
-        newMaxHp = Mathf.Max(2, newMaxHp);
+        newHp = Mathf.Max(2, newHp);
 
-        if (newMaxHp % 2 != 0)
+        if (newHp % 2 != 0)
         {
-            newMaxHp += 1;
+            newHp += 1;
         }
 
-        maxHp = newMaxHp;
+        maxHp = newHp;
         currentHp = maxHp;
 
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
     }
     
     //추가체력 변동 대응
@@ -156,7 +159,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
         }
 
         currentBonusHp = bonusStat.ShieldHp;
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
     }
 
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
@@ -196,7 +199,7 @@ public class PlayerHP : MonoBehaviour, IDamageable
         Vector2 Direction = damageInfoset.AttackDirection;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
-        OnHpChanged?.Invoke(currentHp, currentBonusHp);
+        OnHpChanged?.Invoke(currentHp, maxHp, currentBonusHp);
 
         if (currentHp <= 0)
         {
@@ -389,6 +392,13 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
             float t = Mathf.Clamp01(elapsedTime / fadeOutDuration);
             float alphaMultiplier = Mathf.Lerp(1f, 0f, t);
+
+            // 테스트 코드
+            if(alphaMultiplier < 0.4f && !isAlphaFaded)
+            {
+                isAlphaFaded = true;
+                OnPlayerDead?.Invoke();
+            }
 
             for (int i = 0; i < spriteRenderers.Length; i++)
             {

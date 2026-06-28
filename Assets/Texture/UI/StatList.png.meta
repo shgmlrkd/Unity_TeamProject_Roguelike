@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 2ae5fa8517f4c544eb8ff573f7bb0225
+guid: 30ed1630ee813ea449030e10e5036fb9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5353482969236660078
-    second: AttackSpeedpng_0
-  - first:
-      213: 329470710196412769
-    second: AttackSpeedpng_1
-  - first:
-      213: -4129970676125741382
-    second: AttackSpeedpng_2
+      213: -204566922694234021
+    second: StatList_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,74 +109,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AttackSpeedpng_0
-      rect:
-        serializedVersion: 2
-        x: 3
-        y: 21
-        width: 25
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e6f547485646b4a40800000000000000
-      internalID: 5353482969236660078
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AttackSpeedpng_1
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 11
-        width: 25
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 16127258dd3829400800000000000000
-      internalID: 329470710196412769
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AttackSpeedpng_2
+      name: StatList_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1
-        width: 25
-        height: 11
+        y: 0
+        width: 128
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: abeceb43d856fa6c0800000000000000
-      internalID: -4129970676125741382
+      spriteID: b50f308b77b392df0800000000000000
+      internalID: -204566922694234021
       vertices: []
       indices: 
       edges: []
@@ -211,9 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AttackSpeedpng_0: 5353482969236660078
-      AttackSpeedpng_1: 329470710196412769
-      AttackSpeedpng_2: -4129970676125741382
+      StatList_0: -204566922694234021
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
