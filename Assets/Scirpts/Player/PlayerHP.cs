@@ -63,7 +63,6 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
     //private int previousTestCurrentHp = -1;
 
-    public event Action OnPlayerDead;
     private void Awake()
     {
         currentHp = maxHp;

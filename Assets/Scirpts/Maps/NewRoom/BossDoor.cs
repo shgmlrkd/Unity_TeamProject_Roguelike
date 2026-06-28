@@ -17,6 +17,8 @@ public class BossDoor : Doorinstall
     }
     private IEnumerator BossEnterSequence()
     {
+        SoundManager.Instance.PlaySFX(SoundKey.BossDoorOpen);
+
         // 암전
         if (blackScreen != null)
             yield return blackScreen.DOFade(1f, 2.0f).WaitForCompletion();
