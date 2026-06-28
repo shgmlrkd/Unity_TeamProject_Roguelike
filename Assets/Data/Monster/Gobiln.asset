@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98967d330d5a2644ac6ac88083fed77, type: 3}
+  m_Name: Gobiln
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterData
+  monsterName: "\uACE0\uBE14\uB9B0"
+  monsterMaxHp: 5
+  moveSpeed: 2
+  attackDamage: 1
+  attackRange: 1
+  attackTakeDamageRange: 0
+  attackDelay: 1
+  contactRange: 5
+  patrolSpeed: 3
+  patrolWaitTime: 0.5
+  minPatrolDistance: 3
+  maxPatrolDistance: 8
+  minDropGold: 1
+  maxDropGold: 2
+  minDropItemCount: 1
+  maxDropItemCount: 4

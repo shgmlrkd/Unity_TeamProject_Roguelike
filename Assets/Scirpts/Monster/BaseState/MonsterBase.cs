@@ -1,15 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public  class MonsterBase : MonoBehaviour
+public class MonsterBase : MonoBehaviour 
 {
-    [SerializeField] protected MonsterData monsterData;
-    
-    protected int currentHp;
-
-    protected Transform target;
     protected Transform monsterTransform;
     protected MonsterStateManager monsterStateManager;
+    protected Rigidbody2D rb;
+    protected Collider2D monsterCollider2D;
+    protected MonsterHP monsterHP;
+    protected AnimationController controller;
+    protected SpriteRenderer[] spriteRenderers;
 
+    protected List<AStarNode> currentPath;
+    protected AStarPathFinder pathFinder;
     protected virtual void Awake()
     {
 
@@ -21,8 +24,55 @@ public  class MonsterBase : MonoBehaviour
         if (monsterStateManager == null)
         {
             monsterStateManager = GetComponent<MonsterStateManager>();
+            spriteRenderers = monsterStateManager.SpriteRenderers;
+        }
+        if(rb == null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+        if (monsterCollider2D == null) 
+        {
+            monsterCollider2D = GetComponent<Collider2D>();
+        }
+        if (monsterHP == null) 
+        {
+            monsterHP = GetComponent<MonsterHP>();
+        }
+        if (controller == null)
+        {
+            controller = GetComponentInChildren<AnimationController>();
         }
     }
-    
+  
+    protected virtual void OnEnable()
+    {
+        pathFinder = monsterStateManager.PathFinder;
+    }
+
+    protected void OnDrawGizmos()
+    {
+        if (currentPath == null) return;
+
+        foreach (var node in pathFinder.Grid.AllNodes)
+        {
+            Gizmos.color = node.IsWall ? Color.yellow : Color.red;
+
+            Gizmos.DrawWireCube(
+                pathFinder.Grid.GetWorldPosition(node),
+                Vector3.one * 0.9f);
+        }
+
+        Gizmos.color = Color.purple;
+
+        foreach (AStarNode node in currentPath)
+        {
+            Vector3 worldPos = pathFinder.Grid.GetWorldPosition(node);
+
+            Gizmos.DrawSphere(worldPos, 0.3f);
+
+
+        }
+
+    }
 
 }

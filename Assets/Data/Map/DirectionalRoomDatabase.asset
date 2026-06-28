@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962e432e63635fb4e890e28e12fb5fa6, type: 3}
+  m_Name: DirectionalRoomDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::DirectionalRoomDatabaseSO
+  startRoom:
+    roomName: 
+    roomPrefab: {fileID: 8833705308829559481, guid: 6fd90195bfba313449fd7638c7184990, type: 3}
+  bossRoom:
+    roomName: 
+    roomPrefab: {fileID: 4157049713048895851, guid: 99e8c51563224234a89ba72b276ce7af, type: 3}
+  normalRooms:
+    up:
+    - roomName: 
+      roomPrefab: {fileID: 5040826379469326472, guid: dc90fb5be17f1d448a8db685c426bbf3, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 4421671947496715501, guid: fde6188763b893b4597539702ff8bc28, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 5664963089614279402, guid: 3b5524c19df828940bf584bcce7a854f, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 5245689177611081948, guid: ac100e458bca1fc489781c1bf995dacd, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 1297413154686796382, guid: a0c24d1ca4a25e64eae6d88a5fe97f26, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 6398681624261940377, guid: 64f8cd45c0f0f4c43a06f0245fbe896b, type: 3}
+    down:
+    - roomName: 
+      roomPrefab: {fileID: 5040826379469326472, guid: dc90fb5be17f1d448a8db685c426bbf3, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 4421671947496715501, guid: fde6188763b893b4597539702ff8bc28, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 5245689177611081948, guid: ac100e458bca1fc489781c1bf995dacd, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 1204199904132143467, guid: 0903b2e80960bd843902f4f7b61f1b95, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 6398681624261940377, guid: 64f8cd45c0f0f4c43a06f0245fbe896b, type: 3}
+    left:
+    - roomName: 
+      roomPrefab: {fileID: 8118879689239770615, guid: abf4149042b762c4a912f373c7fc6910, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 5664963089614279402, guid: 3b5524c19df828940bf584bcce7a854f, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 1297413154686796382, guid: a0c24d1ca4a25e64eae6d88a5fe97f26, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 6398681624261940377, guid: 64f8cd45c0f0f4c43a06f0245fbe896b, type: 3}
+    right:
+    - roomName: 
+      roomPrefab: {fileID: 8118879689239770615, guid: abf4149042b762c4a912f373c7fc6910, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 5664963089614279402, guid: 3b5524c19df828940bf584bcce7a854f, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 5245689177611081948, guid: ac100e458bca1fc489781c1bf995dacd, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 1297413154686796382, guid: a0c24d1ca4a25e64eae6d88a5fe97f26, type: 3}
+    any:
+    - roomName: 
+      roomPrefab: {fileID: 1770166878820713750, guid: 7830bb7e6cd358c4ba1f5a4d9bb9ef5f, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 8677347404241052490, guid: aeb266b1ef56c61488c8457cb018b742, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 8643317479027417408, guid: 70b4de3d4d4d2344799405515b972ef7, type: 3}
+    - roomName: 
+      roomPrefab: {fileID: 8099211862079072021, guid: a7470a7d6c883c8458d5ec497197528e, type: 3}
+  bossEntranceRoom:
+    up: []
+    down:
+    - roomName: 
+      roomPrefab: {fileID: 4118817552218282813, guid: e6c12eeefcdc7074d9030d0778ccaff3, type: 3}
+    left: []
+    right: []
+    any: []
+  treasureRooms:
+    up: []
+    down: []
+    left: []
+    right: []
+    any:
+    - roomName: 
+      roomPrefab: {fileID: 3796997350982542704, guid: 6bb2e20669c002749908f77fa90ed604, type: 3}
+  storeRooms:
+    up: []
+    down: []
+    left: []
+    right: []
+    any: []
