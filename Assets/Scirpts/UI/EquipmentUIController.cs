@@ -62,6 +62,7 @@ public class EquipmentUIController : MonoBehaviour
         Vector2 screenPos = Camera.main.WorldToScreenPoint(pos);
         image.transform.position = screenPos;
 
+        transform.DOKill();
         // 움직이는 애니메이션
         image.transform.DOMove(targetPos, UIAnimationSettings.SlowDuration)
             .SetEase(Ease.OutQuad)
