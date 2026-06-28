@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 public class MonsterStateManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class MonsterStateManager : MonoBehaviour
     [SerializeField] private LayerMask PlayerLayer;
 
 
-
+    private float sortingScale = 100.0f;
     private float attackRangeLostTime;
     private bool isStartCheckState = false;
     private SpriteRenderer[] spriteRenderers; // 자식까지 포함한 모든 spriteRenderer
@@ -23,6 +24,8 @@ public class MonsterStateManager : MonoBehaviour
     private Color[] originColor;          // 풀링 재사용시 원래 색상 복구용
     private Vector3 monsterScale;
     AStarPathFinder pathFinder = null;
+    private SortingGroup sortingGroup;
+
 
     public Transform VisualRoot => visualRoot;
     public SpriteRenderer[] SpriteRenderers => spriteRenderers;
@@ -30,18 +33,22 @@ public class MonsterStateManager : MonoBehaviour
     public bool IsStartCheckState => isStartCheckState;
     public MonsterStateEnum CurrentState => monsterState;
     public Transform Target { get { return target; } }
-    public MonsterData MonsterData {get {return monsterData;}}
-    public AStarPathFinder PathFinder {get {return pathFinder;}}
+    public MonsterData MonsterData { get { return monsterData; } }
+    public AStarPathFinder PathFinder { get { return pathFinder; } }
 
 
     private void Awake()
     {
         // 루트에 spriteRenderer가 없을수 있으므로 자식까지 포함해서 모든 랜더러 가져오기
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+
+        sortingGroup = GetComponentInChildren<SortingGroup>();
+
         InitOriginColors();
+
         monsterScale = transform.localScale;
     }
-   
+
     private void OnEnable()
     {
         pathFinder = null;
@@ -52,6 +59,7 @@ public class MonsterStateManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        sortingGroup.sortingOrder = Mathf.RoundToInt(-transform.position.y * sortingScale); // 레이어 조정 
         if (!isStartCheckState) return;
         CheckState();
     }
@@ -67,18 +75,18 @@ public class MonsterStateManager : MonoBehaviour
         if (collision.TryGetComponent(out AStarPathFinder pathFinder))
         {
             this.pathFinder = pathFinder;
-        }  
+        }
     }
 
     private void CheckState() // 플레이어 감지및 행동 지정
     {
 
-        if(monsterState == MonsterStateEnum.Dead)
+        if (monsterState == MonsterStateEnum.Dead)
         {
             return;
         }
 
-        if(monsterState == MonsterStateEnum.Hit)
+        if (monsterState == MonsterStateEnum.Hit)
         {
             return;
         }
@@ -149,12 +157,12 @@ public class MonsterStateManager : MonoBehaviour
 
         if (monsterState == newState) return;
 
-        if ( monsterState != MonsterStateEnum.None)
+        if (monsterState != MonsterStateEnum.None)
         {
             stateBeses[(int)monsterState].enabled = false;
         }
         monsterState = newState;
-        stateBeses[(int) newState].enabled = true;
+        stateBeses[(int)newState].enabled = true;
         OnstateChanged?.Invoke(monsterState);
     }
 
