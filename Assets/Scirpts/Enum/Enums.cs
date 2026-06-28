@@ -108,6 +108,10 @@ public enum SoundKey
     BossDoorOpen,
     ButtonClick,
     ButtonHover,
+    PlayerHit,
+    PlayerDead,
+    MonsterHit,
+    MonsterDead
 }
 
 ///////////////////////////////////////
