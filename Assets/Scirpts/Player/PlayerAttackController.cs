@@ -29,8 +29,6 @@ public class PlayerAttackController : MonoBehaviour
     //공격중 방향 고정
     private Vector2 lockedAttackDirection = Vector2.down;
 
-    private PlayerSfxController sfxController;
-
     private void Awake()
     {
         inputManager = GetComponent<CharacterInputManager>();
@@ -50,8 +48,6 @@ public class PlayerAttackController : MonoBehaviour
         }
 
         ApplyWeaponAttackSetting();
-
-        sfxController = GetComponent<PlayerSfxController>();
     }
 
     private void OnEnable()
@@ -184,10 +180,8 @@ public class PlayerAttackController : MonoBehaviour
 
         SpawnAttackVfx(attackDirection);
 
-        if (sfxController != null)
-        {
-            sfxController.PlayAttackSfx();
-        }
+        // 칼 휘두르는 사운드 추가
+        SoundManager.Instance.PlaySFX(SoundKey.SwordSwing);
 
         int finalDamage = GetFinalAttackDamage(currentWeapon);
 
