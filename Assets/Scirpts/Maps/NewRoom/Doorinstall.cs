@@ -27,7 +27,7 @@ public class Doorinstall : MonoBehaviour
         {
             if (!MonsterManager.Instance.IsAllMonsterDead) return;
 
-            if (instantiatedDoor == null)
+            /*if (instantiatedDoor == null)
             {
                 SpawnDoor();
             }
@@ -35,7 +35,10 @@ public class Doorinstall : MonoBehaviour
             {
                 OpenDoor();
                 StartCoroutine(OpenAndTeleportRoutine());
-            }
+            }*/
+
+            OpenDoor();
+            StartCoroutine(OpenAndTeleportRoutine());
         }
     }
     private void SpawnDoor()
@@ -54,7 +57,7 @@ public class Doorinstall : MonoBehaviour
     private void OpenDoor()
     {
         SetDoorState(true);
-        SoundManager.Instance.PlaySFX(SoundKey.NormalDoorOpen);
+        SoundManager.Instance.PlaySFX(SoundKey.DoorOpen);
     }
     //닫힌 문 상태
     public void CloseDoor()
@@ -63,10 +66,24 @@ public class Doorinstall : MonoBehaviour
     }
     private void SetDoorState(bool isOpen)
     {
-        if (instantiatedDoor == null) return;
+        //if (instantiatedDoor == null) return;
 
-        Transform openTrans = instantiatedDoor.transform.Find("OpenDoor");
-        Transform closedTrans = instantiatedDoor.transform.Find("CloseDoor");
+        /*Transform openTrans = instantiatedDoor.transform.Find("OpenDoor");
+        Transform closedTrans = instantiatedDoor.transform.Find("CloseDoor");*/
+
+        Transform curDoorTrans = null;
+
+        if (RoomRuleChecker1.Instance.CanGenerateMoreRooms)
+        {
+            curDoorTrans = transform.Find("Door");
+        }
+        else
+        {
+            curDoorTrans = transform.Find("BossDoor");
+        }
+        
+        Transform openTrans = curDoorTrans.Find("OpenDoor");
+        Transform closedTrans = curDoorTrans.Find("CloseDoor");
 
         if (openTrans != null) openTrans.gameObject.SetActive(isOpen);
         if (closedTrans != null) closedTrans.gameObject.SetActive(!isOpen);

@@ -30,7 +30,7 @@ public class InGameManager : ScenesSingleton<InGameManager>
 
     public string GameOverTime => gameOverTime;
 
-    public event Action<int> OnChangedGold;
+    public event Action<int> OnChangedGold; 
     public event Action OnGameOver;
 
     public bool IsGameOver => isGameOver;
@@ -92,9 +92,8 @@ public class InGameManager : ScenesSingleton<InGameManager>
     public void CollectedGold(int gold)
     {
         collectedGold += gold;
-        // 이벤트 써서 골드 텍스트 갱신
+
         OnChangedGold?.Invoke(collectedGold);
-        print($"{collectedGold}");
     }
 
     // 플레이어가 골드를 사용할 때 호출

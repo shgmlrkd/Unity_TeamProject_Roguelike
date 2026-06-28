@@ -82,6 +82,7 @@ public class Item : MonoBehaviour
     // 아이템 드랍 시 애니메이션 실행
     public void PlayDropAnimation(Vector2 targetPos, float jumpPower = 1.2f, float duration = 0.4f)
     {
+        transform.DOKill();
         transform.localScale = Vector3.zero;
 
         Sequence seq = DOTween.Sequence();
@@ -141,6 +142,9 @@ public class Item : MonoBehaviour
                 if (success)
                 {
                     transform.DOKill();
+
+                    SoundManager.Instance.PlaySFX(SoundKey.CollectedItem);
+
                     ItemManager.Instance.ReturnItem(this);
                 }
 
@@ -156,6 +160,9 @@ public class Item : MonoBehaviour
                 playerHp.Heal(consumableData.HealAmount);
 
                 transform.DOKill();
+
+                SoundManager.Instance.PlaySFX(SoundKey.CollectedItem);
+
                 ItemManager.Instance.ReturnItem(this);
 
                 return;
@@ -168,6 +175,9 @@ public class Item : MonoBehaviour
             InGameManager.Instance.CollectedGold(goldAmount);
 
             transform.DOKill();
+
+            SoundManager.Instance.PlaySFX(SoundKey.CollectedItem);
+
             ItemManager.Instance.ReturnItem(this);
         }
     }

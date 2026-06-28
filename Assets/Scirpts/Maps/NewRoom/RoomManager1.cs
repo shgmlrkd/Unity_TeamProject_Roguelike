@@ -17,7 +17,7 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
     [Header("설정")]
     [SerializeField] private DirectionalRoomDatabaseSO roomDatabase;
     [SerializeField] private Transform playerTransform;
-    [SerializeField] private float roomWidth = 11f, roomHeight = 7f, tileOffset = 3.0f;
+    [SerializeField] private float roomWidth = 11f, roomHeight = 7f, tileOffset = 3.0f, bossDoorTileOffset = 6.0f;
     [Header("카메라")]
     [SerializeField] private CameraRig cameraRig;
 
@@ -88,6 +88,13 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
     private void ExecuteTeleport(Transform player, Doorinstall door, Vector2Int dir)
     {
         Vector2Int nextGrid = door.ParentRoomGridPos + dir;
+
+        if(!RoomRuleChecker1.Instance.CanGenerateMoreRooms)
+        {
+            teleporter.TeleportToDoor(player, door.transform.position, dir, bossDoorTileOffset);
+            MoveCamera();
+            return;
+        }
 
         // 방 데이터가 실제로 있는지 한 번 더 확인 (안전장치)
         if (teleporter.CanTeleport(nextGrid, map.DungeonMap))
