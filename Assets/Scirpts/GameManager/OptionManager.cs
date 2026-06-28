@@ -41,6 +41,8 @@ public class OptionManager : GlobalSingleton<OptionManager>
         BGMVolume = bgm;
         SFXVolume = sfx;
 
+        SoundManager.Instance.SetBGMVolume(BGMVolume);
+
         SaveOption();
     }
 
