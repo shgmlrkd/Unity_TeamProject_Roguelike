@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHP : MonoBehaviour, IDamageable
@@ -24,6 +25,8 @@ public class PlayerHP : MonoBehaviour, IDamageable
     [Header("Hit Flash")]
     [SerializeField] private Transform hitFlashRoot;
     [SerializeField] private SpriteRenderer[] hitFlashRenderers;
+    //피격 이펙트 제외설정
+    [SerializeField] private SpriteRenderer[] hitFlashExcludeRenderers;
     [SerializeField] private Color hitFlashColor = Color.red;
     [SerializeField] private int hitFlashCount = 3;
     [SerializeField] private float hitFlashInterval = 0.06f;
@@ -321,10 +324,29 @@ public class PlayerHP : MonoBehaviour, IDamageable
         {
             hitFlashRoot = animator.transform;
         }
-        //애니메이터에서 동작하는 물체의 스프라이트 랜더러 모음
+
         if ((hitFlashRenderers == null || hitFlashRenderers.Length == 0) && hitFlashRoot != null)
         {
-            hitFlashRenderers = hitFlashRoot.GetComponentsInChildren<SpriteRenderer>(true);
+            SpriteRenderer[] foundRenderers = hitFlashRoot.GetComponentsInChildren<SpriteRenderer>(true);
+            //렌더러 필터링
+            List<SpriteRenderer> filteredRenderers = new List<SpriteRenderer>();
+
+            for (int i = 0; i < foundRenderers.Length; i++)
+            {
+                if (foundRenderers[i] == null)
+                {
+                    continue;
+                }
+
+                if (IsExcludedHitFlashRenderer(foundRenderers[i]))
+                {
+                    continue;
+                }
+
+                filteredRenderers.Add(foundRenderers[i]);
+            }
+
+            hitFlashRenderers = filteredRenderers.ToArray();
         }
 
         if (hitFlashRenderers == null)
@@ -341,6 +363,24 @@ public class PlayerHP : MonoBehaviour, IDamageable
                 hitFlashOriginalColors[i] = hitFlashRenderers[i].color;
             }
         }
+    }
+    //피격효과 제외 설정
+    private bool IsExcludedHitFlashRenderer(SpriteRenderer targetRenderer)
+    {
+        if (hitFlashExcludeRenderers == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < hitFlashExcludeRenderers.Length; i++)
+        {
+            if (hitFlashExcludeRenderers[i] == targetRenderer)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
     //피격시 무적 설정
     private void StartInvincible()
