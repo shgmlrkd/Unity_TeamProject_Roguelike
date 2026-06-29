@@ -51,6 +51,7 @@ public class MonsterStateManager : MonoBehaviour
 
     private void OnEnable()
     {
+        target = null;
         pathFinder = null;
         isStartCheckState = false;
         ResetColor();
@@ -91,8 +92,12 @@ public class MonsterStateManager : MonoBehaviour
             return;
         }
 
-        Collider2D player = Physics2D.OverlapCircle(transform.position, monsterData.ContactRange, PlayerLayer);
+        Collider2D player = null;
 
+        if(monsterState != MonsterStateEnum.Dead)
+        {
+            player = Physics2D.OverlapCircle(transform.position, monsterData.ContactRange, PlayerLayer);
+        }
 
         if (player == null)
         {
@@ -154,6 +159,10 @@ public class MonsterStateManager : MonoBehaviour
     }
     public void SetState(MonsterStateEnum newState) // 상태 교체
     {
+        //if(monsterState == MonsterStateEnum.Dead)
+        //{
+        //    return;
+        //}
 
         if (monsterState == newState) return;
 
@@ -188,6 +197,7 @@ public class MonsterStateManager : MonoBehaviour
         transform.localScale = scale;
     }
 
+    // 페이드 인 코루틴 페이드 인 
     private void OnDrawGizmos() // 사거리 체크
     {
         if (monsterData == null) return;

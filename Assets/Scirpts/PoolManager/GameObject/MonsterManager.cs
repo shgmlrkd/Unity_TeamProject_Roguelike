@@ -1,21 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MonsterManager : ScenesSingleton<MonsterManager>
 {
-    [Header("프리팹")]
     [SerializeField] private MonsterStateManager[] monsterPrefabs;
 
-
+    // 투사체
     [Header("화살 프리팹")]
-    [SerializeField] private SkeletonBullet[] skeletonBulletPergabs;
+    [SerializeField] private SkeletonBullet skeletonBulletPrefab;
 
     [Header("매직볼 프리팹")]
-    [SerializeField] private MagicBullet[] MagicBulletPrefabs;
-
-
+    [SerializeField] private MagicBullet MagicBulletPrefab;
 
     private int poolSize = 10;
-
     private bool isAllMonsterDead = false;
     public bool IsAllMonsterDead => isAllMonsterDead;
 
@@ -23,39 +20,32 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
     {
         base.Awake();
 
+        PoolManager.Instance.SetCreatePool();
+
+        //// 몬스터
         for (int i = 0; i < monsterPrefabs.Length; i++)
         {
-            PoolManager.Instance.PreloadPool(monsterPrefabs[i], poolSize); // 몬스터 프리펩들을 미리 풀에 만들기
-        }
+            PoolManager.Instance.PreloadPool(monsterPrefabs[i], poolSize); 
 
-        for (int i = 0; i < skeletonBulletPergabs.Length; ++i)
-        {
-            PoolManager.Instance.PreloadPool(skeletonBulletPergabs[i], poolSize);
         }
-
-        for (int i = 0; i < MagicBulletPrefabs.Length; ++i)
-        {
-            PoolManager.Instance.PreloadPool(MagicBulletPrefabs[i], poolSize);
-        }
+        // 투사체
+        PoolManager.Instance.PreloadPool(skeletonBulletPrefab, poolSize); // 스켈레톤 화살
+        PoolManager.Instance.PreloadPool(MagicBulletPrefab, poolSize); // 스켈레톤 마법사 마법볼
 
     }
 
     public MonsterStateManager SpawnMonster()
     {
-        if (monsterPrefabs == null || monsterPrefabs.Length == 0)
-        {
-            return null;
-        }
+        int randomIndex = Random.Range(0,4);
 
-        // 어떤 몬스터를 소환할지 랜덤으로 고르기
-        int randomIndex = Random.Range(0, monsterPrefabs.Length);
-        print($"몬스터 프리팹 : {monsterPrefabs[randomIndex].GetType()}");
-        // 선택된 프리팹을 기준으로 풀에서 몬스터를 꺼냄
-        MonsterStateManager monster = PoolManager.Instance.GetPool(monsterPrefabs[randomIndex]);
+        return GetRandomMonster(randomIndex);
 
         // 실제 위치 지정은 SpawnerRoom에서 하니까 반환
-        return monster;
+    }
 
+    private MonsterStateManager GetRandomMonster(int index)
+    {
+        return PoolManager.Instance.GetPool(monsterPrefabs[index], monsterPrefabs[index].name);
     }
 
     public void CheckAllMonstersDead(bool isAllMonsterDead)
