@@ -964,6 +964,7 @@ GameObject:
   - component: {fileID: 3674753703933226043}
   - component: {fileID: 960318227865341817}
   - component: {fileID: 3876616974539314070}
+  - component: {fileID: 4993510618700438429}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1328,6 +1329,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStartStatApplier
   playerHp: {fileID: 7961975366001377439}
   startStatBonus: {fileID: 960318227865341817}
+--- !u!114 &4993510618700438429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617234061336637363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86385e758e1995f4388f455f26134799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSortOrder
+  sortingGroup: {fileID: 4491191673263214828}
+  sortingScale: 100
+  sortingOffset: 0
 --- !u!1 &2658598303617437336
 GameObject:
   m_ObjectHideFlags: 0
