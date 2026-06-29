@@ -1,40 +1,19 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using System;
+using Unity.VisualScripting;
 
 public class CameraRig : MonoBehaviour
 {
-    //[SerializeField] private Transform target;
-    //[SerializeField] private float followSpeed = 5f;
     [SerializeField] private Vector3 offset = new Vector3(0f, 0f, -10f);
 
-    //private void Awake()
-    //{
-    //    if (target == null)
-    //    {
-    //        GameObject player = GameObject.FindGameObjectWithTag("Player");
+    public event Action OnCameraMoveStarted;
+    public event Action OnCameraMoveFinished;
 
-    //        if (player != null)
-    //        {
-    //            target = player.transform;
-    //        }
-    //    }
-    //}
-    //private void LateUpdate()
-    //{
-    //    if (target == null)
-    //    {
-    //        return;
-    //    }
-
-    //    Vector3 targetPosition = target.position + offset;
-    //    transform.position = Vector3.Lerp(
-    //        transform.position,
-    //        targetPosition,
-    //        followSpeed * Time.deltaTime
-    //    );
-    //}
-    public void MoveToRoom(Vector3 targetPos, float duration, System.Action onComplete)
+    public void MoveToRoom(Vector3 targetPos, float duration)
     {
+        OnCameraMoveStarted?.Invoke();
+
         targetPos.z = offset.z;
 
         transform.DOKill();
@@ -42,7 +21,10 @@ public class CameraRig : MonoBehaviour
             .SetEase(Ease.InOutCubic)
             .OnComplete(() =>
             {
-                onComplete?.Invoke();
+                DOVirtual.DelayedCall(0.2f, () =>
+                {
+                    OnCameraMoveFinished?.Invoke();
+                });
             });
     }
 }
