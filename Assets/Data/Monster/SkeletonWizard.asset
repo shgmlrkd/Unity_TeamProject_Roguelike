@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e98967d330d5a2644ac6ac88083fed77, type: 3}
-  m_Name: Skeleton
+  m_Name: SkeletonWizard
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: "\uC2A4\uCF08\uB808\uD1A4"
   monsterMaxHp: 6
