@@ -52,6 +52,7 @@ MonoBehaviour:
   doorPrefab: {fileID: 7841760728125186997, guid: 1f866b5014be9c740868251c033c359f, type: 3}
   isBossEntranceDoor: 0
   openDelay: 0.5
+  interactionUI: {fileID: 0}
 --- !u!61 &4977405968175733511
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2162,6 +2163,7 @@ MonoBehaviour:
   doorPrefab: {fileID: 7841760728125186997, guid: 1f866b5014be9c740868251c033c359f, type: 3}
   isBossEntranceDoor: 0
   openDelay: 0.5
+  interactionUI: {fileID: 0}
 --- !u!61 &7974016939127445349
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2260,6 +2262,7 @@ MonoBehaviour:
   doorPrefab: {fileID: 7841760728125186997, guid: 1f866b5014be9c740868251c033c359f, type: 3}
   isBossEntranceDoor: 0
   openDelay: 0.5
+  interactionUI: {fileID: 0}
 --- !u!61 &2701545450557143014
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2358,6 +2361,7 @@ MonoBehaviour:
   doorPrefab: {fileID: 7841760728125186997, guid: 1f866b5014be9c740868251c033c359f, type: 3}
   isBossEntranceDoor: 0
   openDelay: 0.5
+  interactionUI: {fileID: 0}
 --- !u!61 &9116007277868184205
 BoxCollider2D:
   m_ObjectHideFlags: 0

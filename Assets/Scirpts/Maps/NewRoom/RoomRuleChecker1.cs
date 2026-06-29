@@ -3,7 +3,7 @@
 public class RoomRuleChecker1 : ScenesSingleton<RoomRuleChecker1>
 {
     public int GeneratedNormalRoomCount { get; set; } = 0;
-    public int MaxDoorCount { get; set; } = 3; // 보스 방 등장을 위한 제한 횟수
+    public int MaxDoorCount { get; set; } = 10; // 보스 방 등장을 위한 제한 횟수
     public int CurrentDoorUsedCount { get; set; } = 0;
     public bool CanGenerateMoreRooms { get; set; } = true;
     public bool IsInBossEntranceMode { get; set; } = false;

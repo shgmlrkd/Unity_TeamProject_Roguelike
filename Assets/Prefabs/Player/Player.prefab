@@ -1151,6 +1151,8 @@ MonoBehaviour:
   disableAlphaThreshold: 0.02
   hitFlashRoot: {fileID: 2223723469790467281}
   hitFlashRenderers: []
+  hitFlashExcludeRenderers:
+  - {fileID: 3323821553339066566}
   hitFlashColor: {r: 1, g: 0, b: 0, a: 1}
   hitFlashCount: 3
   hitFlashInterval: 0.06

@@ -9,9 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bb0c60e4eeb216408cbab3bf978164e, type: 3}
-  m_Name: ItemData 4
-  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  m_Script: {fileID: 11500000, guid: 37f8e4382dc48ac4a8a13eddd4ddd033, type: 3}
+  m_Name: fish
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
   itemType: 0
   itemName: "\uAC15\uACE0\uB4F1\uC5B4"
   sprite: {fileID: 21300000, guid: f69e0acc69e53431485991ab399ba4e0, type: 3}
+  equipmentType: 2
+  attack: 3
+  attackRange: 0
+  attackSpeedRate: 1
+  moveSpeedRate: 2
+  shieldHp: 2
