@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acb528d961a693c4588a63127296d5d2, type: 3}
-  m_Name: WeaponData 3
+  m_Name: Knife
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   itemType: 0
-  itemName: "\uC591\uB0A0\uB3C4\uB07C"
-  sprite: {fileID: 21300000, guid: 18a0930a4031c41aa82b57602f696f3a, type: 3}
-  equipmentType: 0
-  attack: 0
-  attackRange: 0
-  attackSpeedRate: 0
-  moveSpeedRate: 0
+  itemName: "\uCFE0\uB098\uC774"
+  sprite: {fileID: 21300000, guid: 034268c716eab4a7e834d5492962f6eb, type: 3}
+  equipmentType: 1
+  attack: 1
+  attackRange: 1
+  attackSpeedRate: 4
+  moveSpeedRate: 2
   shieldHp: 0
-  attackBoxSize: {x: 1, y: 1}
+  attackBoxSize: {x: 0.8, y: 2}
   weaponItemPrefab: {fileID: 0}

@@ -95,6 +95,9 @@ MonoBehaviour:
     - roomName: 
       roomPrefab: {fileID: 8099211862079072021, guid: a7470a7d6c883c8458d5ec497197528e, type: 3}
       type: 2
+    - roomName: 
+      roomPrefab: {fileID: 1664202283828239824, guid: 530883feb90b55d4babe6e21260a10fd, type: 3}
+      type: 2
   bossEntranceRoom:
     up:
     - roomName: 

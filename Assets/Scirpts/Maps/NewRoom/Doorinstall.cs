@@ -12,6 +12,7 @@ public class Doorinstall : MonoBehaviour
     public bool isBossEntranceDoor;
     [Header("연출 설정")]
     [SerializeField] private float openDelay = 0.5f; // 문이 열리는 연출 시간
+    private GameObject interactionUI;
 
     private GameObject instantiatedDoor;
     private bool isPlayerNearby = false;
@@ -20,7 +21,11 @@ public class Doorinstall : MonoBehaviour
 
     // 외부에서 방향을 가져가기 위한 프로퍼티
     public Vector2Int WallDirection => wallDirection;
-
+    private void Awake()
+    {
+        interactionUI = GameObject.Find("InteractionText");
+        if (interactionUI != null) interactionUI.SetActive(false);
+    }
     private void Update()
     {
         if (isPlayerNearby && Keyboard.current.eKey.wasPressedThisFrame)
@@ -112,6 +117,7 @@ public class Doorinstall : MonoBehaviour
             isPlayerNearby = true;
             playerTransform = collision.transform;
         }
+        if (interactionUI != null) interactionUI.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -120,6 +126,7 @@ public class Doorinstall : MonoBehaviour
         {
             isPlayerNearby = false;
         }
+        if (interactionUI != null) interactionUI.SetActive(false);
     }
     public void SetDestination(Vector2Int dest)
     {
