@@ -5,6 +5,7 @@ public class RoomBuilder
 {
     private RoomGenerator1 generator;
     private DirectionalRoomDatabaseSO database;
+    private RoomInfo lastRoom;
 
     public RoomBuilder(RoomGenerator1 gen, DirectionalRoomDatabaseSO db)
     {
@@ -41,8 +42,20 @@ public class RoomBuilder
         });
         candidates.AddRange(set.any);
 
+        List<RoomInfo> validRooms = new List<RoomInfo>();
         foreach (var room in candidates)
-            if (HasDoorInDirection(room.roomPrefab, entryDir)) return room;
+        {
+            if (HasDoorInDirection(room.roomPrefab, entryDir) && room != lastRoom)
+            {
+                validRooms.Add(room);
+            }
+        }
+
+        if (validRooms.Count > 0)
+        {
+            lastRoom = validRooms[Random.Range(0, validRooms.Count)]; // 선택된 방 저장
+            return lastRoom;
+        }
 
         return database.startRoom;
     }
