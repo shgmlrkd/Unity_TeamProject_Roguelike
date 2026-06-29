@@ -1,15 +1,10 @@
-﻿using Cainos.PixelArtTopDown_Basic;
-using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
+﻿using System.Collections;
 using UnityEngine;
 
 public class RoomManager1 : ScenesSingleton<RoomManager1>
 {
     private DungeonMapController map = new DungeonMapController();
     private RoomBuilder builder;
-    private bool isChangingRoom = false;
 
     [Header("모듈")]
     [SerializeField] private RoomGenerator1 generator;
@@ -128,7 +123,10 @@ public class RoomManager1 : ScenesSingleton<RoomManager1>
     private void MoveCamera()
     {
         Vector2Int grid = map.GetCurrentRoomGridPos(playerTransform.position);
+        
         if (map.RoomPositions.TryGetValue(grid, out Vector3 pos))
-            cameraRig.MoveToRoom(pos, 0.5f, () => isChangingRoom = false);
+        { 
+            cameraRig.MoveToRoom(pos, 0.5f); 
+        }
     }
 }
