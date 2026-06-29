@@ -3829,6 +3829,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterManager
   monsterPrefabs:
   - {fileID: 5078300678617987942, guid: ce7ab330facf1b14ca0daf1c660a73f1, type: 3}
+  skeletonBulletPergabs: []
+  monsterBulletPrefabs: []
 --- !u!224 &1629604623 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8703451249113484492, guid: a0bfec88aac355949829de0f00e24497, type: 3}
