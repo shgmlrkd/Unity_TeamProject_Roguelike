@@ -81,7 +81,9 @@ public class Doorinstall : MonoBehaviour
         {
             curDoorTrans = transform.Find("BossDoor");
         }
-        
+
+        if (curDoorTrans == null) return;
+
         Transform openTrans = curDoorTrans.Find("OpenDoor");
         Transform closedTrans = curDoorTrans.Find("CloseDoor");
 
