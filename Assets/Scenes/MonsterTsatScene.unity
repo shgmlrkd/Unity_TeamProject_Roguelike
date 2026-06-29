@@ -3828,10 +3828,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterManager
   monsterPrefabs:
-  - {fileID: 6400733132150451325, guid: 72f871ccec5a7f2438fccfadb22d1596, type: 3}
-  - {fileID: -7997484450888334348, guid: 54efb32e24792384daff84f2187ebb0c, type: 3}
+  - {fileID: 857665897032835859, guid: 72f871ccec5a7f2438fccfadb22d1596, type: 3}
   - {fileID: 705625002989017552, guid: f5e1897a1f42a294683f9087b262fc18, type: 3}
-  - {fileID: 4986879094018075614, guid: f339668b83f60ea40b759664b520c9fd, type: 3}
+  - {fileID: 4295165173395495693, guid: 54efb32e24792384daff84f2187ebb0c, type: 3}
+  - {fileID: 4050331276311963444, guid: f339668b83f60ea40b759664b520c9fd, type: 3}
   skeletonBulletPrefab: {fileID: -855288747529778112, guid: 4d6dd3a69ee9a274f8c59c2133ae2d3a, type: 3}
   MagicBulletPrefab: {fileID: 8562821281303987673, guid: 8c43a196933cb9b4887a459839b9085b, type: 3}
 --- !u!224 &1629604623 stripped

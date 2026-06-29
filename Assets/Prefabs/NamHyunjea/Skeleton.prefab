@@ -49,7 +49,6 @@ GameObject:
   - component: {fileID: -5655924068164694574}
   - component: {fileID: 4785044680722278265}
   - component: {fileID: 705625002989017552}
-  - component: {fileID: -3648971055364708789}
   - component: {fileID: 7131361248425637197}
   - component: {fileID: 5179358546124342237}
   - component: {fileID: 6769483480357130421}
@@ -62,7 +61,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2230009819093508441
 Transform:
   m_ObjectHideFlags: 0
@@ -201,46 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b76abc6bb7fa344bebab9976b85493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
-  visualRoot: {fileID: 336648048727566495}
-  monsterData: {fileID: 11400000, guid: 92b1a85a1e8bf74478fede9178afb42a, type: 2}
-  stateBeses:
-  - {fileID: 7131361248425637197}
-  - {fileID: 5179358546124342237}
-  - {fileID: 6769483480357130421}
-  - {fileID: 7732208937883053253}
-  - {fileID: 5791670333526851796}
-  - {fileID: 7052125814158344678}
-  monsterState: -1
-  OnstateChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2647228226813983388}
-        m_TargetAssemblyTypeName: AnimationController, Assembly-CSharp
-        m_MethodName: OnStateChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 128
---- !u!114 &-3648971055364708789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157080953199062489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5652d530b759975419e4156416845b04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Skeleton
   visualRoot: {fileID: 336648048727566495}
   monsterData: {fileID: 11400000, guid: 92b1a85a1e8bf74478fede9178afb42a, type: 2}
   stateBeses:

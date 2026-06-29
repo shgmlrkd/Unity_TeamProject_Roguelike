@@ -992,7 +992,7 @@ GameObject:
   - component: {fileID: 6909843376046652539}
   - component: {fileID: 1724232787514438724}
   - component: {fileID: 3960760605010572103}
-  - component: {fileID: 6400733132150451325}
+  - component: {fileID: 857665897032835859}
   - component: {fileID: 2795105761392571508}
   - component: {fileID: 756013279911399792}
   - component: {fileID: 7280803269159834430}
@@ -1131,7 +1131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d01d6027000d7c4ea2330e5d4aeb6e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterHP
---- !u!114 &6400733132150451325
+--- !u!114 &857665897032835859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1140,9 +1140,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2008492938012638545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e328c3e3f2bea3409bfc2ecf8ab43b4, type: 3}
+  m_Script: {fileID: 11500000, guid: c5b76abc6bb7fa344bebab9976b85493, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Goblin
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
   visualRoot: {fileID: 1122769834691038834}
   monsterData: {fileID: 11400000, guid: 81585ac7396dbc548b25d21f1524661a, type: 2}
   stateBeses:
@@ -4020,7 +4020,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5327654318706803788}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

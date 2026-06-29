@@ -1205,7 +1205,7 @@ GameObject:
   - component: {fileID: 1618068000392360929}
   - component: {fileID: 8187360653022884891}
   - component: {fileID: 1870383128115910767}
-  - component: {fileID: 4986879094018075614}
+  - component: {fileID: 4050331276311963444}
   - component: {fileID: 299721061888809661}
   - component: {fileID: 7490622113979692988}
   - component: {fileID: 7497971315679251105}
@@ -1345,7 +1345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d01d6027000d7c4ea2330e5d4aeb6e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterHP
---- !u!114 &4986879094018075614
+--- !u!114 &4050331276311963444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1354,9 +1354,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 562441197858139230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31c626c7436e71b41be9cab425f41a2f, type: 3}
+  m_Script: {fileID: 11500000, guid: c5b76abc6bb7fa344bebab9976b85493, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SkeletonWizard
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
   visualRoot: {fileID: 4008330835791557631}
   monsterData: {fileID: 11400000, guid: 45ad756455d2d404aad531f5036cba88, type: 2}
   stateBeses:
