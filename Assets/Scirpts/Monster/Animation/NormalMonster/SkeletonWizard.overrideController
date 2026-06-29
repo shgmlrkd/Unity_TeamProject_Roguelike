@@ -9,5 +9,5 @@ AnimatorOverrideController:
   m_Name: SkeletonWizard
   m_Controller: {fileID: 9100000, guid: f0ace18c8ddc7714a9833192430f7ce4, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: ccc66609eaae7425f967209ab0b3935f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f58f18817c9dfe8439cc80a6fb411de3, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 26c1745a2d7068640aa0ebb7bb94ea6e, type: 2}

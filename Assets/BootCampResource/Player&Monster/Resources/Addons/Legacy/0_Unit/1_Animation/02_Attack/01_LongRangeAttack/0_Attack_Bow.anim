@@ -3840,7 +3840,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.55
-    functionName: AnimEventShootBullet
+    functionName: AnimEventSkeletonShootBullet
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
