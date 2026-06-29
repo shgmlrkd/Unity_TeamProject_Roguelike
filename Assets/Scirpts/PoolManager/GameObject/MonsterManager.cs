@@ -10,7 +10,7 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
     [SerializeField] private SkeletonBullet[] skeletonBulletPergabs;
 
     [Header("매직볼 프리팹")]
-    [SerializeField] private MagicBullet[] monsterBulletPrefabs;
+    [SerializeField] private MagicBullet[] MagicBulletPrefabs;
 
 
 
@@ -33,9 +33,9 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
             PoolManager.Instance.PreloadPool(skeletonBulletPergabs[i], poolSize);
         }
 
-        for (int i = 0; i < monsterBulletPrefabs.Length; ++i)
+        for (int i = 0; i < MagicBulletPrefabs.Length; ++i)
         {
-            PoolManager.Instance.PreloadPool(monsterBulletPrefabs[i], poolSize);
+            PoolManager.Instance.PreloadPool(MagicBulletPrefabs[i], poolSize);
         }
 
     }

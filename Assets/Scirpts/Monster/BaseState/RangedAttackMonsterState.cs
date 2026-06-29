@@ -27,7 +27,7 @@ public class RangedAttackMonsterState : MonsterBase
         print($"RangedAttackMonsterState : {rb.linearVelocity}");
     }
 
-    public void AnimEventSkeletonShootBullet() // 애니메이션에 연결
+    public void AnimEventSkeletonShootBullet() // 화살 (애니메이션 연결)
     {
         firePos = firePoint.position; // 총알이 나갈 위치
 
@@ -58,7 +58,7 @@ public class RangedAttackMonsterState : MonsterBase
 
     }
 
-    public void AnimEventmagicShootBullet()
+    public void AnimEvenMagicShootBullet() // 매직 볼 (애니메이션 연결)
     {
         firePos = firePoint.position; // 총알이 나갈 위치
 
