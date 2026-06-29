@@ -2717,7 +2717,7 @@ GameObject:
   - component: {fileID: 3656033565913481083}
   - component: {fileID: 7347755124229396956}
   - component: {fileID: 2913359349810999349}
-  - component: {fileID: 4220067836864982753}
+  - component: {fileID: -7997484450888334348}
   - component: {fileID: 7093385456934477214}
   - component: {fileID: 2352380083723973546}
   - component: {fileID: 7468459779129905502}
@@ -2740,7 +2740,7 @@ Transform:
   m_GameObject: {fileID: 6010111190823153636}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4, y: -13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2856,7 +2856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d01d6027000d7c4ea2330e5d4aeb6e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterHP
---- !u!114 &4220067836864982753
+--- !u!114 &-7997484450888334348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2865,10 +2865,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6010111190823153636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b76abc6bb7fa344bebab9976b85493, type: 3}
+  m_Script: {fileID: 11500000, guid: 827876da0625cd3448c7c85e3d3be2d5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
-  visualRoot: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::GoblinWarrior
+  visualRoot: {fileID: 608048698722830347}
   monsterData: {fileID: 11400000, guid: 3d0b371b1132d064e8e94cc9515e3305, type: 2}
   stateBeses:
   - {fileID: 7093385456934477214}
