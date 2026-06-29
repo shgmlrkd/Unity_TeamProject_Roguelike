@@ -96,14 +96,23 @@ MonoBehaviour:
       roomPrefab: {fileID: 8099211862079072021, guid: a7470a7d6c883c8458d5ec497197528e, type: 3}
       type: 0
   bossEntranceRoom:
-    up: []
-    down: []
-    left: []
-    right: []
-    any:
+    up:
     - roomName: 
       roomPrefab: {fileID: 4118817552218282813, guid: e6c12eeefcdc7074d9030d0778ccaff3, type: 3}
       type: 3
+    down:
+    - roomName: 
+      roomPrefab: {fileID: 8879633368240587312, guid: 0ad533076fafc80498e0be70285518e8, type: 3}
+      type: 3
+    left:
+    - roomName: 
+      roomPrefab: {fileID: 4118817552218282813, guid: e6c12eeefcdc7074d9030d0778ccaff3, type: 3}
+      type: 3
+    right:
+    - roomName: 
+      roomPrefab: {fileID: 4118817552218282813, guid: e6c12eeefcdc7074d9030d0778ccaff3, type: 3}
+      type: 3
+    any: []
   treasureRooms:
     up: []
     down: []
