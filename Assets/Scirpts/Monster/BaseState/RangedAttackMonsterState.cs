@@ -2,8 +2,10 @@
 
 public class RangedAttackMonsterState : MonsterBase
 {
-    [Header("투사체 프리팹")]
-    [SerializeField] private MonsterBullet bulletPrefab;
+    [Header("스켈레톤 투사체 프리팹")]
+    [SerializeField] private SkeletonBullet skeletonBulletPrefab;
+    [Header("마법사 투사체 프리팹")]
+    [SerializeField] private MagicBullet magicBulletPrefab;
 
     [Header("발사 위치")]
     [SerializeField ] private Transform firePoint;
@@ -11,17 +13,30 @@ public class RangedAttackMonsterState : MonsterBase
     [Header("투사체 속도")]
     [SerializeField] private float bulletSpeed;
 
-    MonsterBullet bullet;
+    SkeletonBullet skeleton;
+    MagicBullet magicBullet;
     Vector3 firePos;
 
-    public void AnimEventShootBullet() // 애니메이션에 연결
+    protected override void OnEnable()
     {
-        if(monsterStateManager.CurrentState == MonsterStateEnum.Dead) // 죽은 상태라면 공격 이 불가능
+        base.OnEnable();
+        rb.linearVelocity = Vector3.zero;
+    }
+    private void Update()
+    {
+        print($"RangedAttackMonsterState : {rb.linearVelocity}");
+    }
+
+    public void AnimEventSkeletonShootBullet() // 애니메이션에 연결
+    {
+        firePos = firePoint.position; // 총알이 나갈 위치
+
+        if (monsterStateManager.CurrentState == MonsterStateEnum.Dead) // 죽은 상태라면 공격 이 불가능
         {
             return;
         }
 
-        if(bulletPrefab ==  null)  // 프리팹이 없다면 발사 안됌
+        if(skeletonBulletPrefab ==  null)  // 프리팹이 없다면 발사 안됌
         {
             return;
             
@@ -32,18 +47,47 @@ public class RangedAttackMonsterState : MonsterBase
             return;
         }
 
-        firePos = firePoint.position; // 총알이 나갈 위치
+        skeleton = PoolManager.Instance.GetPool(skeletonBulletPrefab); // 스켈레톤 풀에서 총알 꺼내기
 
-        bullet = PoolManager.Instance.GetPool(bulletPrefab); // 풀에서 종알 꺼내기
-
-        bullet.transform.position = firePos; // 풀에서 꺼낸 총알 firePos 위치로 이동
+        skeleton.transform.position = firePos; // 풀에서 꺼낸 총알 firePos 위치로 이동
 
         Vector2 dir = monsterStateManager.Target.position - firePos; // firePos 위치에서 타겟 방향으로 계산
 
-
         // 총알 초기화
-        bullet.Init(dir, bulletSpeed, monsterStateManager.MonsterData.AttackDamage, gameObject);
+        skeleton.Init(dir, bulletSpeed, monsterStateManager.MonsterData.AttackDamage, gameObject);
 
     }
+
+    public void AnimEventmagicShootBullet()
+    {
+        firePos = firePoint.position; // 총알이 나갈 위치
+
+        if (monsterStateManager.CurrentState == MonsterStateEnum.Dead) // 죽은 상태라면 공격 이 불가능
+        {
+            return;
+        }
+
+        if (magicBulletPrefab == null)  // 프리팹이 없다면 발사 안됌
+        {
+            return;
+
+        }
+
+        if (monsterStateManager.Target == null) // 타겟이 없다면 발사 하지 않는다.
+        {
+            return;
+        }
+
+        magicBullet = PoolManager.Instance.GetPool(magicBulletPrefab); // 마법사 풀에서 총알 꺼내기
+
+        magicBullet.transform.position = firePos; // 풀에서 꺼낸 총알 firePos 위치로 이동
+
+
+        Vector2 dir = monsterStateManager.Target.position - firePos; // firePos 위치에서 타겟 방향으로 계산
+
+        // 총알 초기화
+        magicBullet.Init(dir, bulletSpeed, monsterStateManager.MonsterData.AttackDamage, gameObject);
+    }
+
 
 }

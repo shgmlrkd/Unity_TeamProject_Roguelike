@@ -1,11 +1,15 @@
-﻿
+﻿using UnityEngine;
+
 public class AttackMonsterState : MonsterBase
 {
     private bool isAttacking = false;
 
 
     // 공격 할 몬스터에 따라 다르기 때문에 상속 준비  
-
+    protected override void OnEnable()
+    {
+        rb.linearVelocity = Vector3.zero;
+    }
     public void AttackDamage()
     {
         // 이미 공격 상태가 아니면 데미지를 주지 않음
