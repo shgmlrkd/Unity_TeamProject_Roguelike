@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TitleUIController : MonoBehaviour
 {
@@ -15,6 +14,11 @@ public class TitleUIController : MonoBehaviour
     [Header("타이틀 캔버스 그룹")]
     [SerializeField]
     private CanvasGroup titleCanvasGroup;
+
+    private void Start()
+    {
+        SoundManager.Instance.PlayBGM(SoundKey.TitleBGM);
+    }
 
     public void OnClickGameStart()
     {

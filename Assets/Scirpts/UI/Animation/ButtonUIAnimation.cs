@@ -20,6 +20,8 @@ public class ButtonUIAnimation : MonoBehaviour, IPointerEnterHandler, IPointerEx
     // 클릭 시 호출되는 인터페이스 메서드
     public void OnPointerClick(PointerEventData eventData)
     {
+        SoundManager.Instance.PlaySFX(SoundKey.ButtonClick);
+
         // usePunch가 false면 클릭 시 애니메이션 적용 X
         if (!usePunch) return;
 
@@ -32,6 +34,8 @@ public class ButtonUIAnimation : MonoBehaviour, IPointerEnterHandler, IPointerEx
     // 마우스 포인터가 버튼에 오버랩 될 때 호출되는 인터페이스 메서드
     public void OnPointerEnter(PointerEventData eventData)
     {
+        SoundManager.Instance.PlaySFX(SoundKey.ButtonHover);
+
         // useHover가 false면 마우스가 오버랩 시 애니메이션 적용 X
         if (!useHover) return;
 

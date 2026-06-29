@@ -1,9 +1,12 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class CharacterInputManager : MonoBehaviour
 {
+    private const int SORTING_SCALE = 100;
+
     [Header("Input Actions")]
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference lookAction;
@@ -13,6 +16,13 @@ public class CharacterInputManager : MonoBehaviour
     public Vector2 MousePosition => lookAction.action.ReadValue<Vector2>();
 
     public event Action OnAttackPressed;
+
+    private SortingGroup sortingGroup;
+
+    private void Awake()
+    {
+        sortingGroup = GetComponentInChildren<SortingGroup>();
+    }
 
     private void OnEnable()
     {
@@ -24,6 +34,20 @@ public class CharacterInputManager : MonoBehaviour
     {
         UnsubscribeInputEvents();
         DisableInput();
+    }
+
+    private void Update()
+    {
+        // 움직이고 있는지 체크
+        bool isMoving = MoveInput.sqrMagnitude > Mathf.Epsilon;
+
+        // 움직인다 근데 SFX 플레이 중이 아니면 플레이 한다
+        if (isMoving && !SoundManager.Instance.IsPlayingSFX(SoundKey.PlayerFootStep))
+        {
+            SoundManager.Instance.PlaySFX(SoundKey.PlayerFootStep);
+        }
+
+        sortingGroup.sortingOrder = Mathf.RoundToInt(-transform.position.y * SORTING_SCALE);
     }
 
     private void EnableInput()
