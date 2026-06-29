@@ -15,7 +15,7 @@ public class MonsterStateManager : MonoBehaviour
     [SerializeField] private LayerMask PlayerLayer;
 
 
-    private float sortingScale = 100.0f;
+    private const int SORTING_SCALE = 100;
     private float attackRangeLostTime;
     private bool isStartCheckState = false;
     private SpriteRenderer[] spriteRenderers; // 자식까지 포함한 모든 spriteRenderer
@@ -59,7 +59,7 @@ public class MonsterStateManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        sortingGroup.sortingOrder = Mathf.RoundToInt(-transform.position.y * sortingScale); // 레이어 조정 
+        sortingGroup.sortingOrder = Mathf.RoundToInt(-transform.position.y * SORTING_SCALE); // 레이어 조정 
         if (!isStartCheckState) return;
         CheckState();
     }

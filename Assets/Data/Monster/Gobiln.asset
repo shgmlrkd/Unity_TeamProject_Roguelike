@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gobiln
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: "\uACE0\uBE14\uB9B0"
-  monsterMaxHp: 5
+  monsterMaxHp: 12
   moveSpeed: 2
   attackDamage: 1
   attackRange: 1
