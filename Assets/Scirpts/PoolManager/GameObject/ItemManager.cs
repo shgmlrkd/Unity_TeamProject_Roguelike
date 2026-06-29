@@ -30,6 +30,12 @@ public class ItemManager : ScenesSingleton<ItemManager>
         PoolManager.Instance.ReturnPool(item);
     }
 
+    // 상자 아이템 드랍일 경우 사용
+    public void DropItem(ItemData data, Vector3 pos)
+    {
+        SpawnItem(data, 0, 1, 0, pos);
+    }
+
     // 여기서 아이템의 데이터를 랜덤으로 뽑고 적용함
     public void DropItem(int itemCount, int gold, Vector3 pos)
     {
