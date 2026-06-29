@@ -2717,7 +2717,7 @@ GameObject:
   - component: {fileID: 3656033565913481083}
   - component: {fileID: 7347755124229396956}
   - component: {fileID: 2913359349810999349}
-  - component: {fileID: 4220067836864982753}
+  - component: {fileID: 4295165173395495693}
   - component: {fileID: 7093385456934477214}
   - component: {fileID: 2352380083723973546}
   - component: {fileID: 7468459779129905502}
@@ -2856,7 +2856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d01d6027000d7c4ea2330e5d4aeb6e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterHP
---- !u!114 &4220067836864982753
+--- !u!114 &4295165173395495693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2868,7 +2868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b76abc6bb7fa344bebab9976b85493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
-  visualRoot: {fileID: 0}
+  visualRoot: {fileID: 608048698722830347}
   monsterData: {fileID: 11400000, guid: 3d0b371b1132d064e8e94cc9515e3305, type: 2}
   stateBeses:
   - {fileID: 7093385456934477214}

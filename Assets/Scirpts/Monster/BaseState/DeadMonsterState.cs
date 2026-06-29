@@ -87,6 +87,7 @@ public class DeadMonsterState : MonsterBase
 
             }
 
+            rb.linearVelocity = Vector3.zero;
             yield return null;
         }
          

@@ -20,11 +20,17 @@ public class PoolManager : ScenesSingleton<PoolManager>
 
         if (isUI)
         {
-            CreateUIPoolRoot(transform);
+            if(uiPoolRoot == null)
+            {
+                CreateUIPoolRoot(transform);
+            }
         }
         else
         {
-            CreatePoolRoot();
+            if(poolRoot == null)
+            {
+                CreatePoolRoot();
+            }
         }
     }
 
@@ -102,6 +108,62 @@ public class PoolManager : ScenesSingleton<PoolManager>
 
     }
 
+    public T GetPool<T>(T prefab, string prefabName) where T : Component
+    {
+        Type type = typeof(T);
+
+        CreatePool(type);
+
+        T obj = null;
+
+        int count = poolDictionary[type].Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            T current = poolDictionary[type].Dequeue() as T;
+
+            if (current == null)
+            {
+                continue;
+            }
+
+            // Instantiate로 생성된 오브젝트는 이름 뒤에 (Clone)이 붙을 수 있어서 제거
+            string currentName = current.name.Replace("(Clone)", "");
+
+            // 원하는 프리팹 이름이 아니면 다시 풀에 넣기
+            if (currentName != prefabName)
+            {
+                poolDictionary[type].Enqueue(current);
+                continue;
+            }
+
+            // 원하는 이름의 오브젝트를 찾았으면 사용
+            if (obj == null)
+            {
+                obj = current;
+            }
+            else
+            {
+                // 이미 하나를 찾았는데 또 같은 이름이 나오면 다시 풀에 넣기
+                poolDictionary[type].Enqueue(current);
+            }
+        }
+
+        // 풀에 원하는 이름의 오브젝트가 없으면 새로 생성
+        if (obj == null)
+        {
+            obj = Instantiate(prefab);
+
+            // 이름 비교가 꼬이지 않게 prefabName으로 고정
+            obj.name = prefabName;
+
+            obj.transform.SetParent(poolParents[type]);
+        }
+
+        obj.gameObject.SetActive(true);
+
+        return obj;
+    }
     public void ReturnPool<T>(T obj) where T : Component // 사용이 끝난 오브젝트 다시 넣기
     {
         Type type = typeof(T);
