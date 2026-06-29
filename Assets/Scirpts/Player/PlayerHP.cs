@@ -57,13 +57,14 @@ public class PlayerHP : MonoBehaviour, IDamageable
     public event Action OnPlayerDead;
     private bool isAlphaFaded = false;
 
+    private PlayerSfxController sfxController;
+
     //현재 체력 갱신 테스트
     //[Header("Test")]
     //[SerializeField] private int testCurrentHp = -1;
 
     //private int previousTestCurrentHp = -1;
 
-    public event Action OnPlayerDead;
     private void Awake()
     {
         currentHp = maxHp;
@@ -93,6 +94,8 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
         //피격 이펙트
         CacheHitFlashRenderers();
+
+        sfxController = GetComponent<PlayerSfxController>();
     }
 
     private void Start()
@@ -207,6 +210,10 @@ public class PlayerHP : MonoBehaviour, IDamageable
 
             Die();
             return;
+        }
+        if (sfxController != null)
+        {
+            sfxController.PlayHitSfx();
         }
         if (attackController != null)
         {

@@ -13,12 +13,14 @@ public class PlayerSfxController : MonoBehaviour
     [Header("Clips")]
     [SerializeField] private AudioClip attackClip;
     [SerializeField] private AudioClip pickupClip;
+    [SerializeField] private AudioClip hitClip;
     [SerializeField] private AudioClip moveLoopClip;
 
     [Header("Volumes")]
     [SerializeField, Range(0f, 1f)] private float masterSfxVolume = 0.5f;
     [SerializeField, Range(0f, 1f)] private float attackVolume = 0.5f;
     [SerializeField, Range(0f, 1f)] private float pickupVolume = 0.5f;
+    [SerializeField, Range(0f, 1f)] private float hitVolume = 0.5f;
     [SerializeField, Range(0f, 1f)] private float moveVolume = 0.3f;
 
     [Header("Move Check")]
@@ -96,6 +98,10 @@ public class PlayerSfxController : MonoBehaviour
     public void PlayPickupSfx()
     {//이거 아이템 픽업하는 스크립트에 넣어주세요 이세호
         PlayOneShotFromPool(pickupClip, pickupVolume);
+    }
+    public void PlayHitSfx()
+    {
+        PlayOneShotFromPool(hitClip, hitVolume);
     }
 
     private void PlayOneShotFromPool(AudioClip clip, float volume)

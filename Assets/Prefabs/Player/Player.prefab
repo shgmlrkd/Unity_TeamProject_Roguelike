@@ -1346,10 +1346,12 @@ MonoBehaviour:
   moveLoopAudioSource: {fileID: 0}
   attackClip: {fileID: 8300000, guid: c5955b1ca51d47245ae5e5e10395d910, type: 3}
   pickupClip: {fileID: 8300000, guid: 3a922676860603947b452d0b573a158d, type: 3}
+  hitClip: {fileID: 8300000, guid: eed63d57ca363ae4f94e076024f06512, type: 3}
   moveLoopClip: {fileID: 8300000, guid: b5029388cb05404429404214c37e8df6, type: 3}
   masterSfxVolume: 0.5
   attackVolume: 0.4
   pickupVolume: 0.5
+  hitVolume: 0.5
   moveVolume: 0.1
   inputManager: {fileID: 0}
   minMoveInput: 0.01
@@ -5439,7 +5441,7 @@ SortingGroup:
   m_GameObject: {fileID: 9201085666925120891}
   m_Enabled: 1
   m_SortingLayerID: 407995435
-  m_SortingLayer: 5
+  m_SortingLayer: 0
   m_SortingOrder: 5
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
@@ -5582,7 +5584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5391305622121724469, guid: 1eac0a97dcef562499208e53747f00cb, type: 3}
       propertyPath: m_SortingLayer
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5391305622121724469, guid: 1eac0a97dcef562499208e53747f00cb, type: 3}
       propertyPath: m_SortingLayerID
