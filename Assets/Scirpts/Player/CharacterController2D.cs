@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +21,7 @@ public class CharacterController2D : MonoBehaviour
     private PlayerAttackController attackController;
     //화면 기준 마우스 위치 좌표 도출용
     private Camera mainCamera;
+    private CameraRig cameraRig;
 
     private PlayerInventory playerInventory;
 
@@ -31,9 +33,12 @@ public class CharacterController2D : MonoBehaviour
 
     private Vector3 visualRootOriginalScale;
 
+    private bool canMove = true;
+
     private void Awake()
     {
         mainCamera = Camera.main;
+        cameraRig = mainCamera.gameObject.GetComponent<CameraRig>();
 
         rb = GetComponent<Rigidbody2D>();
         inputManager = GetComponent<CharacterInputManager>();
@@ -69,6 +74,18 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        cameraRig.OnCameraMoveStarted += () => canMove = false;
+        cameraRig.OnCameraMoveFinished += () => canMove = true;
+    }
+
+    private void OnDisable()
+    {
+        cameraRig.OnCameraMoveStarted -= () => canMove = false;
+        cameraRig.OnCameraMoveFinished -= () => canMove = true;
+    }
+
     private void Update()
     {
         UpdateLookDirection();
@@ -79,6 +96,12 @@ public class CharacterController2D : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!canMove)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         Move();
     }
 
