@@ -12,7 +12,8 @@ public class Doorinstall : MonoBehaviour
     public bool isBossEntranceDoor;
     [Header("연출 설정")]
     [SerializeField] private float openDelay = 0.5f; // 문이 열리는 연출 시간
-    private GameObject interactionUI;
+    [Header("UI 설정")]
+    [SerializeField] private GameObject interactionUI;
 
     private GameObject instantiatedDoor;
     private bool isPlayerNearby = false;
@@ -23,7 +24,6 @@ public class Doorinstall : MonoBehaviour
     public Vector2Int WallDirection => wallDirection;
     private void Awake()
     {
-        interactionUI = GameObject.Find("InteractionText");
         if (interactionUI != null) interactionUI.SetActive(false);
     }
     private void Update()
@@ -31,16 +31,6 @@ public class Doorinstall : MonoBehaviour
         if (isPlayerNearby && Keyboard.current.eKey.wasPressedThisFrame)
         {
             if (!MonsterManager.Instance.IsAllMonsterDead) return;
-
-            /*if (instantiatedDoor == null)
-            {
-                SpawnDoor();
-            }
-            else
-            {
-                OpenDoor();
-                StartCoroutine(OpenAndTeleportRoutine());
-            }*/
 
             OpenDoor();
             StartCoroutine(OpenAndTeleportRoutine());
@@ -78,7 +68,7 @@ public class Doorinstall : MonoBehaviour
 
         Transform curDoorTrans = null;
 
-        if (RoomRuleChecker1.Instance.CanGenerateMoreRooms)
+        if (RoomRuleChecker.Instance.CanGenerateMoreRooms)
         {
             curDoorTrans = transform.Find("Door");
         }
@@ -97,7 +87,7 @@ public class Doorinstall : MonoBehaviour
     }
     protected virtual void ExecuteDoorAction()
     {
-        RoomManager1.Instance.BuildRoomFromDoor(this, playerTransform);
+        RoomManager.Instance.BuildRoomFromDoor(this, playerTransform);
     }
     private IEnumerator OpenAndTeleportRoutine()
     {
@@ -116,8 +106,8 @@ public class Doorinstall : MonoBehaviour
         {
             isPlayerNearby = true;
             playerTransform = collision.transform;
+            if (interactionUI != null) interactionUI.SetActive(true);
         }
-        if (interactionUI != null) interactionUI.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -125,8 +115,8 @@ public class Doorinstall : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerNearby = false;
+            if (interactionUI != null) interactionUI.SetActive(false);
         }
-        if (interactionUI != null) interactionUI.SetActive(false);
     }
     public void SetDestination(Vector2Int dest)
     {

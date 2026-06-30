@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 835367882088116429}
   - component: {fileID: 221175144309543366}
   m_Layer: 0
-  m_Name: RoomManager1
+  m_Name: RoomManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,6 +139,7 @@ MonoBehaviour:
   roomWidth: 11
   roomHeight: 7
   tileOffset: 3.5
+  bossDoorTileOffset: 6
   cameraRig: {fileID: 0}
 --- !u!1 &3090879773427780031
 GameObject:
