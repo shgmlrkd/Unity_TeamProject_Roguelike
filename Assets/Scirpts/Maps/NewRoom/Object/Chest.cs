@@ -29,7 +29,9 @@ public class Chest : MonoBehaviour
     }
     private void Start()
     {
-        fixedCost = Random.Range(minCost, maxCost + 1);
+        int randomValue = Random.Range(minCost, maxCost + 1);
+
+        fixedCost = Mathf.Clamp(randomValue, minCost, maxCost);
     }
     private void Update()
     {
