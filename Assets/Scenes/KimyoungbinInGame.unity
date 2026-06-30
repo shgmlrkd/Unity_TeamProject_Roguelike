@@ -269,8 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aef9f5eae2a3e94689f2f6697381d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraRig
-  target: {fileID: 0}
-  followSpeed: 5
   offset: {x: 0, y: 0, z: -10}
 --- !u!1001 &533605821
 PrefabInstance:
@@ -590,8 +588,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponController
   defaultWeapon: {fileID: 11400000, guid: 7fb9161dc16b9404e9bb4f2045873de0, type: 2}
   currentWeapon: {fileID: 0}
-  weaponDropDistance: 0.8
-  droppedWeaponPickupDelay: 2
 --- !u!114 &585228990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,6 +605,10 @@ MonoBehaviour:
   attackAreaTransform: {fileID: 1857210254}
   attackBoxCollider: {fileID: 1857210255}
   animator: {fileID: 585228988}
+  attackVfxPrefab: {fileID: 0}
+  attackVfxLifeTime: 0.35
+  attackVfxAngleOffset: 0
+  attackVfxPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &585228991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,9 +622,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   animator: {fileID: 585228988}
+  bodyCollider: {fileID: 0}
   maxHp: 10
   invincibleTime: 0.8
-  bonusHpObj: {fileID: 6047184231622314929, guid: e56795640d76583469235fac98e0fe39, type: 3}
+  fadeOutDuration: 1
+  disableAlphaThreshold: 0.02
+  hitFlashRoot: {fileID: 0}
+  hitFlashRenderers: []
+  hitFlashExcludeRenderers: []
+  hitFlashColor: {r: 1, g: 0, b: 0, a: 1}
+  hitFlashCount: 3
+  hitFlashInterval: 0.06
 --- !u!120 &585228992
 LineRenderer:
   serializedVersion: 3
@@ -765,6 +773,8 @@ MonoBehaviour:
   moveSpeed: 5
   animator: {fileID: 585228988}
   spriteRenderer: {fileID: 585228997}
+  visualRoot: {fileID: 0}
+  invertVisualFlip: 1
 --- !u!61 &585228995
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -884,7 +894,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -930847697
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
@@ -2325,6 +2335,7 @@ MonoBehaviour:
   optionUIAnimation: {fileID: 1452031732}
   equipmentUI: {fileID: 1247197769}
   statUI: {fileID: 958031466}
+  gameOverUI: {fileID: 0}
 --- !u!114 &1452031732
 MonoBehaviour:
   m_ObjectHideFlags: 0

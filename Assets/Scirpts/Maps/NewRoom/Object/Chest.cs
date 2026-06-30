@@ -32,8 +32,6 @@ public class Chest : MonoBehaviour
         int randomValue = Random.Range(minCost, maxCost + 1);
 
         fixedCost = Mathf.Clamp(randomValue, minCost, maxCost);
-
-        Debug.Log($"확정된 비용: {fixedCost}");
     }
     private void Update()
     {

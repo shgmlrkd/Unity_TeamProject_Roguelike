@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6ad5c156459884db8717d4e6b49742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chest
-  minCost: 30
-  maxCost: 70
+  minCost: 20
+  maxCost: 60
   itemPool:
   - {fileID: 11400000, guid: 7661eabfdd1de064eada16a79d556db1, type: 2}
   - {fileID: 11400000, guid: eda5f4d4be549df4594d618aa06ddfe0, type: 2}
@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 4375677498620459048}
   - component: {fileID: 7726903366645176742}
   - component: {fileID: 4490883182077910511}
+  - component: {fileID: 7122992442596124304}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -561,3 +562,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7122992442596124304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9187925203925616655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf5599f4b9f09f4fa645698bf329c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIEffect
+  minScale: 0.01
+  maxScale: 0.015
+  speed: 2
