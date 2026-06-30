@@ -548,7 +548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4491191673263214828, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: m_SortingLayer
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4491191673263214828, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: m_SortingLayerID
@@ -610,6 +610,10 @@ PrefabInstance:
       propertyPath: bonusStatSystem
       value: 
       objectReference: {fileID: 591083273}
+    - target: {fileID: 8596282807915642325, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
+      propertyPath: positionOffset.y
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 9105330616483280830, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
       propertyPath: attackVfxPrefab
       value: 
@@ -2650,6 +2654,12 @@ MonoBehaviour:
   invincibleTime: 0.8
   fadeOutDuration: 1
   disableAlphaThreshold: 0.02
+  hitFlashRoot: {fileID: 0}
+  hitFlashRenderers: []
+  hitFlashExcludeRenderers: []
+  hitFlashColor: {r: 1, g: 0, b: 0, a: 1}
+  hitFlashCount: 3
+  hitFlashInterval: 0.06
 --- !u!224 &1514318684 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3732926286377063122, guid: aa015f15c2afcf2449b5e0c89c2341de, type: 3}

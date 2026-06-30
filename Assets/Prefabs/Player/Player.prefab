@@ -965,6 +965,7 @@ GameObject:
   - component: {fileID: 960318227865341817}
   - component: {fileID: 3876616974539314070}
   - component: {fileID: 4993510618700438429}
+  - component: {fileID: 8596282807915642325}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1144,7 +1145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   animator: {fileID: 8335872964775510835}
-  bodyCollider: {fileID: 0}
+  bodyCollider: {fileID: 5086462135723915612}
   maxHp: 10
   invincibleTime: 0.8
   fadeOutDuration: 1
@@ -1346,6 +1347,27 @@ MonoBehaviour:
   sortingGroup: {fileID: 4491191673263214828}
   sortingScale: 100
   sortingOffset: 0
+--- !u!114 &8596282807915642325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617234061336637363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177bb81e468ac384e9d1284a6b05ec2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMoveDustVfx
+  inputManager: {fileID: 5164998801281500219}
+  dustTransform: {fileID: 3359563589611699944}
+  dustObject: {fileID: 8564038842779507985}
+  dustSpriteRenderer: {fileID: 8652763406186272725}
+  sideDistance: 0.35
+  positionOffset: {x: 0, y: 0.25, z: 0}
+  flipByDirection: 1
+  minMoveInput: 0.01
+  minHorizontalInput: 0.01
 --- !u!1 &2658598303617437336
 GameObject:
   m_ObjectHideFlags: 0
@@ -5589,5 +5611,15 @@ PrefabInstance:
 --- !u!4 &3359563589611699944 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2043113434081317640, guid: 1eac0a97dcef562499208e53747f00cb, type: 3}
+  m_PrefabInstance: {fileID: 3658340851301150176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8564038842779507985 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4907967478675534065, guid: 1eac0a97dcef562499208e53747f00cb, type: 3}
+  m_PrefabInstance: {fileID: 3658340851301150176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &8652763406186272725 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5391305622121724469, guid: 1eac0a97dcef562499208e53747f00cb, type: 3}
   m_PrefabInstance: {fileID: 3658340851301150176}
   m_PrefabAsset: {fileID: 0}
