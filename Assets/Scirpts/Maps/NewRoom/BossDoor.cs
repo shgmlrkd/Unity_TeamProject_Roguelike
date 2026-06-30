@@ -10,8 +10,8 @@ public class BossDoor : Doorinstall
     [SerializeField] private float normalRoomCameraSize = 5f; // 일반방 복귀 시 카메라 사이즈
     protected override void ExecuteDoorAction()
     {
-        RoomRuleChecker1.Instance.MaxDoorCount++;
-        RoomRuleChecker1.Instance.CanGenerateMoreRooms = true;
+        RoomRuleChecker.Instance.MaxDoorCount++;
+        RoomRuleChecker.Instance.CanGenerateMoreRooms = true;
         // 일반 이동 대신 연출 및 강제 이동 호출
         StartCoroutine(BossEnterSequence());
     }
@@ -29,7 +29,7 @@ public class BossDoor : Doorinstall
         Vector2Int bossGridPos = new Vector2Int(myRoomPos.x, myRoomPos.y + 1);
 
         // 이동 처리 (플레이어와 카메라를 함께 이동)
-        RoomManager1.Instance.ForceMoveToBossRoom(spawnPos, bossGridPos);
+        RoomManager.Instance.ForceMoveToBossRoom(spawnPos, bossGridPos);
 
         if (Camera.main != null)
         {
@@ -49,6 +49,6 @@ public class BossDoor : Doorinstall
     }
     public void OnBossDoorTriggered(Doorinstall door)
     {
-        RoomManager1.Instance.SpawnBossRoomOnly(door);
+        RoomManager.Instance.SpawnBossRoomOnly(door);
     }
 }
