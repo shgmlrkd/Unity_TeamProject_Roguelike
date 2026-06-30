@@ -64,6 +64,13 @@ public class PlayerMoveDustVfx : MonoBehaviour
             return;
         }
 
+        // 위/아래 방향이 45도 초과하면 먼지 출력 안 함
+        if (Mathf.Abs(moveInput.y) > Mathf.Abs(moveInput.x))
+        {
+            SetDustActive(false);
+            return;
+        }
+
         UpdateDustSide(moveInput.x);
         UpdateDustPosition();
         UpdateDustFlip();
