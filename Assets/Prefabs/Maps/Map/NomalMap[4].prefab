@@ -3821,7 +3821,7 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_CompositeOperation: 1
+  m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
@@ -3892,56 +3892,9 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 2390931626238784466}
-    m_ColliderPaths:
-    - - X: 100000000
-        Y: 60000000
-      - X: -100000000
-        Y: 60000000
-      - X: -100000000
-        Y: -60000000
-      - X: 100000000
-        Y: -60000000
-    - - X: -80000000
-        Y: -40000000
-      - X: -80000000
-        Y: 40000000
-      - X: 80000000
-        Y: 40000000
-      - X: 80000000
-        Y: -40000000
-    - - X: 10000000
-        Y: 10000000
-      - X: 6250000
-        Y: 13125000
-      - X: -3750000
-        Y: 13125000
-      - X: -10000000
-        Y: 10625000
-      - X: -10000000
-        Y: -8125000
-      - X: -8125000
-        Y: -10000000
-      - X: 10000000
-        Y: -10000000
+  m_ColliderPaths: []
   m_CompositePaths:
-    m_Paths:
-    - - {x: 9.99997, y: -6}
-      - {x: 9.99997, y: 6}
-      - {x: -10, y: 5.999971}
-      - {x: -9.99997, y: -6}
-    - - {x: 8, y: -3.9999704}
-      - {x: -8, y: -3.9999704}
-      - {x: -7.9999704, y: 4}
-      - {x: 8, y: 3.9999704}
-    - - {x: 0.99997073, y: -1}
-      - {x: 0.9999906, y: 1.000008}
-      - {x: 0.6249907, y: 1.3125}
-      - {x: -0.3750046, y: 1.3124982}
-      - {x: -1, y: 1.0624815}
-      - {x: -0.99999243, y: -0.8125076}
-      - {x: -0.8124892, y: -1}
+    m_Paths: []
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -3981,11 +3934,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1551069162190986755}
   - {fileID: 935816228265751064}
   - {fileID: 1576589508194531585}
   - {fileID: 312581607523554680}
   - {fileID: 1731481195545895536}
-  - {fileID: 1551069162190986755}
   - {fileID: 443197988003243895}
   - {fileID: 8313817089886198492}
   - {fileID: 678147484936118537}
