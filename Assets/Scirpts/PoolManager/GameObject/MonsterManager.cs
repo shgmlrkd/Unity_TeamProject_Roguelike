@@ -6,13 +6,10 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
     [SerializeField] private MonsterStateManager[] monsterPrefabs;
 
     // 투사체
-    [Header("화살 프리팹")]
-    [SerializeField] private SkeletonBullet skeletonBulletPrefab;
-
-    [Header("매직볼 프리팹")]
-    [SerializeField] private MagicBullet MagicBulletPrefab;
-
+    [SerializeField] private MonsterBullet[] bullet;
+  
     private int poolSize = 10;
+    private int bulletPoolSize = 110;
     private bool isAllMonsterDead = false;
     public bool IsAllMonsterDead => isAllMonsterDead;
 
@@ -28,10 +25,14 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
             PoolManager.Instance.PreloadPool(monsterPrefabs[i], poolSize); 
 
         }
-        // 투사체
-        PoolManager.Instance.PreloadPool(skeletonBulletPrefab, poolSize); // 스켈레톤 화살
-        PoolManager.Instance.PreloadPool(MagicBulletPrefab, poolSize); // 스켈레톤 마법사 마법볼
 
+        // 투사체
+        for (int i = 0; i < bullet.Length; i++)
+        {
+            PoolManager.Instance.PreloadPool(bullet[i], bulletPoolSize);
+
+        }
+        
     }
 
     public MonsterStateManager SpawnMonster()
