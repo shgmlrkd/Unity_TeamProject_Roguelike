@@ -20,6 +20,11 @@ public class SpawnerRoom : MonoBehaviour
     private int totalSpawnCount; // 실제로 소환된 몬스터의 수
     private int currentSpawnCount;      // 소환된 몬스터의 수
 
+    // 카메라 도착후 스폰
+    private CameraRig cameraRig;
+    private bool isSpawnStarted = false; // 이방에서 이미 스폰을 시작했는지 확인하는 bool형
+    private bool isCameraMoveFinished = false; // 카메라 이동이 끝났는지 확인하는 bool 형
+
     private List<MonsterStateManager> aliveMonsters = new List<MonsterStateManager>(); // 현재 살아있는 몬스터 목록
 
     private void Awake()
@@ -39,26 +44,40 @@ public class SpawnerRoom : MonoBehaviour
             }
             spawnPoints = points.ToArray();
         }
+
+        cameraRig = FindFirstObjectByType<CameraRig>();
     }
     private void OnEnable()
     {
         // 방이 활성화되면 아직 클리어되지 않은 상태로 변경
         MonsterManager.Instance.CheckAllMonstersDead(false);
-    }
 
+        if(cameraRig == null)
+        {
+            return;
+        }
+        
+        cameraRig.OnCameraMoveStarted += OnCameraMoveStarted;
+        cameraRig.OnCameraMoveFinished += OnCameraMoveFinished;
+    }
+    private void OnDisable()
+    {
+        cameraRig.OnCameraMoveStarted -= OnCameraMoveStarted;
+        cameraRig.OnCameraMoveFinished -= OnCameraMoveFinished;
+    }
     private void Start()
     {
         // 스폰 위치가 없다면 바로 방 클리어 처리
         if (spawnPoints.Length == 0)
         {
             MonsterManager.Instance.CheckAllMonstersDead(true);
+
+            return;
         }
 
         // 이번 방에서 생성될 총 몬스터 수 결정
         totalSpawnCount = Random.Range(MIN_TOTAL_SPAWN_COUNT, MAX_TOTAL_SPAWN_COUNT);
 
-        // 첫 몬스터 생성
-        SpawnMonsters();
     }
     private void Update()
     {
@@ -69,6 +88,17 @@ public class SpawnerRoom : MonoBehaviour
     // 방의 몬스터 상태를 갱신
     private void UpdateRoomState()
     {
+        // 카메라 이동이 끝나기 전에 작동 금지
+        if (!isCameraMoveFinished)
+        {
+            return;
+        }
+
+        if(!isSpawnStarted) // 스폰이 아직 시작되지 않았다면 TryRespwanMonster() 막기
+        {
+            return;
+        }
+
         // 죽은 몬스터를 리스트에서 제거
         CheckAliveMonster();
 
@@ -101,6 +131,35 @@ public class SpawnerRoom : MonoBehaviour
         SoundManager.Instance.PlaySFX(SoundKey.MapClear);
         MonsterManager.Instance.CheckAllMonstersDead(true);
     }
+
+    private void StartSpawnAfterCameraMove()
+    {
+        if (isSpawnStarted)
+        {
+            return;
+        }
+
+        isSpawnStarted = true;
+
+        SpawnMonsters();
+    }
+
+    private void OnCameraMoveStarted()
+    {
+        if (cameraRig == null)
+        {
+            return;
+        }
+        isCameraMoveFinished = false;
+    }
+
+    private void OnCameraMoveFinished()
+    {
+        isCameraMoveFinished = true; // 카메라 이동이 끝났으니까 스폰 가능 상태 변경
+
+        StartSpawnAfterCameraMove(); // 카메라 이동 완료후 스폰 시도
+    }
+
 
     public void SpawnMonsters()
     {
