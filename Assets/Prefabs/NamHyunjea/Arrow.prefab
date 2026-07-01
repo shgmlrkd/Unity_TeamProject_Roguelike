@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6356681055899294525}
   - component: {fileID: 8413983494034979933}
   - component: {fileID: 6767841997297304796}
-  - component: {fileID: -855288747529778112}
+  - component: {fileID: 4825733637951970044}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -167,7 +167,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.08864933, y: 0.07782042}
   m_EdgeRadius: 0
---- !u!114 &-855288747529778112
+--- !u!114 &4825733637951970044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,9 +176,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2522005242645762804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a06e6377fc48f489c8ec27163f2df4, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bae8dc8c2ed7c94980ea39d3e362e54, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SkeletonBullet
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterBullet
   targetLayer:
     serializedVersion: 2
     m_Bits: 128

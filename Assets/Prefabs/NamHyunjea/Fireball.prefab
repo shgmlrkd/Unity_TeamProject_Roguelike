@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7205008291378916257
+--- !u!1 &7491761441902171667
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4233511710960014077}
-  - component: {fileID: 2155182428648890495}
-  - component: {fileID: 3791245884108711903}
-  - component: {fileID: 8953618376411410906}
-  - component: {fileID: -8822872541089180286}
+  - component: {fileID: 6609571914340681779}
+  - component: {fileID: 3483883085909170595}
+  - component: {fileID: 5416401887495195631}
+  - component: {fileID: 1323542193715281329}
+  - component: {fileID: 8983203076824330525}
   m_Layer: 0
-  m_Name: MagicBall
+  m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4233511710960014077
+--- !u!4 &6609571914340681779
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7205008291378916257}
+  m_GameObject: {fileID: 7491761441902171667}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.016, y: 0.095, z: 0}
-  m_LocalScale: {x: 0.11852708, y: 0.1221766, z: 0.1372}
+  m_LocalPosition: {x: -71.6, y: -79.32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2155182428648890495
+--- !u!212 &3483883085909170595
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7205008291378916257}
+  m_GameObject: {fileID: 7491761441902171667}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -84,24 +84,24 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4239118585719830459, guid: 6308da4965c89e845ae5a42c60df8b74, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e17db3ae1e0b83243bd726823fc6b3a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.03, y: 3.08}
+  m_Size: {x: 2.522, y: 2.508}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!50 &3791245884108711903
+--- !u!50 &5416401887495195631
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7205008291378916257}
+  m_GameObject: {fileID: 7491761441902171667}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -117,17 +117,17 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8953618376411410906
+--- !u!114 &1323542193715281329
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7205008291378916257}
+  m_GameObject: {fileID: 7491761441902171667}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bae8dc8c2ed7c94980ea39d3e362e54, type: 3}
@@ -137,13 +137,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   lifeTime: 3
---- !u!58 &-8822872541089180286
+--- !u!58 &8983203076824330525
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7205008291378916257}
+  m_GameObject: {fileID: 7491761441902171667}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -172,4 +172,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.1
+  m_Radius: 0.22

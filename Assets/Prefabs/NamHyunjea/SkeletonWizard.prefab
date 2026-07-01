@@ -1434,8 +1434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc2f45dc65e1434aa05df2eb9cf4c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangedAttackMonsterState
-  skeletonBulletPrefab: {fileID: 0}
-  magicBulletPrefab: {fileID: 8562821281303987673, guid: 8c43a196933cb9b4887a459839b9085b, type: 3}
+  monsterBulletPrefabs: {fileID: 1323542193715281329, guid: 6c5cbdfdb0cb90c48ab16d0fee6000e5, type: 3}
   firePoint: {fileID: 4810504627482992914}
   bulletSpeed: 9
 --- !u!114 &8938619520972845690
