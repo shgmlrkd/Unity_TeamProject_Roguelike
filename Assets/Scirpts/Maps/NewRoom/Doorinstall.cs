@@ -104,6 +104,7 @@ public class Doorinstall : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            if (!MonsterManager.Instance.IsAllMonsterDead) return;
             isPlayerNearby = true;
             playerTransform = collision.transform;
             if (interactionUI != null) interactionUI.SetActive(true);
@@ -116,6 +117,8 @@ public class Doorinstall : MonoBehaviour
         {
             isPlayerNearby = false;
             if (interactionUI != null) interactionUI.SetActive(false);
+
+            playerTransform = null;
         }
     }
     public void SetDestination(Vector2Int dest)

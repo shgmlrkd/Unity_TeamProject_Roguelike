@@ -25,7 +25,7 @@ public class BossDoor : Doorinstall
 
         // 보스방 이동 좌표 계산 
         Vector3 bossCenterPos = transform.position + new Vector3(0, 500, 0);
-        Vector3 spawnPos = bossCenterPos + new Vector3(0, -3f, 0);
+        Vector3 spawnPos = bossCenterPos + new Vector3(0, 0, 0);
         Vector2Int bossGridPos = new Vector2Int(myRoomPos.x, myRoomPos.y + 1);
 
         // 이동 처리 (플레이어와 카메라를 함께 이동)
