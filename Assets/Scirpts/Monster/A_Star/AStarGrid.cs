@@ -39,7 +39,7 @@ public class AStarGrid : MonoBehaviour
 
                 Vector3 worldPos = wallTilemap.GetCellCenterWorld(tilePos); // 타일 좌표를 월드 중앙 좌표로 변환
 
-                Collider2D wall = Physics2D.OverlapBox(worldPos, wallTilemap.cellSize * 0.8f, 0f, obstacleLayer); // obstacleLayer 체크
+                Collider2D wall = Physics2D.OverlapBox(worldPos, wallTilemap.cellSize * 0.8f, 0.0f, obstacleLayer); // obstacleLayer 체크
 
                 bool hasWall = wall != null;
 
