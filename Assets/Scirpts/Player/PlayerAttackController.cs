@@ -55,7 +55,7 @@ public class PlayerAttackController : MonoBehaviour
         if (inputManager != null)
         {
             inputManager.OnAttackPressed += HandleAttackPressed;
-        }   
+        }
 
         if (weaponController != null)
         {
@@ -350,19 +350,29 @@ public class PlayerAttackController : MonoBehaviour
         {
             attackDirection = Vector2.down;
         }
+
+        Vector3 size = new(attackBoxCollider.size.x, attackBoxCollider.size.y, 1.0f);
+
+        Vector3 curOffset = attackBoxCollider.offset; // 오프셋 변수 저장
+
         //공격방향 정규화
         attackDirection.Normalize();
+
         //방향을 각도로
         float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
+
         Quaternion rotation = Quaternion.Euler(0f, 0f, angle + attackVfxAngleOffset);
 
-        Vector3 spawnPosition = attackAreaTransform.position + attackVfxPositionOffset;
+        Vector3 spawnScale = Vector3.Scale(attackAreaTransform.localScale, size);
 
-        GameObject vfxObject = Instantiate(
-            attackVfxPrefab,
-            spawnPosition,
-            rotation
-        );
+        GameObject vfxObject = Instantiate(attackVfxPrefab, transform); // 플레이어 하위로 생성하기
+
+        // Offset은 로컬 좌표로 그냥 더하지 않고 attackArea 기준 월드 좌표로 변환해서 위치를 맞추기
+        vfxObject.transform.position = attackAreaTransform.TransformPoint(curOffset); 
+
+        vfxObject.transform.rotation = rotation;
+        vfxObject.transform.localScale = spawnScale;
+
         //공격속도 맞게
         float attackSpeedMultiplier = GetAttackSpeedMultiplier();
 
