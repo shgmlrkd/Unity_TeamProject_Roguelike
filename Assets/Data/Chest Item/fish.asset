@@ -20,4 +20,4 @@ MonoBehaviour:
   attackRange: 0
   attackSpeedRate: 1
   moveSpeedRate: 2
-  shieldHp: 2
+  shieldHp: 6
