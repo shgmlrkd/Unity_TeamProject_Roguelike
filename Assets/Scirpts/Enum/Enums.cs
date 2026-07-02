@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////
 //              Monster
 ///////////////////////////////////////
-public enum MonsterStateEnum // 몬스터 상태
+public enum MonsterStateEnum
 {
     None = -1,
     Idle, 
@@ -12,20 +12,26 @@ public enum MonsterStateEnum // 몬스터 상태
     Dead
 }
 
-public enum NormalMonsterPattern // 일반 몬스터 패턴
+public enum NormalMonsterPattern
 {
     BaseAttack,
-    PatternA,
-    Length
-}
-public enum BossMonsterPattern // 보스 몬스터 패턴
-{
-    BaseAttack,
-    BossPatternA,
-    BossPatternB,
     Length
 }
 
+public enum BossStateEnum
+{
+    None = -1,
+    Idle,               // 대기
+    Chase,              // 추격
+    AttackSelect,       // 공격 선택
+    BaseAttack,         // 기본 공격
+    DashAttack,         // 돌진 공격
+    Summon,             // 잡몹 소환
+    PhaseTransition,    // 회복 (2페이즈)
+    ProjectileAttack,   // 투사체 공격
+    Dead,               // 죽음
+    Hit                 // 다침
+}
 
 ///////////////////////////////////////
 //               Item
@@ -95,24 +101,35 @@ public enum GameOverTextType
 
 public enum SoundKey
 {
-    // 씬 브금
+    #region BGM
+
     TitleBGM,
     InGameBGM,
     BoosRoomBGM,
 
-    // 효과음
-    PlayerFootStep,
+    #endregion BGM
+
+    #region SFX
+
+    // 플레이어
     SwordSwing,
-    CollectedItem,
-    MapClear,
-    BossDoorOpen,
-    ButtonClick,
-    ButtonHover,
+    PlayerFootStep,
     PlayerHit,
     PlayerDead,
+
+    // 몬스터
     MonsterHit,
     MonsterDead,
-    DoorOpen
+
+    // UI
+    BossDoorOpen,
+    ButtonHover,
+    ButtonClick,
+    CollectedItem,
+    DoorOpen,
+    MapClear,
+
+    #endregion SFX
 }
 
 ///////////////////////////////////////
