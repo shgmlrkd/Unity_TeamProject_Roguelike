@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MonsterHP : MonoBehaviour, IDamageable
@@ -7,6 +8,8 @@ public class MonsterHP : MonoBehaviour, IDamageable
     private MonsterStateManager monsterStateManager;
     
     protected int currentHp;
+
+    public event Action<GameObject> OnMonsterDied;
 
     public bool IsDead
     {
@@ -60,6 +63,8 @@ public class MonsterHP : MonoBehaviour, IDamageable
     {
         SoundManager.Instance.PlaySFX(SoundKey.MonsterDead);
         InGameManager.Instance.RegisterMonsterKill();
+
+        OnMonsterDied?.Invoke(gameObject);
         monsterStateManager.SetState(MonsterStateEnum.Dead);
     }
 
