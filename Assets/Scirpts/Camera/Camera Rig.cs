@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 using System;
-using Unity.VisualScripting;
 
 public class CameraRig : MonoBehaviour
 {
@@ -26,5 +25,28 @@ public class CameraRig : MonoBehaviour
                     OnCameraMoveFinished?.Invoke();
                 });
             });
+    }
+
+    public void MoveToRoom(Vector3 startPos, Vector3 targetPos, float startDuration, float targetDuration)
+    {
+        OnCameraMoveStarted?.Invoke();
+
+        startPos.z = offset.z;
+        targetPos.z = offset.z;
+
+        Sequence sequence = DOTween.Sequence();
+
+        sequence.Append(transform.DOMove(startPos, startDuration)
+            .SetEase(Ease.InOutCubic));
+
+        sequence.AppendInterval(0.2f);
+
+        sequence.Append(transform.DOMove(targetPos, targetDuration)
+            .SetEase(Ease.InOutCubic));
+
+        sequence.OnComplete(() =>
+        {
+            OnCameraMoveFinished?.Invoke();
+        });
     }
 }

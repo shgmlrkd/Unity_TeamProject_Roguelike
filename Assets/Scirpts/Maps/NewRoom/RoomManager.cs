@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class RoomManager : ScenesSingleton<RoomManager>
 {
     private DungeonMapController map = new DungeonMapController();
     private RoomBuilder builder;
+    private Transform bossSpawnPos;
 
     [Header("모듈")]
     [SerializeField] private RoomGenerator generator;
@@ -99,16 +101,18 @@ public class RoomManager : ScenesSingleton<RoomManager>
     {
 
         // 1. 보스방 생성
-        generator.CreateRoom(roomDatabase.bossRoom, pos, grid, Vector2Int.zero);
+        GameObject bossRoom = generator.CreateRoom(roomDatabase.bossRoom, pos, grid, Vector2Int.zero);
+
+        bossSpawnPos = bossRoom.transform.Find("BossSpawner").transform;
 
         // 2. 맵 데이터 저장
         map.DungeonMap[grid] = roomDatabase.bossRoom;
         map.RoomPositions[grid] = pos;
 
         // 3. 순간이동 및 카메라 이동
-        playerTransform.position = pos;
+        playerTransform.position = pos + new Vector3(0, -6, 0);
         RoomRuleChecker.Instance.IsInBossEntranceMode = true;
-        MoveCamera();
+        BossRoomMoveCamera();
     }
     // 문을 통과한 후 플레이어가 방에서 완전히 벗어날 시간을 벌고 문을 닫는 함수
     private IEnumerator CloseDoorDelayed(Doorinstall door)
@@ -124,6 +128,16 @@ public class RoomManager : ScenesSingleton<RoomManager>
         if (map.RoomPositions.TryGetValue(grid, out Vector3 pos))
         { 
             cameraRig.MoveToRoom(pos, 0.5f); 
+        }
+    }
+
+    private void BossRoomMoveCamera()
+    {
+        Vector2Int grid = map.GetCurrentRoomGridPos(playerTransform.position);
+
+        if (map.RoomPositions.TryGetValue(grid, out Vector3 pos))
+        {
+            cameraRig.MoveToRoom(bossSpawnPos.position, pos, 2.0f, 1.0f);
         }
     }
 }
