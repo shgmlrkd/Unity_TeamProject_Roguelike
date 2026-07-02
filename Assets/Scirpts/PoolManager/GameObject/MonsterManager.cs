@@ -1,15 +1,26 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+[System.Serializable]
+public class BulletPool
+{
+    [SerializeField]
+    private MonsterBullet monsterBullet;
+
+    [SerializeField]
+    private int bulletPoolSize;
+
+    public MonsterBullet MonsterBullet => monsterBullet;
+    public int BulletPoolSize => bulletPoolSize;
+}
 
 public class MonsterManager : ScenesSingleton<MonsterManager>
 {
     [SerializeField] private MonsterStateManager[] monsterPrefabs;
 
     // 투사체
-    [SerializeField] private MonsterBullet[] bullet;
+    [SerializeField] private BulletPool[] bullets;
   
-    private int poolSize = 10;
-    private int bulletPoolSize = 110;
+    private int poolSize = 15;
     private bool isAllMonsterDead = false;
     public bool IsAllMonsterDead => isAllMonsterDead;
 
@@ -23,16 +34,13 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
         for (int i = 0; i < monsterPrefabs.Length; i++)
         {
             PoolManager.Instance.PreloadPool(monsterPrefabs[i], poolSize); 
-
         }
 
         // 투사체
-        for (int i = 0; i < bullet.Length; i++)
+        for (int i = 0; i < bullets.Length; i++)
         {
-            PoolManager.Instance.PreloadPool(bullet[i], bulletPoolSize);
-
+            PoolManager.Instance.PreloadPool(bullets[i].MonsterBullet, bullets[i].BulletPoolSize);
         }
-        
     }
 
     public MonsterStateManager SpawnMonster()
@@ -52,5 +60,10 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
     public void CheckAllMonstersDead(bool isAllMonsterDead)
     {
         this.isAllMonsterDead = isAllMonsterDead;
+    }
+
+    public MonsterBullet GetBossBullet()
+    {
+        return PoolManager.Instance.GetPool(bullets[2].MonsterBullet, bullets[2].MonsterBullet.name);
     }
 }

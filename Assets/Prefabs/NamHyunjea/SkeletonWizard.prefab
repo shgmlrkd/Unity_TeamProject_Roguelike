@@ -1228,7 +1228,7 @@ Transform:
   m_GameObject: {fileID: 562441197858139230}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 9, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1434,7 +1434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc2f45dc65e1434aa05df2eb9cf4c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangedAttackMonsterState
-  monsterBulletPrefabs: {fileID: 1323542193715281329, guid: 6c5cbdfdb0cb90c48ab16d0fee6000e5, type: 3}
+  monsterBulletPrefabs: {fileID: 8953618376411410906, guid: 8c43a196933cb9b4887a459839b9085b, type: 3}
   firePoint: {fileID: 4810504627482992914}
   bulletSpeed: 9
 --- !u!114 &8938619520972845690
