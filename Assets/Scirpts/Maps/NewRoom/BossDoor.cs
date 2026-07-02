@@ -42,7 +42,7 @@ public class BossDoor : Doorinstall
         if (blackScreen != null)
         {
             blackScreen.DOFade(0f, 2.0f);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(2.25f);
             Camera.main.DOOrthoSize(bossRoomCameraSize, 1.0f);
             SoundManager.Instance.PlayBGM(SoundKey.BoosRoomBGM);
         }

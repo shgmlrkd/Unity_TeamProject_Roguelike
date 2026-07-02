@@ -57,9 +57,14 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
         return PoolManager.Instance.GetPool(monsterPrefabs[index], monsterPrefabs[index].name);
     }
 
-    public void CheckAllMonstersDead(bool isAllMonsterDead)
+    public void SetAllMonstersDead(bool isAllMonsterDead)
     {
         this.isAllMonsterDead = isAllMonsterDead;
+    }
+
+    public bool CheckAllMonsterDead()
+    {
+        return isAllMonsterDead;
     }
 
     public MonsterBullet GetBossBullet()
