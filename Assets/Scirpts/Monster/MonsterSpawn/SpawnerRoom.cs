@@ -50,7 +50,7 @@ public class SpawnerRoom : MonoBehaviour
     private void OnEnable()
     {
         // 방이 활성화되면 아직 클리어되지 않은 상태로 변경
-        MonsterManager.Instance.CheckAllMonstersDead(false);
+        MonsterManager.Instance.SetAllMonstersDead(false);
 
         if(cameraRig == null)
         {
@@ -70,14 +70,13 @@ public class SpawnerRoom : MonoBehaviour
         // 스폰 위치가 없다면 바로 방 클리어 처리
         if (spawnPoints.Length == 0)
         {
-            MonsterManager.Instance.CheckAllMonstersDead(true);
+            MonsterManager.Instance.SetAllMonstersDead(true);
 
             return;
         }
 
         // 이번 방에서 생성될 총 몬스터 수 결정
         totalSpawnCount = Random.Range(MIN_TOTAL_SPAWN_COUNT, MAX_TOTAL_SPAWN_COUNT);
-
     }
     private void Update()
     {
@@ -118,18 +117,23 @@ public class SpawnerRoom : MonoBehaviour
         {
             CheckRoomClear();
         }
+        else
+        {
+            MonsterManager.Instance.SetAllMonstersDead(false);
+        }
     }
 
     private void CheckRoomClear()
     {
         if (aliveMonsters.Count > 0)
         {
+            MonsterManager.Instance.SetAllMonstersDead(false);
             return;
         }
 
         isRoomCleared = true;
         SoundManager.Instance.PlaySFX(SoundKey.MapClear);
-        MonsterManager.Instance.CheckAllMonstersDead(true);
+        MonsterManager.Instance.SetAllMonstersDead(true);
     }
 
     private void StartSpawnAfterCameraMove()
