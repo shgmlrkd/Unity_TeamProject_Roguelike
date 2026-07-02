@@ -54,6 +54,41 @@ public class MonsterBullet : MonoBehaviour
         lifeCo = StartCoroutine(LifeCo());
     }
 
+    public void Init(Vector2 dir, Vector3 pos, float speed, int damage, GameObject attacker)
+    {
+        isReturned = false; // 반환 상태 해제
+
+        this.damage = damage; // 발사 할때 받은 데미지 저장
+
+        this.attacker = attacker; // 누가 쐈는지 저장
+
+        if (dir == Vector2.zero) // 발사 위치랑 플레이어 위치(좌표)가 같다면 일단 왼쪽으로 발사
+        {
+            dir = Vector2.left;
+        }
+
+        dir.Normalize(); // 방향만 사용하기 위해서 정규화
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;   // 풀링 재사용 전 이전속도 제거
+            rb.linearVelocity = dir * speed;    // 실제 투사체 이동속도 적용
+        }
+
+        // 위치 맞추기
+        transform.position = pos;
+        // 화살 방향 맞추기
+        transform.right = -dir;
+
+        if (lifeCo != null)
+        {
+            StopCoroutine(lifeCo);
+            lifeCo = null;
+        }
+
+        lifeCo = StartCoroutine(LifeCo());
+    }
+
     private IEnumerator LifeCo()
     {
         yield return new WaitForSeconds(lifeTime);
