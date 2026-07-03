@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Skeleton
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: "\uC2A4\uCF08\uB808\uD1A4"
-  monsterMaxHp: 6
+  monsterMaxHp: 10
   moveSpeed: 1
   attackDamage: 1
-  attackRange: 3
+  attackRange: 4
   attackTakeDamageRange: 0
   attackDelay: 1
   contactRange: 6
@@ -25,6 +25,6 @@ MonoBehaviour:
   minPatrolDistance: 3
   maxPatrolDistance: 5
   minDropGold: 1
-  maxDropGold: 3
+  maxDropGold: 5
   minDropItemCount: 1
   maxDropItemCount: 4
