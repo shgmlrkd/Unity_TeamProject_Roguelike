@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1aeed9fe9863c4980acf901c8452a9, type: 3}
   m_Name: BossMonsterData
   m_EditorClassIdentifier: Assembly-CSharp::BossMonsterData
-  maxHp: 150
-  attackDamage: 2
-  projectileSpeed: 5
-  moveSpeed: 1.5
-  attackSelectRange: 8
+  maxHp: 1000
+  attackDamage: 3
+  projectileSpeed: 8
+  moveSpeed: 2
+  attackSelectRange: 10
   normalSpriteLibrary: {fileID: 11400000, guid: fa8d9fcc91b0b0e4d9dcc0e003ef83ef, type: 2}
   angrySpriteLibrary: {fileID: 11400000, guid: 834947839e0758c4980a1530346b291d, type: 2}

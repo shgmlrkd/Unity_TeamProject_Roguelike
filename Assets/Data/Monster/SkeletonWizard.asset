@@ -16,7 +16,7 @@ MonoBehaviour:
   monsterMaxHp: 6
   moveSpeed: 1
   attackDamage: 1
-  attackRange: 3
+  attackRange: 6
   attackTakeDamageRange: 0
   attackDelay: 1
   contactRange: 6
@@ -24,7 +24,7 @@ MonoBehaviour:
   patrolWaitTime: 1
   minPatrolDistance: 3
   maxPatrolDistance: 5
-  minDropGold: 1
-  maxDropGold: 3
+  minDropGold: 2
+  maxDropGold: 6
   minDropItemCount: 1
   maxDropItemCount: 4
