@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class BossStateManager : MonoBehaviour
@@ -61,18 +60,19 @@ public class BossStateManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        SetState(BossStateEnum.Idle);
-    }
-
     private void Update()
     {
+        if (bossState == BossStateEnum.None)
+            return;
+
         states[(int)bossState].ManualUpdate();
     }
 
     private void FixedUpdate()
     {
+        if (bossState == BossStateEnum.None)
+            return;
+
         states[(int)bossState].FixedTick();
     }
 

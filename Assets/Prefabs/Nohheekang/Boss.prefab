@@ -200,7 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378dff15acb292e40be7ff089b345c8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossVisualController
-  target: {fileID: 0}
   stateManager: {fileID: 7949265305080919070}
   spriteLibrary: {fileID: 4946684206604070967}
 --- !u!114 &7949265305080919070
@@ -225,7 +224,7 @@ MonoBehaviour:
   - {fileID: 6677438589259872010}
   - {fileID: 8090623021535070867}
   - {fileID: 1135680909439264370}
-  target: {fileID: 0}
+  target: {fileID: 5824612967443884266, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
   firePos: {fileID: 194978863010852972}
   attackPos: {fileID: 6466913097359914863}
   rb: {fileID: 2091019613326807804}
@@ -292,15 +291,15 @@ MonoBehaviour:
   - state: 4
     weight: 70
     minDistance: 4
-    maxDistance: 15
+    maxDistance: 30
   - state: 5
     weight: 50
     minDistance: 3
-    maxDistance: 8
+    maxDistance: 12
   - state: 7
     weight: 50
-    minDistance: 3
-    maxDistance: 12
+    minDistance: 4
+    maxDistance: 18
 --- !u!114 &3804082551151786888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,7 +532,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -910092549403018386, guid: b829efe23965090468ea07aaa62b3ae4, type: 3}
+  m_Sprite: {fileID: 4723107735738678597, guid: b829efe23965090468ea07aaa62b3ae4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -569,10 +568,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 9.932601e-39
-  m_labelHash: 0.000000084799865
+  m_CategoryHash: 0.009161512
+  m_labelHash: 0.00000040954276
   m_SpriteKey: 1.3971405e-28
-  m_SpriteHash: 492122378
+  m_SpriteHash: 288431053
 --- !u!210 &2793417150702645127
 SortingGroup:
   m_ObjectHideFlags: 0

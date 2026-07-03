@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GoblinWarrior
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: "\uC804\uC0AC \uACE0\uBE14\uB9B0"
-  monsterMaxHp: 25
+  monsterMaxHp: 20
   moveSpeed: 3
   attackDamage: 2
   attackRange: 1.5

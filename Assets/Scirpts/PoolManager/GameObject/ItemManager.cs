@@ -1,5 +1,4 @@
-﻿using NUnit.Framework.Interfaces;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemManager : ScenesSingleton<ItemManager>
 {

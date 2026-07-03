@@ -49,9 +49,9 @@ public class BossContext
         monsterCount = PHASE_TWO_MONSTER_COUNT;
 
         // 공격력
-        // Phase 1 -> 3 데미지
-        // Phase 2 -> 5 데미지
-        CurrentAttackDamage = 0;// += PHASE_TWO_ATTACK_BONUS;
+        // Phase 1 -> 2 데미지
+        // Phase 2 -> 4 데미지
+        CurrentAttackDamage += PHASE_TWO_ATTACK_BONUS;
         
         // 속도
         // Phase 1 -> 2

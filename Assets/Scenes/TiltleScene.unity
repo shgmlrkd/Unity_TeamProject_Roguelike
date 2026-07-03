@@ -1125,6 +1125,26 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: e966a7855fef76a408a83e324595cbbc, type: 3}
   - Key: 14
     Clip: {fileID: 8300000, guid: d5ad74e0078ac784baf1ba950c908445, type: 3}
+  - Key: 15
+    Clip: {fileID: 8300000, guid: 62a91cd976c87ba4c90ef611410b7568, type: 3}
+  - Key: 16
+    Clip: {fileID: 8300000, guid: 08ce5e3c1bebd8744bc7350d3efa20c3, type: 3}
+  - Key: 17
+    Clip: {fileID: 8300000, guid: 5e92af6f45482fb4b9519387754aaaef, type: 3}
+  - Key: 18
+    Clip: {fileID: 8300000, guid: 9a6aa8ea54c546049be4659af733373c, type: 3}
+  - Key: 19
+    Clip: {fileID: 8300000, guid: eaa08f0074c125f4592c0a293a4b79e9, type: 3}
+  - Key: 20
+    Clip: {fileID: 8300000, guid: 81adaa96e33c8214daf47f5108351015, type: 3}
+  - Key: 21
+    Clip: {fileID: 8300000, guid: 0aa465fc8b200f94f96cbcc11f22d4e1, type: 3}
+  - Key: 22
+    Clip: {fileID: 8300000, guid: 4d1b363e88301fe428ce5b18ca08b1c9, type: 3}
+  - Key: 23
+    Clip: {fileID: 8300000, guid: 266d199488933514fb8caccfc2d29bb8, type: 3}
+  - Key: 24
+    Clip: {fileID: 8300000, guid: bc1f2f840ce2b7944aaafd3c21fa3811, type: 3}
   bgmSource: {fileID: 1733890566}
   sfxPoolSize: 30
 --- !u!4 &1733890568
