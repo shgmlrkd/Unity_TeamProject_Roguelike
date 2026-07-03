@@ -41,6 +41,8 @@ public class OptionManager : GlobalSingleton<OptionManager>
         BGMVolume = bgm;
         SFXVolume = sfx;
 
+        SoundManager.Instance.SetBGMVolume(BGMVolume);
+
         SaveOption();
     }
 
@@ -83,9 +85,9 @@ public class OptionManager : GlobalSingleton<OptionManager>
     // 옵션을 PlayerPrefs로 로드
     private void LoadOption()
     {
-        MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
-        BGMVolume = PlayerPrefs.GetFloat("BGMVolume", 1.0f);
-        SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
+        MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
+        BGMVolume = PlayerPrefs.GetFloat("BGMVolume", 0.5f);
+        SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
 
         ShowStat = PlayerPrefs.GetInt("ShowStat", 1) == 1;
         ShowEquip = PlayerPrefs.GetInt("ShowEquipment", 1) == 1;

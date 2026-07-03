@@ -1,40 +1,19 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class CameraRig : MonoBehaviour
 {
-    //[SerializeField] private Transform target;
-    //[SerializeField] private float followSpeed = 5f;
     [SerializeField] private Vector3 offset = new Vector3(0f, 0f, -10f);
 
-    //private void Awake()
-    //{
-    //    if (target == null)
-    //    {
-    //        GameObject player = GameObject.FindGameObjectWithTag("Player");
+    public event Action OnCameraMoveStarted;
+    public event Action OnCameraMoveActive;
+    public event Action OnCameraMoveFinished;
 
-    //        if (player != null)
-    //        {
-    //            target = player.transform;
-    //        }
-    //    }
-    //}
-    //private void LateUpdate()
-    //{
-    //    if (target == null)
-    //    {
-    //        return;
-    //    }
-
-    //    Vector3 targetPosition = target.position + offset;
-    //    transform.position = Vector3.Lerp(
-    //        transform.position,
-    //        targetPosition,
-    //        followSpeed * Time.deltaTime
-    //    );
-    //}
-    public void MoveToRoom(Vector3 targetPos, float duration, System.Action onComplete)
+    public void MoveToRoom(Vector3 targetPos, float duration)
     {
+        OnCameraMoveStarted?.Invoke();
+
         targetPos.z = offset.z;
 
         transform.DOKill();
@@ -42,7 +21,38 @@ public class CameraRig : MonoBehaviour
             .SetEase(Ease.InOutCubic)
             .OnComplete(() =>
             {
-                onComplete?.Invoke();
+                DOVirtual.DelayedCall(0.2f, () =>
+                {
+                    OnCameraMoveFinished?.Invoke();
+                });
             });
+    }
+
+    public void MoveToRoom(Vector3 startPos, Vector3 targetPos, float startDuration, float targetDuration)
+    {
+        OnCameraMoveStarted?.Invoke();
+
+        startPos.z = offset.z;
+        targetPos.z = offset.z;
+
+        Sequence sequence = DOTween.Sequence();
+
+        sequence.Append(transform.DOMove(startPos, startDuration)
+            .SetEase(Ease.InOutCubic));
+        
+        sequence.AppendCallback(() =>
+        {
+            OnCameraMoveActive?.Invoke();
+        });
+
+        sequence.AppendInterval(2.0f);
+
+        sequence.Append(transform.DOMove(targetPos, targetDuration)
+            .SetEase(Ease.InOutCubic));
+
+        sequence.OnComplete(() =>
+        {
+            OnCameraMoveFinished?.Invoke();
+        });
     }
 }

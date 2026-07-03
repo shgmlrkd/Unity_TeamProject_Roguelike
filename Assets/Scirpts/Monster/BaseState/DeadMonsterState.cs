@@ -24,12 +24,30 @@ public class DeadMonsterState : MonsterBase
 
     protected override void OnEnable()
     {
-
         isItemDrop = false;
+
         DeadStart(); // 죽었을때 이동 정지 / 충돌 끄기
+
         controller.OnDeadTrigger();
     }
+    private void OnDisable()
+    {
+        // 풀로 돌아갈때 코루틴 남아있으면 정지
+        if (fadeCoroutine != null)
+        {
+            StopCoroutine(fadeCoroutine);
+            fadeCoroutine = null;
+        }
 
+        // 풀에서 나왔을때 다시 충돌 켜기
+        if (monsterCollider2D != null)
+        {
+            monsterCollider2D.enabled = true;
+        }
+
+        ResetVisualRootRotation();
+
+    }
     private void DeadStart()
     {
         rb.linearVelocity = Vector2.zero; // 죽었을 때 움직임 멈추기
@@ -66,7 +84,7 @@ public class DeadMonsterState : MonsterBase
         {
             alpha = Mathf.Lerp(alpha, 0.0f, fabeSpeed * Time.deltaTime); // 알파 값을 0에 가깝게 줄이기.
 
-            if (alpha < 0.4f && !isItemDrop)
+            if (!InGameManager.Instance.IsBossSpawned && alpha < 0.4f && !isItemDrop)
             {
                 isItemDrop = true;
                 ItemManager.Instance.DropItem(monsterStateManager.MonsterData.DropItemCount,
@@ -87,6 +105,7 @@ public class DeadMonsterState : MonsterBase
 
             }
 
+            rb.linearVelocity = Vector3.zero;
             yield return null;
         }
          
@@ -99,27 +118,11 @@ public class DeadMonsterState : MonsterBase
         // 죽은 상태의 기울어진 회전값이 남는 것을 방지
         ResetVisualRootRotation();
 
+        enabled = false;
+
         PoolManager.Instance.ReturnPool(monsterStateManager);
     }
 
-    private void OnDisable()
-    {
-        // 풀로 돌아갈때 코루틴 남아있으면 정지
-        if(fadeCoroutine != null)
-        {
-            StopCoroutine(fadeCoroutine);
-            fadeCoroutine = null;
-        }
-
-        // 풀에서 나왔을때 다시 충돌 켜기
-        if(monsterCollider2D != null)
-        {
-            monsterCollider2D.enabled = true;
-        }
-
-        ResetVisualRootRotation();
-
-    }
     private void ResetVisualRootRotation()
     {
         if (monsterStateManager.VisualRoot == null)

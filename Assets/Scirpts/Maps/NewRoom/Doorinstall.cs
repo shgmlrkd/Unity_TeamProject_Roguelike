@@ -3,39 +3,44 @@ using UnityEngine.InputSystem;
 using System.Collections;
 public class Doorinstall : MonoBehaviour
 {
+    private static bool isGlobalProcessing = false;
+    private static float lastInteractionTime = -100f;
     public Vector2Int ParentRoomGridPos { get; set; }
     public Vector2Int myRoomPos; // 이 문이 있는 방의 좌표
     public Vector2Int destinationRoomPos; // 이 문이 연결된 방의 좌표
     [Header("설정")]
     [SerializeField] private Vector2Int wallDirection; // 문이 어느 방향으로 방을 생성할지
     [SerializeField] private GameObject doorPrefab;    // 소환할 문 프리팹
-    public bool isBossEntranceDoor;
+    [SerializeField] private float globalCooldown = 1.5f;
     [Header("연출 설정")]
     [SerializeField] private float openDelay = 0.5f; // 문이 열리는 연출 시간
+    [Header("UI 설정")]
+    [SerializeField] private GameObject interactionUI;
 
     private GameObject instantiatedDoor;
+    public bool isBossEntranceDoor;
     private bool isPlayerNearby = false;
-    private bool isProcessing = false; // 중복 실행 방지
     private Transform playerTransform;
 
     // 외부에서 방향을 가져가기 위한 프로퍼티
     public Vector2Int WallDirection => wallDirection;
-
+    private void Awake()
+    {
+        if (interactionUI != null) interactionUI.SetActive(false);
+    }
     private void Update()
     {
+        if (isGlobalProcessing || (Time.time - lastInteractionTime < globalCooldown)) return;
+
         if (isPlayerNearby && Keyboard.current.eKey.wasPressedThisFrame)
         {
             if (!MonsterManager.Instance.IsAllMonsterDead) return;
 
-            if (instantiatedDoor == null)
-            {
-                SpawnDoor();
-            }
-            else
-            {
-                OpenDoor();
-                StartCoroutine(OpenAndTeleportRoutine());
-            }
+            isGlobalProcessing = true;
+            lastInteractionTime = Time.time;
+
+            OpenDoor();
+            StartCoroutine(OpenAndTeleportRoutine());
         }
     }
     private void SpawnDoor()
@@ -54,6 +59,7 @@ public class Doorinstall : MonoBehaviour
     private void OpenDoor()
     {
         SetDoorState(true);
+        SoundManager.Instance.PlaySFX(SoundKey.DoorOpen);
     }
     //닫힌 문 상태
     public void CloseDoor()
@@ -62,43 +68,70 @@ public class Doorinstall : MonoBehaviour
     }
     private void SetDoorState(bool isOpen)
     {
-        if (instantiatedDoor == null) return;
+        Transform curDoorTrans = null;
 
-        Transform openTrans = instantiatedDoor.transform.Find("OpenDoor");
-        Transform closedTrans = instantiatedDoor.transform.Find("CloseDoor");
+        if (RoomRuleChecker.Instance.CanGenerateMoreRooms)
+        {
+            curDoorTrans = transform.Find("Door");
+        }
+        else
+        {
+            curDoorTrans = transform.Find("BossDoor");
+        }
+
+        if (curDoorTrans == null) return;
+
+        Transform openTrans = curDoorTrans.Find("OpenDoor");
+        Transform closedTrans = curDoorTrans.Find("CloseDoor");
 
         if (openTrans != null) openTrans.gameObject.SetActive(isOpen);
         if (closedTrans != null) closedTrans.gameObject.SetActive(!isOpen);
     }
     protected virtual void ExecuteDoorAction()
     {
-        RoomManager1.Instance.BuildRoomFromDoor(this, playerTransform);
+        RoomManager.Instance.BuildRoomFromDoor(this, playerTransform);
     }
     private IEnumerator OpenAndTeleportRoutine()
     {
-        isProcessing = true; // 처리 중 상태로 변경
-
         // 설정한 시간만큼 대기 (딜레이)
         yield return new WaitForSeconds(openDelay);
-
         ExecuteDoorAction();
 
-        isProcessing = false; // 다시 처리 가능 상태로 변경
+        isGlobalProcessing = false;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            isPlayerNearby = true;
-            playerTransform = collision.transform;
+            bool allDead = MonsterManager.Instance.IsAllMonsterDead;
+
+            if (allDead)
+            {
+                isPlayerNearby = true;
+                playerTransform = collision.transform;
+                if (interactionUI != null && !interactionUI.activeSelf)
+                {
+                    interactionUI.SetActive(true);
+                }
+            }
+            else
+            {
+                isPlayerNearby = false;
+                if (interactionUI != null && interactionUI.activeSelf)
+                {
+                    interactionUI.SetActive(false);
+                }
+            }
         }
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             isPlayerNearby = false;
+            if (interactionUI != null) interactionUI.SetActive(false);
+
+            playerTransform = null;
         }
     }
     public void SetDestination(Vector2Int dest)

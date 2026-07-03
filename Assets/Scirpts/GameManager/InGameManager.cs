@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class InGameManager : ScenesSingleton<InGameManager>
@@ -18,43 +19,56 @@ public class InGameManager : ScenesSingleton<InGameManager>
     [SerializeField]
     private PlayerHP playerhp;
 
+    private BossHp bossHp;
+
     [SerializeField]
     private InGameTimer timerText;
 
-    private int collectedGold = 0;      // 상점 또는 보물방에 상자를 열 때 쓸 골드
+    private int collectedGold = 0;          // 상점 또는 보물방에 상자를 열 때 쓸 골드
 
-    private string gameOverTime = "";   // 게임 오버 시간
-    private int monsterKillCount = 0;   // 몬스터 죽인 수
-    private bool isKilledBoss = false;  // 보스 처치 했는가
+    private string gameOverTime = "";       // 게임 오버 시간
+    private int monsterKillCount = 0;       // 몬스터 죽인 수
+    private bool isKilledBoss = false;      // 보스 처치 했는가
+    private bool isBossSpawned = false;     // 보스 스폰 됬는가
     private bool isGameOver = false;
 
     public string GameOverTime => gameOverTime;
 
-    public event Action<int> OnChangedGold;
     public event Action OnGameOver;
+    public event Action<int> OnChangedGold; 
 
+    public BossHp BossHp => bossHp;
+    public bool IsBossSpawned => isBossSpawned;
     public bool IsGameOver => isGameOver;
 
     protected override void Awake()
     {
         base.Awake();
 
-        playerStat.RollStats();         // 플레이어 랜덤 스탯 뽑기
+        playerStat.RollStats();             // 플레이어 랜덤 스탯 뽑기
     }
 
     private void OnEnable()
     {
         isGameOver = false;
+
         playerhp.OnPlayerDead += RegisterGameOverTime;
         playerhp.OnPlayerDead += ShowGameOverUI;
     }
 
     private void OnDisable()
     {
-        // 이건 나중에 수정
-        // 이유 : 구독 해제 타이밍 안맞음
-        playerhp.OnPlayerDead -= RegisterGameOverTime;
-        playerhp.OnPlayerDead -= ShowGameOverUI;
+        if (bossHp != null)
+        {
+            bossHp.OnBossDead -= RegisterGameOverTime;
+            bossHp.OnBossDead -= ShowGameOverUI;
+        }
+
+        if (playerhp != null)
+        {
+            playerhp.OnPlayerDead -= RegisterGameOverTime;
+            playerhp.OnPlayerDead -= ShowGameOverUI;
+        }
     }
 
     private void ShowGameOverUI()
@@ -63,13 +77,38 @@ public class InGameManager : ScenesSingleton<InGameManager>
         OnGameOver?.Invoke();
     }
 
+    private void ShowGameClearUI()
+    {
+        StartCoroutine(ShowGameClearUICoroutine());
+    }
+
+    private IEnumerator ShowGameClearUICoroutine()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        isGameOver = true;
+        OnGameOver?.Invoke();
+    }
+
+    public void SetBossHp(BossHp bossHp)
+    {
+        this.bossHp = bossHp;
+        bossHp.OnBossDead += RegisterGameOverTime;
+        bossHp.OnBossDead += ShowGameClearUI;
+    }
+
+    public void RegisterBossSpawned()
+    {
+        isBossSpawned = true;
+    }
+
     // 몬스터 한 마리 죽일 때마다 호출할 함수
     public void RegisterMonsterKill()
     {
         monsterKillCount++;
     }
 
-    // 플레이어가 죽는 시간을 저장할 함수
+    // 게임이 끝나면 플레이 타임을 등록함
     public void RegisterGameOverTime()
     {
         gameOverTime = $"플레이 타임 [ {timerText.TimerText} ]";
@@ -92,9 +131,8 @@ public class InGameManager : ScenesSingleton<InGameManager>
     public void CollectedGold(int gold)
     {
         collectedGold += gold;
-        // 이벤트 써서 골드 텍스트 갱신
+
         OnChangedGold?.Invoke(collectedGold);
-        print($"{collectedGold}");
     }
 
     // 플레이어가 골드를 사용할 때 호출

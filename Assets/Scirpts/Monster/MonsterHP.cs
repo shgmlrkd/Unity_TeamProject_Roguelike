@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using System;
+using UnityEngine;
 
 public class MonsterHP : MonoBehaviour, IDamageable
 {
@@ -7,6 +7,8 @@ public class MonsterHP : MonoBehaviour, IDamageable
     private MonsterStateManager monsterStateManager;
     
     protected int currentHp;
+
+    public event Action<GameObject> OnMonsterDied;
 
     public bool IsDead
     {
@@ -21,19 +23,6 @@ public class MonsterHP : MonoBehaviour, IDamageable
     private void OnEnable()
     {
         currentHp = monsterData.MonsterMaxHp;
-    }
-
-    private void OnDisable()
-    {
-        // 죽기전에 해야할걸 하는곳
-    }
-
-    private void Update()
-    {
-        if (Keyboard.current.qKey.wasPressedThisFrame)
-        {
-            Die();
-        }
     }
 
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지
@@ -52,12 +41,16 @@ public class MonsterHP : MonoBehaviour, IDamageable
             return;
         }
 
+        SoundManager.Instance.PlaySFX(SoundKey.MonsterHit);
         monsterStateManager.SetState(MonsterStateEnum.Hit);
     }
 
     public void Die()
     {
+        SoundManager.Instance.PlaySFX(SoundKey.MonsterDead);
         InGameManager.Instance.RegisterMonsterKill();
+
+        OnMonsterDied?.Invoke(gameObject);
         monsterStateManager.SetState(MonsterStateEnum.Dead);
     }
 

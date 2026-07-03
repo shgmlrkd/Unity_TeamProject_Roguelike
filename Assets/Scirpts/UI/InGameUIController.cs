@@ -27,6 +27,8 @@ public class InGameUIController : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.Instance.PlayBGM(SoundKey.InGameBGM);
+
         // 옵션 설정값을 기반으로 UI 활성/비활성 상태 갱신
         ApplyUIVisibility(OptionManager.Instance.ShowStat, OptionManager.Instance.ShowEquip);
 
@@ -48,10 +50,17 @@ public class InGameUIController : MonoBehaviour
 
     private void OnDisable()
     {
-        // 옵션 설정 변했을 때 이벤트 해제
-        OptionManager.Instance.OnUIOptionChanged -= ApplyUIVisibility;
-        // 게임 결과 출력 이벤트 해제
-        InGameManager.Instance.OnGameOver -= ShowResult;
+        if (OptionManager.Instance != null)
+        {
+            // 옵션 설정 변했을 때 이벤트 해제
+            OptionManager.Instance.OnUIOptionChanged -= ApplyUIVisibility;
+        }
+
+        if (InGameManager.Instance != null)
+        {
+            // 게임 결과 출력 이벤트 해제
+            InGameManager.Instance.OnGameOver -= ShowResult;
+        }
     }
 
     private void Update()
