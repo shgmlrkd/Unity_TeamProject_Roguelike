@@ -15,11 +15,11 @@ MonoBehaviour:
   itemType: 0
   itemName: "\uC78A\uD600\uC9C4\uAC80"
   sprite: {fileID: 21300000, guid: 3df5a0f5600c04257b7f91ef2a75dc6c, type: 3}
-  equipmentType: 0
-  attack: 0
-  attackRange: 0
-  attackSpeedRate: 0
-  moveSpeedRate: 0
+  equipmentType: 1
+  attack: 7
+  attackRange: 1
+  attackSpeedRate: -0.5
+  moveSpeedRate: -0.5
   shieldHp: 0
-  attackBoxSize: {x: 1, y: 1}
+  attackBoxSize: {x: 3, y: 3}
   weaponItemPrefab: {fileID: 0}
