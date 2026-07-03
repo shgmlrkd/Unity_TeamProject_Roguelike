@@ -13,5 +13,15 @@ public class BossDeadState : BossBase
         bossContext.OnFadeRequested?.Invoke(0.0f, ALPHA_DURATION);
     }
 
+    private void OnPlayDeadSFX()
+    {
+        SoundManager.Instance.PlaySFX(SoundKey.BossDead);
+    }
+
+    private void OnPlayDeadIntroSFX()
+    { 
+        SoundManager.Instance.PlaySFX(SoundKey.BossDeadIntro); 
+    }
+
     public override void Tick() {}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -9,9 +8,6 @@ using UnityEngine.U2D.Animation;
 public class BossVisualController : MonoBehaviour
 {
     [SerializeField]
-    private Transform target;
-
-    [SerializeField]
     private BossStateManager stateManager;
 
     [SerializeField]
@@ -19,6 +15,7 @@ public class BossVisualController : MonoBehaviour
 
     private const int SORTING_SCALE = 100;
     private const float HIT_FLASH_DURATION = 0.1f;
+    private const float SPAWN_FADE_DURATION = 1.5f;
 
     private BossContext context;
 
@@ -32,7 +29,6 @@ public class BossVisualController : MonoBehaviour
     private Color originColor;
 
     public Action<SpriteLibraryAsset> OnSpriteLibraryChanged;
-
     // 보스 플립 못하게 막을 행동들
     private static readonly BossStateEnum[] noFlipStates =
     {
@@ -53,7 +49,7 @@ public class BossVisualController : MonoBehaviour
         bossScale = transform.localScale;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         if (context == null) return;
 
@@ -81,7 +77,7 @@ public class BossVisualController : MonoBehaviour
     private void FlipTo()
     {
         Vector3 scale = bossScale;
-        Vector3 dir = transform.position - target.position;
+        Vector3 dir = transform.position - context.target.position;
         dir.Normalize();
 
         scale.x = dir.x < 0 ? 1 : -1;
@@ -129,6 +125,18 @@ public class BossVisualController : MonoBehaviour
         spriteRenderer.color = new Color(color.r, color.g, color.b, alpha);
     }
 
+    public void FadeIn()
+    {
+        if (fadeRoutine != null)
+        {
+            StopCoroutine(fadeRoutine);
+        }
+
+        SoundManager.Instance.PlaySFX(SoundKey.BossDashIntro);
+        SetAlpha(0.0f);
+        fadeRoutine = StartCoroutine(FadeOutCoroutine(1.0f, SPAWN_FADE_DURATION));
+    }
+
     private void ChangeSpriteLibrary(SpriteLibraryAsset asset)
     {
         spriteLibrary.spriteLibraryAsset = asset;
@@ -136,7 +144,7 @@ public class BossVisualController : MonoBehaviour
 
     private IEnumerator HitFlashCoroutine()
     {
-        Color original = spriteRenderer.color;
+        Color original = Color.white;
 
         spriteRenderer.color = Color.red;
 
@@ -155,6 +163,7 @@ public class BossVisualController : MonoBehaviour
     public void BindContext(BossContext context)
     {
         this.context = context;
+        this.context.target = context.target;
         this.context.OnFadeRequested += FadeRequested;
         this.context.OnSpriteLibraryChanged += ChangeSpriteLibrary;
     }

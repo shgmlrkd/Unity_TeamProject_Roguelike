@@ -7,6 +7,7 @@ public class CameraRig : MonoBehaviour
     [SerializeField] private Vector3 offset = new Vector3(0f, 0f, -10f);
 
     public event Action OnCameraMoveStarted;
+    public event Action OnCameraMoveActive;
     public event Action OnCameraMoveFinished;
 
     public void MoveToRoom(Vector3 targetPos, float duration)
@@ -38,8 +39,13 @@ public class CameraRig : MonoBehaviour
 
         sequence.Append(transform.DOMove(startPos, startDuration)
             .SetEase(Ease.InOutCubic));
+        
+        sequence.AppendCallback(() =>
+        {
+            OnCameraMoveActive?.Invoke();
+        });
 
-        sequence.AppendInterval(0.2f);
+        sequence.AppendInterval(2.0f);
 
         sequence.Append(transform.DOMove(targetPos, targetDuration)
             .SetEase(Ease.InOutCubic));

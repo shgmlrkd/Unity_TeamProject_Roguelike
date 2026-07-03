@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class MonsterHP : MonoBehaviour, IDamageable
 {
@@ -24,19 +23,6 @@ public class MonsterHP : MonoBehaviour, IDamageable
     private void OnEnable()
     {
         currentHp = monsterData.MonsterMaxHp;
-    }
-
-    private void OnDisable()
-    {
-        // 죽기전에 해야할걸 하는곳
-    }
-
-    private void Update()
-    {
-        if (Keyboard.current.qKey.wasPressedThisFrame)
-        {
-            Die();
-        }
     }
 
     public void TakeDamage(DamageInfoSet damageInfoset) // 받는 공격 데미지

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using static RoomManager;
 [System.Serializable]
 public class RoomInfo
 {

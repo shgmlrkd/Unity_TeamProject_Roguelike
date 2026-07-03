@@ -2,11 +2,19 @@
 
 public class BossChaseState : BossBase
 {
-    private const float CHASE_TIME = 3.5f;
+    private const float CHASE_TIME = 5.0f;
     private const float ATTACKABLE_TIME = 1.0f;
+
+    private bool isPhaseChanged = false;
 
     public override void Tick()
     {
+        if (!isPhaseChanged && bossContext.IsPhaseTwo)
+        {
+            isPhaseChanged = true;
+            ChangeState(BossStateEnum.AttackSelect);
+        }
+
         // 추격 시간 내에 AttackSelect 상태로 못가면 Idle 상태
         if (IsChaseTimeOver())
         {
@@ -43,6 +51,11 @@ public class BossChaseState : BossBase
         bool attackCoolTime = stateTime >= ATTACKABLE_TIME;
 
         return attackCoolTime && canAttack;
+    }
+
+    private void OnPlayChaseSound()
+    {
+        SoundManager.Instance.PlaySFX(SoundKey.BossRun);
     }
 
     private void OnDrawGizmos()
