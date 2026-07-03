@@ -99,14 +99,29 @@ public class Doorinstall : MonoBehaviour
 
         isGlobalProcessing = false;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            if (!MonsterManager.Instance.IsAllMonsterDead) return;
-            isPlayerNearby = true;
-            playerTransform = collision.transform;
-            if (interactionUI != null) interactionUI.SetActive(true);
+            bool allDead = MonsterManager.Instance.IsAllMonsterDead;
+
+            if (allDead)
+            {
+                isPlayerNearby = true;
+                playerTransform = collision.transform;
+                if (interactionUI != null && !interactionUI.activeSelf)
+                {
+                    interactionUI.SetActive(true);
+                }
+            }
+            else
+            {
+                isPlayerNearby = false;
+                if (interactionUI != null && interactionUI.activeSelf)
+                {
+                    interactionUI.SetActive(false);
+                }
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
