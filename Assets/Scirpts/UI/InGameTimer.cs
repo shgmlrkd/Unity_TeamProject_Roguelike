@@ -19,8 +19,11 @@ public class InGameTimer : MonoBehaviour
     }
 
     private void OnDisable()
-    {   
-        InGameManager.Instance.OnGameOver -= SetTimerStop;
+    {
+        if (InGameManager.Instance != null)
+        {
+            InGameManager.Instance.OnGameOver -= SetTimerStop;
+        }
     }
 
     private void Update()

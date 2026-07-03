@@ -15,9 +15,36 @@ public class GameOverUI : MonoBehaviour
     [SerializeField]
     private ScreenFader screenFader;
 
+    [Header("게임 오버 BG")]
+    [SerializeField]
+    private Transform gameOverBG;
+
     [Header("인게임 캔버스 그룹")]
     [SerializeField]
     private CanvasGroup InGameCanvasGroup;
+
+    private void OnEnable()
+    {
+        Show();
+    }
+
+    public void Show()
+    {
+        // 애니메이션 재생 중 입력 비활성화
+        InGameCanvasGroup.blocksRaycasts = false;
+
+        Sequence sequence = DOTween.Sequence();
+
+        // 옵션 패널 열기 애니메이션 재생
+        sequence.Append(UIAnimationUtility.ShowScale(gameOverBG,
+            UIAnimationSettings.NormalDuration)).SetUpdate(true);
+
+        // 애니메이션이 일정 비율 진행되면 입력 활성화
+        sequence.InsertCallback(UIAnimationSettings.CallbackRatio, () =>
+        {
+            InGameCanvasGroup.blocksRaycasts = true;
+        });
+    }
 
     public void Result()
     {

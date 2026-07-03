@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BossFireballBurstState : BossBase
 {
-    private const float PHASE_CHANGE_DELAY = 0.25f;
+    private const float PHASE_CHANGE_DELAY = 0.3f;
 
     private WaitForSeconds phaseChangeDelayWait = new(PHASE_CHANGE_DELAY);
 
@@ -12,6 +12,7 @@ public class BossFireballBurstState : BossBase
 
     private void OnStartFireballBurst()
     {
+        print("투사체 첫번째 발사!");
         float angleOffset = FULL_CIRCLE_ANGLE / bossContext.FireballCount * 0.5f;
 
         for (int i = 0; i < bossContext.FireballCount; i++)
@@ -34,6 +35,9 @@ public class BossFireballBurstState : BossBase
 
         useOffsetThisTime = !useOffsetThisTime;
 
+        SoundManager.Instance.PlaySFX(SoundKey.BossAxAttack);
+        SoundManager.Instance.PlaySFX(SoundKey.BossFireBall);
+
         StartCoroutine(FireballBurstEndCoroutine());
     }
 
@@ -43,11 +47,13 @@ public class BossFireballBurstState : BossBase
 
         if (!hasTriggeredPhaseTwo && bossContext.IsPhaseTwo)
         {
+            print("투사체 한번 더 함 대기 상태로 돌아가자");
             hasTriggeredPhaseTwo = true;
             bossContext.animController.OnBossPhaseTwo(true);
             yield break;
         }
 
+        print("투사체 끝 대기 상태로 돌아가자");
         ChangeState(BossStateEnum.Idle);
     }
 

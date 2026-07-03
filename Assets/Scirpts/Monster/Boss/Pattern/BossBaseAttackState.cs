@@ -72,6 +72,11 @@ public class BossBaseAttackState : BossBase
             player.TakeDamage(damage);
         }
 
+        SoundManager.Instance.PlaySFX(SoundKey.BossAxAttack);
+    }
+
+    private void OnAttackEnd()
+    {
         isAttackEnd = true;
     }
 

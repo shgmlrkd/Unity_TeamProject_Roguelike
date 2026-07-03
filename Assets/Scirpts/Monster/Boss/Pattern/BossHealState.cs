@@ -17,6 +17,8 @@ public class BossHealState : BossBase
 
     private IEnumerator HealCoroutine()
     {
+        SoundManager.Instance.PlaySFX(SoundKey.BossPhaseChange);
+
         // 페이드 아웃
         bossContext.OnFadeRequested?.Invoke(0.0f, FADE_DURATION);
         yield return fadeWait;
@@ -31,9 +33,6 @@ public class BossHealState : BossBase
         // 페이드 인
         bossContext.OnFadeRequested?.Invoke(1.0f, FADE_DURATION);
         yield return fadeWait;
-
-        // 무적 끝 (변신 완료)
-        bossContext.OnInvincibleChanged?.Invoke(false);
 
         ChangeState(BossStateEnum.Idle);
     }

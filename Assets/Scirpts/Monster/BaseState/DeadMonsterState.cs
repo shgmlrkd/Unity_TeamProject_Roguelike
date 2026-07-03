@@ -84,7 +84,7 @@ public class DeadMonsterState : MonsterBase
         {
             alpha = Mathf.Lerp(alpha, 0.0f, fabeSpeed * Time.deltaTime); // 알파 값을 0에 가깝게 줄이기.
 
-            if (alpha < 0.4f && !isItemDrop)
+            if (!InGameManager.Instance.IsBossSpawned && alpha < 0.4f && !isItemDrop)
             {
                 isItemDrop = true;
                 ItemManager.Instance.DropItem(monsterStateManager.MonsterData.DropItemCount,

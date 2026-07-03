@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class StartStatRoller : MonoBehaviour
 {//시작 버튼에 연결 필요
     //랜덤 범위 지정
