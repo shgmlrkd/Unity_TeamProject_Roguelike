@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHP : MonoBehaviour, IDamageable
@@ -20,6 +21,18 @@ public class PlayerHP : MonoBehaviour, IDamageable
     private SpriteRenderer[] spriteRenderers;
     private Color[] originalSpriteColors;
     private Coroutine fadeOutCoroutine;
+
+    [Header("Hit Flash")]
+    [SerializeField] private Transform hitFlashRoot;
+    [SerializeField] private SpriteRenderer[] hitFlashRenderers;
+    //피격 이펙트 제외설정
+    [SerializeField] private SpriteRenderer[] hitFlashExcludeRenderers;
+    [SerializeField] private Color hitFlashColor = Color.red;
+    [SerializeField] private int hitFlashCount = 3;
+    [SerializeField] private float hitFlashInterval = 0.06f;
+
+    private Color[] hitFlashOriginalColors;
+    private Coroutine hitFlashCoroutine;
 
     private int currentHp;
     // 추가 체력 저장할 변수
@@ -79,6 +92,9 @@ public class PlayerHP : MonoBehaviour, IDamageable
         {
             originalSpriteColors[i] = spriteRenderers[i].color;
         }
+
+        //피격 이펙트
+        CacheHitFlashRenderers();
     }
 
     private void Start()
@@ -203,12 +219,25 @@ public class PlayerHP : MonoBehaviour, IDamageable
             animator.SetTrigger("Hit");
         }
 
+        StartHitFlash();
+        SoundManager.Instance.PlaySFX(SoundKey.PlayerHit);
         StartInvincible();
     }
 
     private void Die()
     {
         isDead = true;
+
+        SoundManager.Instance.PlaySFX(SoundKey.PlayerDead);
+
+        // 피격시 캐릭터가 사망했다면 피격 이펙트 출력 안함
+        if (hitFlashCoroutine != null)
+        {
+            StopCoroutine(hitFlashCoroutine);
+            hitFlashCoroutine = null;
+        }
+
+        RestoreHitFlashColor();
 
         if (attackController != null)
         {
@@ -227,7 +256,132 @@ public class PlayerHP : MonoBehaviour, IDamageable
             StartFadeOut();
         }
     }
+    //피격시 깜빡임 추가
+    private void StartHitFlash()
+    {
+        if (isDead)
+        {
+            return;
+        }
 
+        if (hitFlashCoroutine != null)
+        {
+            StopCoroutine(hitFlashCoroutine);
+        }
+
+        hitFlashCoroutine = StartCoroutine(HitFlashCo());
+    }
+
+    private IEnumerator HitFlashCo()
+    {
+        for (int i = 0; i < hitFlashCount; i++)
+        {
+            SetHitFlashColor(hitFlashColor);
+            yield return new WaitForSeconds(hitFlashInterval);
+
+            RestoreHitFlashColor();
+            yield return new WaitForSeconds(hitFlashInterval);
+        }
+
+        hitFlashCoroutine = null;
+    }
+
+    private void SetHitFlashColor(Color color)
+    {
+        if (hitFlashRenderers == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < hitFlashRenderers.Length; i++)
+        {
+            if (hitFlashRenderers[i] != null)
+            {
+                hitFlashRenderers[i].color = color;
+            }
+        }
+    }
+
+    private void RestoreHitFlashColor()
+    {
+        if (hitFlashRenderers == null || hitFlashOriginalColors == null)
+        {
+            return;
+        }
+        //색입힘
+        for (int i = 0; i < hitFlashRenderers.Length; i++)
+        {
+            if (hitFlashRenderers[i] != null && i < hitFlashOriginalColors.Length)
+            {
+                hitFlashRenderers[i].color = hitFlashOriginalColors[i];
+            }
+        }
+    }
+    // 다수의 렌더러를 통제하기 위한 모음
+    private void CacheHitFlashRenderers()
+    {
+        if (hitFlashRoot == null && animator != null)
+        {
+            hitFlashRoot = animator.transform;
+        }
+
+        if ((hitFlashRenderers == null || hitFlashRenderers.Length == 0) && hitFlashRoot != null)
+        {
+            SpriteRenderer[] foundRenderers = hitFlashRoot.GetComponentsInChildren<SpriteRenderer>(true);
+            //렌더러 필터링
+            List<SpriteRenderer> filteredRenderers = new List<SpriteRenderer>();
+
+            for (int i = 0; i < foundRenderers.Length; i++)
+            {
+                if (foundRenderers[i] == null)
+                {
+                    continue;
+                }
+
+                if (IsExcludedHitFlashRenderer(foundRenderers[i]))
+                {
+                    continue;
+                }
+
+                filteredRenderers.Add(foundRenderers[i]);
+            }
+
+            hitFlashRenderers = filteredRenderers.ToArray();
+        }
+
+        if (hitFlashRenderers == null)
+        {
+            hitFlashRenderers = new SpriteRenderer[0];
+        }
+
+        hitFlashOriginalColors = new Color[hitFlashRenderers.Length];
+
+        for (int i = 0; i < hitFlashRenderers.Length; i++)
+        {
+            if (hitFlashRenderers[i] != null)
+            {
+                hitFlashOriginalColors[i] = hitFlashRenderers[i].color;
+            }
+        }
+    }
+    //피격효과 제외 설정
+    private bool IsExcludedHitFlashRenderer(SpriteRenderer targetRenderer)
+    {
+        if (hitFlashExcludeRenderers == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < hitFlashExcludeRenderers.Length; i++)
+        {
+            if (hitFlashExcludeRenderers[i] == targetRenderer)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     //피격시 무적 설정
     private void StartInvincible()
     {

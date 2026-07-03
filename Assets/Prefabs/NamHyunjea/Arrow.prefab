@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6356681055899294525}
   - component: {fileID: 8413983494034979933}
   - component: {fileID: 6767841997297304796}
-  - component: {fileID: 7144420989043901836}
+  - component: {fileID: 4825733637951970044}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2522005242645762804}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.202, y: 1.091, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -117,7 +117,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
@@ -155,7 +155,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.03499303, y: 0.0020995736}
+  m_Offset: {x: -0.19729862, y: 0.0020995736}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -165,9 +165,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.46363503, y: 0.07782042}
+  m_Size: {x: 0.08864933, y: 0.07782042}
   m_EdgeRadius: 0
---- !u!114 &7144420989043901836
+--- !u!114 &4825733637951970044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,7 +182,4 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 256
   lifeTime: 3

@@ -44,7 +44,7 @@ public class OptionUIController : MonoBehaviour
         SubscribeToggleEvent();
 
         // 로드된 볼륨 값 즉시 적용
-        SoundManager.Instance.ApplyVolume();
+        //SoundManager.Instance.ApplyVolume();
 
         // 처음 시작 시 비활성화
         gameObject.SetActive(false);
@@ -115,9 +115,6 @@ public class OptionUIController : MonoBehaviour
 
         // 현재 값 저장
         SaveVolumeOption();
-
-        // 즉시 적용
-        SoundManager.Instance.ApplyVolume();
     }
 
     private void UpdateVolumeOptionValue(VolumeType type, float value)

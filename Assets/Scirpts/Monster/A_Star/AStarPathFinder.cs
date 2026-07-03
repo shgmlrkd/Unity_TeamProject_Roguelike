@@ -59,11 +59,16 @@ public class AStarPathFinder : MonoBehaviour
     }
     public List<AStarNode> FindPath(Vector3 startPos, Vector3 targetPos)
     {
+        // Grid 연결 확인
+        if (grid == null)
+        {
+            return null;
+        }
+
         AStarNode startNode = grid.GetNodeFromWorld(startPos);     // 시작 위치 가져오기
         AStarNode targetNode = grid.GetNodeFromWorld(targetPos);   // 목표 위치 노드 가져오기
-        
 
-        if(startNode == null || targetNode == null)
+        if (startNode == null || targetNode == null)
         {
             return null;
         }

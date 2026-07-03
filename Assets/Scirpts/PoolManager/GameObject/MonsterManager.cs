@@ -1,12 +1,26 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
+public class BulletPool
+{
+    [SerializeField]
+    private MonsterBullet monsterBullet;
+
+    [SerializeField]
+    private int bulletPoolSize;
+
+    public MonsterBullet MonsterBullet => monsterBullet;
+    public int BulletPoolSize => bulletPoolSize;
+}
+
 public class MonsterManager : ScenesSingleton<MonsterManager>
 {
-    [Header("프리팹")]
     [SerializeField] private MonsterStateManager[] monsterPrefabs;
 
-    private int poolSize = 10;
-
+    // 투사체
+    [SerializeField] private BulletPool[] bullets;
+  
+    private int poolSize = 15;
     private bool isAllMonsterDead = false;
     public bool IsAllMonsterDead => isAllMonsterDead;
 
@@ -14,32 +28,47 @@ public class MonsterManager : ScenesSingleton<MonsterManager>
     {
         base.Awake();
 
+        PoolManager.Instance.SetCreatePool();
+
+        //// 몬스터
         for (int i = 0; i < monsterPrefabs.Length; i++)
         {
-            PoolManager.Instance.PreloadPool(monsterPrefabs[i], poolSize); // 몬스터 프리펩들을 미리 풀에 만들기
+            PoolManager.Instance.PreloadPool(monsterPrefabs[i], poolSize); 
+        }
+
+        // 투사체
+        for (int i = 0; i < bullets.Length; i++)
+        {
+            PoolManager.Instance.PreloadPool(bullets[i].MonsterBullet, bullets[i].BulletPoolSize);
         }
     }
 
     public MonsterStateManager SpawnMonster()
     {
-        if (monsterPrefabs == null || monsterPrefabs.Length == 0)
-        {
-            return null;
-        }
+        int randomIndex = Random.Range(0,4);
 
-        // 어떤 몬스터를 소환할지 랜덤으로 고르기
-        int randomIndex = Random.Range(0, monsterPrefabs.Length);
-
-        // 선택된 프리팹을 기준으로 풀에서 몬스터를 꺼냄
-        MonsterStateManager monster = PoolManager.Instance.GetPool(monsterPrefabs[randomIndex]);
+        return GetRandomMonster(randomIndex);
 
         // 실제 위치 지정은 SpawnerRoom에서 하니까 반환
-        return monster;
-
     }
 
-    public void CheckAllMonstersDead(bool isAllMonsterDead)
+    private MonsterStateManager GetRandomMonster(int index)
+    {
+        return PoolManager.Instance.GetPool(monsterPrefabs[index], monsterPrefabs[index].name);
+    }
+
+    public void SetAllMonstersDead(bool isAllMonsterDead)
     {
         this.isAllMonsterDead = isAllMonsterDead;
+    }
+
+    public bool CheckAllMonsterDead()
+    {
+        return isAllMonsterDead;
+    }
+
+    public MonsterBullet GetBossBullet()
+    {
+        return PoolManager.Instance.GetPool(bullets[2].MonsterBullet, bullets[2].MonsterBullet.name);
     }
 }

@@ -7,7 +7,6 @@ public class MonsterBase : MonoBehaviour
     protected MonsterStateManager monsterStateManager;
     protected Rigidbody2D rb;
     protected Collider2D monsterCollider2D;
-    protected MonsterHP monsterHP;
     protected AnimationController controller;
     protected SpriteRenderer[] spriteRenderers;
 
@@ -33,10 +32,6 @@ public class MonsterBase : MonoBehaviour
         if (monsterCollider2D == null) 
         {
             monsterCollider2D = GetComponent<Collider2D>();
-        }
-        if (monsterHP == null) 
-        {
-            monsterHP = GetComponent<MonsterHP>();
         }
         if (controller == null)
         {
