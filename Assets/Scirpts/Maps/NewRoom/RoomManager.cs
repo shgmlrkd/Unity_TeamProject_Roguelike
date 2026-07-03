@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class RoomManager : ScenesSingleton<RoomManager>
 {
@@ -17,6 +16,8 @@ public class RoomManager : ScenesSingleton<RoomManager>
     [SerializeField] private float roomWidth = 11f, roomHeight = 7f, tileOffset = 3.0f, bossDoorTileOffset = 6.0f;
     [Header("카메라")]
     [SerializeField] private CameraRig cameraRig;
+
+    public Vector3 BossSpawnPos => bossSpawnPos.position;
 
     protected override void Awake()
     {
@@ -99,7 +100,6 @@ public class RoomManager : ScenesSingleton<RoomManager>
     }
     public void ForceMoveToBossRoom(Vector3 pos, Vector2Int grid)
     {
-
         // 1. 보스방 생성
         GameObject bossRoom = generator.CreateRoom(roomDatabase.bossRoom, pos, grid, Vector2Int.zero);
 

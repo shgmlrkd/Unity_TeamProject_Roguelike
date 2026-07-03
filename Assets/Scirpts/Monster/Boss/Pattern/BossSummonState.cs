@@ -6,7 +6,7 @@ public class BossSummonState : BossBase
 {
     private const float TARGET_ALPHA = 0.6f;
     private const float ALPHA_DURATION = 0.95f;
-    private const float SUMMON_COOLTIME = 10.0f;
+    private const float SUMMON_COOLTIME = 15.0f;
 
     private const float SCATTER_RADIUS = 2.5f;
     
@@ -15,8 +15,6 @@ public class BossSummonState : BossBase
     private List<GameObject> monsters = new List<GameObject>(); 
 
     private float coolTimer = 0.0f;
-
-    private bool isSummonReady = false;
 
     private void Update()
     {
@@ -52,12 +50,15 @@ public class BossSummonState : BossBase
 
     private IEnumerator SummonCoroutine()
     {
+        SoundManager.Instance.PlaySFX(SoundKey.BossSpawnMonster);
+
         bossContext.OnInvincibleChanged?.Invoke(true);
         bossContext.OnFadeRequested?.Invoke(TARGET_ALPHA, ALPHA_DURATION);
 
         yield return alphaDuration;
 
-        // 일반 몬스터 랜덤으로 5마리 소환
+        print(bossContext.SummonMonsterCount);
+
         for(int i = 0; i < bossContext.SummonMonsterCount; i++)
         {
             MonsterStateManager monster = MonsterManager.Instance.SpawnMonster();
@@ -89,7 +90,6 @@ public class BossSummonState : BossBase
         {
             bossContext.OnInvincibleChanged?.Invoke(false);
             bossContext.OnFadeRequested?.Invoke(1.0f, ALPHA_DURATION);
-            ChangeState(BossStateEnum.Idle);
         }
     }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BossDashAttackState : BossBase
 {
@@ -12,15 +11,7 @@ public class BossDashAttackState : BossBase
     private bool isDashing = false;
     private bool isStunned = false; // 벽 충돌 후 스턴 대기 상태
     private bool hasRetriedDash = false;
-    private void Start()
-    {
-        bossContext.OnPhaseTwoRequested += OnPhaseTwo;
-    }
-
-    private void OnDisable()
-    {
-        bossContext.OnPhaseTwoRequested -= OnPhaseTwo;
-    }
+    private bool isPhaseChanged = false;
 
     public override void Enter()
     {
@@ -36,6 +27,20 @@ public class BossDashAttackState : BossBase
 
     public override void Tick()
     {
+        if (!isPhaseChanged && bossContext.IsPhaseTwo)
+        {
+            isPhaseChanged = true;
+
+            if (isStunned)
+            {
+                OnBossStunEnd();
+            }
+            else
+            {
+                OnBossDashEnd();
+            }
+        }    
+
         // 스턴 중에는 못하게 하기
         if (isStunned) return; 
 
@@ -69,18 +74,12 @@ public class BossDashAttackState : BossBase
 
         if (hit.TryGetComponent(out IDamageable player))
         {
+            SoundManager.Instance.PlaySFX(SoundKey.BossCrash);
             bossContext.animController.OnBossDashSuccess();
             DamageInfoSet damage = new DamageInfoSet(bossContext.CurrentAttackDamage);
             player.TakeDamage(damage);
             ChangeState(BossStateEnum.Idle);
         }
-    }
-    private void OnPhaseTwo()
-    {
-        if (!isStunned)
-            return;
-
-        OnBossStunEnd();
     }
 
     private bool CanDash()
@@ -88,10 +87,23 @@ public class BossDashAttackState : BossBase
         return stateTime >= DASH_START;
     }
 
+    private void OnPlayDashCharge()
+    {
+        SoundManager.Instance.PlaySFX(SoundKey.BossDashIntro);
+    }
+
+    public void OnBossDashEnd()
+    {
+        bossContext.animController.OnBossDashSuccess();
+        ChangeState(BossStateEnum.Idle);
+        return;
+    }
+
     public void OnBossStunEnd()
     {
         bossContext.animController.OnBossStunned(true);
         ChangeState(BossStateEnum.Idle);
+        return;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -101,6 +113,8 @@ public class BossDashAttackState : BossBase
 
         // 장애물이 아니면 반환
         if (collision.gameObject.layer != LayerMask.NameToLayer("Obstacle")) return;
+        
+        SoundManager.Instance.PlaySFX(SoundKey.BossCrash);
 
         isDashing = false;
 

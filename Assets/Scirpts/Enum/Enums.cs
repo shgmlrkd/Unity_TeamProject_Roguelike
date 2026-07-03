@@ -111,24 +111,35 @@ public enum SoundKey
 
     #region SFX
 
-    // 플레이어
-    SwordSwing,
-    PlayerFootStep,
-    PlayerHit,
-    PlayerDead,
+    // Player
+    SwordSwing,             // 공격 소리
+    PlayerFootStep,         // 걷는 소리
+    PlayerHit,              // 맞는 소리
+    PlayerDead,             // 죽는 소리
 
-    // 몬스터
-    MonsterHit,
-    MonsterDead,
+    // Monster
+    MonsterHit,             // 맞는 소리
+    MonsterDead,            // 죽는 소리
 
     // UI
-    BossDoorOpen,
-    ButtonHover,
-    ButtonClick,
-    CollectedItem,
-    DoorOpen,
-    MapClear,
+    BossDoorOpen,           // 보스 방 열리는 소리
+    ButtonHover,            // 버튼 위에 마우스 올릴 때 나는 소리
+    ButtonClick,            // 버튼 클릭 소리
+    CollectedItem,          // 아이템 먹는 소리
+    DoorOpen,               // 일반 문 열리는 소리
+    MapClear,               // 맵의 몬스터 다 잡았을 때 소리
 
+    // Boss
+    BossAxAttack,           // 보스 공격 소리
+    BossRun,                // 보스 발 소리
+    BossDashIntro,          // 보스 대쉬 공격 준비 소리
+    BossDashStart,          // 보스 대쉬 돌진 소리
+    BossCrash,              // 플레이어나 벽에 부딪힌 소리
+    BossSpawnMonster,       // 일반 몹 소환 소리
+    BossPhaseChange,        // 페이즈 넘어가는 소리
+    BossDeadIntro,          // 보스 죽는 소리 (울음)
+    BossDead,               // 보스 죽는 소리 (털썩)
+    BossFireBall,           // 보스 투사체 소리
     #endregion SFX
 }
 

@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,11 +30,16 @@ public class EquipmentUIController : MonoBehaviour
 
     private void OnDisable()
     {
-        // 플레이어 인벤토리 구현 시 이벤트에 구독 해제
-        inventory.OnEquipmentStored -= UpdateEquipmentUI;
-        inventory.OnEquipmentRemoved -= HideShieldUI;
+        if (inventory != null)
+        {// 플레이어 인벤토리 구현 시 이벤트에 구독 해제
+            inventory.OnEquipmentStored -= UpdateEquipmentUI;
+            inventory.OnEquipmentRemoved -= HideShieldUI;
+        }
 
-        OptionManager.Instance.OnEquipShowEnabled -= StartRestoreEquipmentImages;
+        if (OptionManager.Instance != null)
+        { 
+            OptionManager.Instance.OnEquipShowEnabled -= StartRestoreEquipmentImages; 
+        }
     }
     
     // 아이템 획득 시 장비 타입에 맞는 UI에 표시

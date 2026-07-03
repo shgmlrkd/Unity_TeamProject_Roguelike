@@ -2,11 +2,18 @@
 
 public class GlobalSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
+    private static bool applicationIsQuitting = false;
+
     private static T instance;
     public static T Instance
     {
         get
         {
+            if(applicationIsQuitting)
+            {
+                return null;
+            }
+
             // instance가 null 이면
             if(instance == null)
             {
@@ -54,6 +61,8 @@ public class GlobalSingleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void OnApplicationQuit()
     {
+        applicationIsQuitting = true;
+
         if(instance != null)
         {
             // 종료 직전에 정리
