@@ -19,7 +19,7 @@ MonoBehaviour:
   attackRange: 6
   attackTakeDamageRange: 0
   attackDelay: 1
-  contactRange: 6
+  contactRange: 7
   patrolSpeed: 2
   patrolWaitTime: 1
   minPatrolDistance: 3
