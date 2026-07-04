@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "\uBCF4\uB78F\uBE5B \uB2E8\uAC80"
   sprite: {fileID: 21300000, guid: a5108b9cfec7c4485a10fca61d8a2758, type: 3}
   equipmentType: 1
-  attack: 3
+  attack: 4
   attackRange: 1
   attackSpeedRate: 0.03
   moveSpeedRate: 1
