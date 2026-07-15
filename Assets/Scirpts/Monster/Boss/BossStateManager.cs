@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class BossStateManager : MonoBehaviour
@@ -76,6 +76,7 @@ public class BossStateManager : MonoBehaviour
         states[(int)bossState].FixedTick();
     }
 
+    // 상태 변환
     public void SetState(BossStateEnum next)
     {
         if (bossState == next) return;
@@ -91,3 +92,4 @@ public class BossStateManager : MonoBehaviour
         OnstateChanged?.Invoke(bossState);
     }
 }
+
