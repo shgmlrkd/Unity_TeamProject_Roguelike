@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,8 +52,10 @@ public class BossSummonState : BossBase
     {
         SoundManager.Instance.PlaySFX(SoundKey.BossSpawnMonster);
 
-        bossContext.OnInvincibleChanged?.Invoke(true);
-        bossContext.OnFadeRequested?.Invoke(TARGET_ALPHA, ALPHA_DURATION);
+        bossContext.RequestInvincible(true);
+        bossContext.RequestFade(TARGET_ALPHA, ALPHA_DURATION);
+        //bossContext.OnInvincibleChanged?.Invoke(true);
+        //bossContext.OnFadeRequested?.Invoke(TARGET_ALPHA, ALPHA_DURATION);
 
         yield return alphaDuration;
 
@@ -88,8 +90,8 @@ public class BossSummonState : BossBase
 
         if (monsters.Count == 0)
         {
-            bossContext.OnInvincibleChanged?.Invoke(false);
-            bossContext.OnFadeRequested?.Invoke(1.0f, ALPHA_DURATION);
+            bossContext.RequestInvincible(false);
+            bossContext.RequestFade(1.0f, ALPHA_DURATION);
         }
     }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -19,11 +19,11 @@ public class BossContext
     public AnimationController animController;
 
     // 필요한 이벤트
-    public Action OnHealRequested;
-    public Action OnPhaseTwoRequested;
-    public Action<SpriteLibraryAsset> OnSpriteLibraryChanged;
-    public Action<float, float> OnFadeRequested;
-    public Action<bool> OnInvincibleChanged;
+    public event Action OnHealRequested;
+    public event Action OnPhaseTwoRequested;
+    public event Action<SpriteLibraryAsset> OnSpriteLibraryChanged;
+    public event Action<float, float> OnFadeRequested;
+    public event Action<bool> OnInvincibleChanged;
 
     public float CurrentMoveSpeed { get; private set; }
     public int CurrentAttackDamage { get; private set; }
@@ -59,5 +59,30 @@ public class BossContext
         CurrentMoveSpeed += PHASE_TWO_MOVE_SPEED_BONUS;
 
         OnPhaseTwoRequested?.Invoke();
+    }
+
+    public void RequestHeal()
+    {
+        OnHealRequested?.Invoke();
+    }
+
+    public void RequestPhaseTwo()
+    {
+        OnPhaseTwoRequested?.Invoke();
+    }
+
+    public void RequestSpriteLibraryChange(SpriteLibraryAsset asset)
+    {
+        OnSpriteLibraryChanged?.Invoke(asset);
+    }
+
+    public void RequestFade(float targetAlpha, float duration)
+    {
+        OnFadeRequested?.Invoke(targetAlpha, duration);
+    }
+
+    public void RequestInvincible(bool value)
+    {
+        OnInvincibleChanged?.Invoke(value);
     }
 }
