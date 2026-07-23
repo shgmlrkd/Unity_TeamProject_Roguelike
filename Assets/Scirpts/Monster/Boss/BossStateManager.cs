@@ -1,10 +1,20 @@
-﻿using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
+
+[System.Serializable]
+public class BossStatePair
+{
+    public BossStateEnum state;
+    public BossBase bossbase;
+}
 
 public class BossStateManager : MonoBehaviour
 {
     [SerializeField]
-    private BossBase[] states;
+    private BossStatePair[] statePairs;
+
+    private readonly Dictionary<BossStateEnum, BossBase> stateDict = new Dictionary<BossStateEnum, BossBase>();
 
     [SerializeField]
     private Transform target;
@@ -53,10 +63,27 @@ public class BossStateManager : MonoBehaviour
 
         bossVisual.BindContext(context);
 
-        // 상태 매니저와 타겟(플레이어) 각 상태 스크립트에서 초기화
-        foreach (BossBase state in states)
+        InitializeStates();
+    }
+
+    private void InitializeStates()
+    {
+        // 상태 등록 및 초기화
+        foreach (BossStatePair pair in statePairs)
         {
-            state.Init(this, context);
+            // 상태 스크립트가 없으면 건너뜀
+            if (pair.bossbase == null)
+            {
+                continue;
+            }
+
+            // 동일한 상태가 중복 등록되는 것을 방지
+            if (!stateDict.TryAdd(pair.state, pair.bossbase))
+            {
+                continue;
+            }
+
+            pair.bossbase.Init(this, context);
         }
     }
 
@@ -65,7 +92,10 @@ public class BossStateManager : MonoBehaviour
         if (bossState == BossStateEnum.None)
             return;
 
-        states[(int)bossState].ManualUpdate();
+        if(stateDict.TryGetValue(bossState, out BossBase state))
+        {
+            state.ManualUpdate();
+        }
     }
 
     private void FixedUpdate()
@@ -73,21 +103,33 @@ public class BossStateManager : MonoBehaviour
         if (bossState == BossStateEnum.None)
             return;
 
-        states[(int)bossState].FixedTick();
+        if (stateDict.TryGetValue(bossState, out BossBase state))
+        {
+            state.FixedTick();
+        }
     }
 
     public void SetState(BossStateEnum next)
     {
         if (bossState == next) return;
 
-        if (bossState != BossStateEnum.None)
+        // 현재 상태 종료
+        if (bossState != BossStateEnum.None &&
+            stateDict.TryGetValue(bossState, out BossBase currentState))
         {
-            states[(int)bossState].Exit();
+            currentState.Exit();
+        }
+
+        // 다음 상태가 등록된 상태인지 확인
+        if (!stateDict.TryGetValue(next, out BossBase nextState))
+        {
+            return;
         }
 
         bossState = next;
 
-        states[(int)bossState].Enter();
+        nextState.Enter();
+
         OnstateChanged?.Invoke(bossState);
     }
 }
