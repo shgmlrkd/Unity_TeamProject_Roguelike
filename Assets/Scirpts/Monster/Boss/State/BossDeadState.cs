@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BossDeadState : BossBase
 {
@@ -10,7 +10,7 @@ public class BossDeadState : BossBase
     }
     private void OnStartFadeOut()
     {
-        bossContext.OnFadeRequested?.Invoke(0.0f, ALPHA_DURATION);
+        bossContext.RequestFade(0.0f, ALPHA_DURATION);
     }
 
     private void OnPlayDeadSFX()

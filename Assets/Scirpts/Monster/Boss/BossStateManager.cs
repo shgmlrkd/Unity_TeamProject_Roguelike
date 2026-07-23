@@ -109,6 +109,7 @@ public class BossStateManager : MonoBehaviour
         }
     }
 
+    // 상태 변환
     public void SetState(BossStateEnum next)
     {
         if (bossState == next) return;
@@ -133,3 +134,4 @@ public class BossStateManager : MonoBehaviour
         OnstateChanged?.Invoke(bossState);
     }
 }
+
