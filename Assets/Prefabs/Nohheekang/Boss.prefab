@@ -214,16 +214,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da5028a9efbf0846a1774442f58cc21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossStateManager
-  states:
-  - {fileID: 1115826358634305274}
-  - {fileID: 6183695978739843695}
-  - {fileID: 890189006138139857}
-  - {fileID: 3804082551151786888}
-  - {fileID: 5620070410430969038}
-  - {fileID: 4216601675401562145}
-  - {fileID: 6677438589259872010}
-  - {fileID: 8090623021535070867}
-  - {fileID: 1135680909439264370}
+  statePairs:
+  - state: 0
+    bossbase: {fileID: 1115826358634305274}
+  - state: 1
+    bossbase: {fileID: 6183695978739843695}
+  - state: 2
+    bossbase: {fileID: 890189006138139857}
+  - state: 3
+    bossbase: {fileID: 3804082551151786888}
+  - state: 4
+    bossbase: {fileID: 5620070410430969038}
+  - state: 5
+    bossbase: {fileID: 4216601675401562145}
+  - state: 6
+    bossbase: {fileID: 6677438589259872010}
+  - state: 7
+    bossbase: {fileID: 8090623021535070867}
+  - state: 8
+    bossbase: {fileID: 1135680909439264370}
   target: {fileID: 5824612967443884266, guid: c1ef97564af486f46ab9b204fbfc2a14, type: 3}
   firePos: {fileID: 194978863010852972}
   attackPos: {fileID: 6466913097359914863}
