@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BossChaseState : BossBase
 {
@@ -60,6 +60,8 @@ public class BossChaseState : BossBase
 
     private void OnDrawGizmos()
     {
+        if (bossContext == null) return;
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, bossContext.data.AttackSelectRange);
     }
